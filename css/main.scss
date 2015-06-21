@@ -1,0 +1,36 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+
+@charset "utf-8";
+
+$eastern-blue:  #1b8cb5;
+$atoll-blue:    #0c6a8c;
+$white:         #fffffe;
+$concrete-grey: #f3f3f3;
+$mystic-grey:   #e4ecef;
+$iron-grey:     #dbdfe1;
+$nevada-grey:   #5c6b70;
+$bunker-black:  #141d1f;
+
+@mixin serif {
+  font-family: 'Karma', Georgia, serif;
+}
+
+@mixin sans-serif {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+@mixin monospace {
+  font-family: "DejaVu Sans Mono", monospace;
+}
+
+@import 'base';
+@import 'typography';
+@import 'banner';
+@import 'blockquote';
+@import 'table';
+@import 'icon';
+@import 'code';
+@import 'syntax-highlighting';
+

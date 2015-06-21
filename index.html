@@ -1,0 +1,51 @@
+---
+layout: default
+---
+
+<div class='home'>
+  <section class='bio type'>
+    <h1>Dan Prince</h1>
+    <p>
+      I'm a developer living in North Wales as a Postgraduate
+      Computer Science student, researching realtime systems.
+    </p>
+    <p>
+      I'm also a co-founder of
+      <a href='http://astraldynamics.co.uk'>Astral Dynamics</a>,
+      a software development adventure.
+    </p>
+    <p>
+      When I'm not at a computer, I'm a keen guitarist.
+      I occasionally dabble with graphic design too.
+    </p>
+    <h3>Contact</h3>
+    <div>
+      Emails to
+      <a href=''>me@danthedev.com</a>.
+    </div>
+    <div>
+      Tweet me at
+      <a href=''>@workshydev</a>.
+    </div>
+    <div>
+      Follow my GitHub at
+      <a href=''>@danprince</a>.
+    </div>
+    <h3 class='page-heading'>Posts</h3>
+    <ul class='post-list'>
+      {% for post in site.posts %}
+        <li>
+          <a href='{{ post.url }}'>
+            <span class='date'>{{ post.date | date: '%b %-d, %Y' }}</span>
+            <span class='title'>{{ post.title}}</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+    {% if site.posts.size < 1 %}
+      <span>
+        I haven't written any posts yet!
+      </span>
+    {% endif %}
+  </section>
+</div>

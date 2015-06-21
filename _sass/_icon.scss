@@ -1,0 +1,18 @@
+.icon {
+  @include sans-serif;
+  background: $eastern-blue;
+  color: $white;
+  display: inline-block;
+  padding: 1em;
+  font-size: 1em;
+  line-height: 1em;
+}
+
+.social {
+  @include sans-serif;
+  color: $white;
+  background: $atoll-blue;
+  padding: .8em 0;
+  font-size: .5em;
+  text-align: center;
+}

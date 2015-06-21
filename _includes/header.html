@@ -1,0 +1,22 @@
+<header class='banner'
+  {% if page.image.src %}
+  style='background-image: url({{page.image.src}})'
+  {% else %}
+  style='background-image: url({{site.image.src}})'
+  {% endif %}
+  >
+  <div class='left-gutter'>
+    <div class='icon'>
+      <a href='/'>
+        DAN<br />
+        THE<br />
+        DEV<br />
+      </a>
+    </div>
+    <div class='social twitter'>
+      <a href='https://twitter.com/{{ site.twitter_username }}'>
+        @{{ site.twitter_username }}
+      </a>
+    </div>
+  </div>
+</header>

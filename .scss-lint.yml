@@ -1,0 +1,5 @@
+css_files: '_sass/**/*.scss'
+
+linters:
+  SingleLinePerSelector:
+    enabled: false

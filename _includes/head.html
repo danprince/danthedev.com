@@ -1,4 +1,13 @@
 <head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <meta name='description' content='{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}'>
+  <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+
+  <link rel='stylesheet' href='{{ '/css/main.css' | prepend: site.baseurl }}'>
+  <link rel='canonical' href='{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}'>
+  <link rel='alternate' type='application/rss+xml' title='{{ site.title }}' href='{{ '/feed.xml' | prepend: site.baseurl | prepend: site.url }}' />
   <style>
     @font-face {
       font-family: 'Karma';
@@ -15,16 +24,7 @@
       unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
     }
   </style>
-  <meta charset='utf-8'>
-  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-  <meta name='viewport' content='width=device-width, initial-scale=1'>
 
-  <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
-  <meta name='description' content='{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}'>
-
-  <link rel='stylesheet' href='{{ '/css/main.css' | prepend: site.baseurl }}'>
-  <link rel='canonical' href='{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}'>
-  <link rel='alternate' type='application/rss+xml' title='{{ site.title }}' href='{{ '/feed.xml' | prepend: site.baseurl | prepend: site.url }}' />
   <link rel='icon' type='image/png' href='favicon-32x32.png' sizes='32x32' />
   <link rel='icon' type='image/png' href='favicon-16x16.png' sizes='16x16' />
 </head>

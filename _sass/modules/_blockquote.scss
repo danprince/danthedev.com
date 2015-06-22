@@ -1,0 +1,7 @@
+@mixin blockquote {
+  background: $concrete-grey;
+  border-left: .5em solid $iron-grey;
+  font-style: italic;
+  margin: 0 1.5em;
+  padding: .5em 1em;
+}

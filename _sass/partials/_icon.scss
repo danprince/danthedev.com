@@ -1,0 +1,9 @@
+@import 'modules/icon';
+
+.icon {
+  @include icon;
+}
+
+.social {
+  @include icon-social-extension;
+}

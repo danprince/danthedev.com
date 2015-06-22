@@ -1,0 +1,10 @@
+@import 'modules/banner';
+
+.banner {
+  @include banner;
+
+  .overlay {
+    @include banner-overlay;
+  }
+}
+

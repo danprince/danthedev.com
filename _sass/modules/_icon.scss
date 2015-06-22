@@ -1,4 +1,4 @@
-.icon {
+@mixin icon {
   @include sans-serif;
   background: $eastern-blue;
   color: $white;
@@ -8,7 +8,7 @@
   padding: 1em;
 }
 
-.social {
+@mixin icon-social-extension {
   @include sans-serif;
   color: $white;
   background: $atoll-blue;
@@ -16,3 +16,4 @@
   font-size: .5em;
   text-align: center;
 }
+

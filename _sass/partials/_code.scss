@@ -1,0 +1,19 @@
+@import 'modules/code';
+
+pre,
+code {
+  @include code;
+}
+
+pre {
+  @include code-block;
+}
+
+code {
+  @include code-inline;
+}
+
+a code {
+  border-bottom: solid 2px $eastern-blue;
+  color: $eastern-blue;
+}

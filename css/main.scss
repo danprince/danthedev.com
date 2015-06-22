@@ -25,12 +25,12 @@ $bunker-black:  #141d1f;
   font-family: "DejaVu Sans Mono", monospace;
 }
 
-@import 'base';
-@import 'typography';
-@import 'banner';
-@import 'blockquote';
-@import 'table';
-@import 'icon';
-@import 'code';
-@import 'syntax-highlighting';
+@import 'partials/base';
+@import 'partials/typography';
+@import 'partials/banner';
+@import 'partials/blockquote';
+@import 'partials/table';
+@import 'partials/icon';
+@import 'partials/code';
+@import 'partials/syntax-highlighting';
 

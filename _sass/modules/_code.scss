@@ -1,22 +1,17 @@
-pre, code {
+@mixin code {
   @include monospace;
   background: $mystic-grey;
   color: $atoll-blue;
   font-size: .7em;
 }
 
-pre {
+@mixin code-block {
   border-radius: .2em;
   line-height: 1.4em;
   padding: 1em;
 }
 
-code {
+@mixin code-inline {
   font-size: .8em;
   padding: .2em;
-}
-
-a code {
-  border-bottom: solid 2px $eastern-blue;
-  color: $eastern-blue;
 }

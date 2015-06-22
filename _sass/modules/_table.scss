@@ -1,0 +1,21 @@
+@mixin table {
+  border: solid 1px $iron-grey;
+  border-collapse: collapse;
+
+  thead,
+  th {
+    background: $concrete-grey;
+    color: $nevada-grey;
+  }
+
+  th,
+  td {
+    border: solid 1px $iron-grey;
+    padding: .2em;
+    text-align: left;
+  }
+
+  th {
+    font-weight: 400;
+  }
+}

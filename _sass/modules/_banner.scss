@@ -1,0 +1,17 @@
+@mixin banner {
+  background-attachment: fixed;
+  background-color: $mystic-grey;
+  height: 13.5em;
+  position: relative;
+  width: 100%;
+}
+
+@mixin banner-overlay {
+  display: block;
+  height: 100%;
+  left: 0;
+  opacity: .4;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}

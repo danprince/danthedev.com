@@ -1,16 +1,14 @@
 body {
+  color: $bunker-black;
   font-family: 'Karma', serif;
   margin: 0;
   width: 100%;
-  color: $bunker-black;
 }
 
 main {
-  box-sizing: border-box;
   margin: 0 auto;
   max-width: 62em;
   width: 100%;
-  padding: 1em;
 }
 
 a {
@@ -18,11 +16,15 @@ a {
   text-decoration: none;
 }
 
+.content-padding {
+  padding: 1em;
+}
+
 .left-gutter {
-  position: absolute;
   font-size: 1.6em;
-  top: 1em;
   left: 1em;
+  position: absolute;
+  top: 1em;
 }
 
 .date {

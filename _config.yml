@@ -13,3 +13,7 @@ image:
 
 # Build settings
 markdown: kramdown
+
+# Sass settings
+sass:
+  style: :compressed

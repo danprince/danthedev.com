@@ -1,0 +1,28 @@
+@mixin link($color: $bunker-black) {
+  //background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .6) 50%);
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, $color, 50%);
+  background-position: 0 1em;
+  background-repeat: repeat-x;
+  background-size: 2px 2px;
+  color: $color;
+  text-decoration: none;
+
+  &:visited {
+    color: $nevada-grey;
+  }
+}
+
+@mixin strike {
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .6) 50%);
+  background-position: 0 .65em;
+  background-repeat: repeat-x;
+  background-size: 2px 2px;
+  color: $bunker-black;
+  text-decoration: none;
+}
+
+@mixin rule {
+  border: 0;
+  border-top: solid 1px $iron-grey;
+}
+

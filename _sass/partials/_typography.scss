@@ -1,4 +1,11 @@
-h1, h2, h3, h4, h5, h6 {
+@import 'modules/typography';
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   @include sans-serif;
 }
 
@@ -15,28 +22,17 @@ h3 {
 }
 
 hr {
-  border: 0;
-  border-top: solid 1px #ddd;
+  @include rule;
 }
 
 .type {
   font-size: 1.4em;
 
   a {
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .6) 50%);
-    background-position: 0 1em;
-    background-repeat: repeat-x;
-    background-size: 2px 2px;
-    color: $bunker-black;
-    text-decoration: none;
+    @include link;
   }
 
   s {
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .6) 50%);
-    background-position: 0 .65em;
-    background-repeat: repeat-x;
-    background-size: 2px 2px;
-    color: $bunker-black;
-    text-decoration: none;
+    @include strike;
   }
 }

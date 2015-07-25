@@ -1,12 +1,10 @@
 # Site settings
 title: danthedev
-email: dan@danthedev.com
-description: >
-  Thoughts of another programmer.
 baseurl: ""
 url: "http://danthedev.com"
-twitter_username: workshydev
-github_username: danprince
+email: dan@danthedev.com
+twitter_handle: workshydev
+github_handle: danprince
 permalink: "/:year/:month/:day/:title"
 image:
   src: "/img/banner.jpg"

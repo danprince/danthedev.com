@@ -1,6 +1,7 @@
 @mixin link($color: $bunker-black) {
-  //background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .6) 50%);
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, $color, 50%);
+  $line-color: rgba($color, .9);
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .6) 50%);
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, $line-color, 50%);
   background-position: 0 1em;
   background-repeat: repeat-x;
   background-size: 2px 2px;
@@ -8,6 +9,7 @@
   text-decoration: none;
 
   &:visited {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, $line-color, 50%);
     color: $nevada-grey;
   }
 }

@@ -47,7 +47,7 @@ If we actually perform this experiment in Chrome, we can use the memory profiler
 
 ![Chrome Memory Profile][12]
 
-Our calculation was actually fairly close, but the V8 has done some smart things in order to save space. It only achieved a 7% reduction on our estimate. The code for this experiment can be found in [this Gist][14].
+Our calculation was actually fairly close, but the V8 has done some smart things in order to save space. It only achieved a small reduction on our estimate. However, it's worth remembering that not all of these objects directly relate to our code. Some of them are created regardless. The code for this experiment can be found in [this gist][14].
 
 With the current state of performance in browsers and the amount of RAM in modern devices, you'd probably get away with it as well. It isn't going to be garbage collected, unless you come up with a clever chunking system that would allow you to save unused tiles into in browser storage ([IndexedDB][3], [sessionStorage][4] etc), but 15mb of RAM isn't a lot these days. You've got take a moment to respect the developers who built games for devices with <128kb of memory.
 
@@ -264,7 +264,7 @@ We can repeat the earlier experiment and compare the object implementation (on t
 ![][12]
 ![][13]
 
-As far as your program is concerned, it is the exact same data. We could read a lot more into this data, but I'll save that for another time. Again, the code is in [the Gist][14].
+As far as your program is concerned, it is the exact same data. We could read a lot more into this data, but I'll save that for another time. Again, the code is in [the gist][14].
  
 ## Sharp Edges
 If you're anything like me, mixing this kind of code with functional or object oriented styles feels messy. Looking for some object properties with dot notation and some with `>>` and `&` is upsetting. In order to improve the experience, I've written a tiny library for removing the sharp edges. It allows you to design lightweight formats for dealing with unsigned integers.

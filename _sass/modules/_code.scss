@@ -1,7 +1,7 @@
-@mixin code {
+@mixin code($bg: $mystic-grey, $fg: $atoll-blue) {
   @include monospace;
-  background: $mystic-grey;
-  color: $atoll-blue;
+  background: $bg;
+  color: $fg;
   font-size: .7em;
 }
 
@@ -14,4 +14,9 @@
 @mixin code-inline {
   font-size: .8em;
   padding: .2em;
+}
+
+@mixin recolor-code($bg, $fg) {
+  background: $bg;
+  color: $fg;
 }

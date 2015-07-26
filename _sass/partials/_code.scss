@@ -3,6 +3,13 @@
 pre,
 code {
   @include code;
+
+  &.alt {
+    $hue-shift: 300;
+    $background: adjust-hue($mystic-grey, $hue-shift);
+    $foreground: adjust-hue($atoll-blue, $hue-shift);
+    @include recolor-code($background, $foreground);
+  }
 }
 
 pre {
@@ -17,3 +24,4 @@ a code {
   border-bottom: solid 2px $eastern-blue;
   color: $eastern-blue;
 }
+

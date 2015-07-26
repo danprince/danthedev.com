@@ -5,6 +5,7 @@ url: "http://danthedev.com"
 email: dan@danthedev.com
 twitter_handle: workshydev
 github_handle: danprince
+analytics_id: "UA-53896773-2"
 permalink: "/:year/:month/:day/:title"
 image:
   src: "/img/banner.jpg"

@@ -229,7 +229,7 @@ To get it out, we need to find a way to ignore whatever comes behind it. We'll n
 
 A bitmask is just a pattern of bits that can be used with bitwise operators to modify other patterns in useful ways. In this case, we'll create a bitmask to help us isolate the first 8 bits of our number.
 
-Not surprisingly, it looks like this: `000000001111111` or 
+Not surprisingly, it looks like this: `000000011111111` or 
 `255`{:.alt}.
 
 Combine that with a bitwise AND and you will left with all other bits zero'ed except for in the first 8 positions.

@@ -161,7 +161,6 @@ function pack(type) {
 
 ### `<<` Shift Left
 
-Let's say that our packed version starts out as a number, set to 0.
 Now our type is embedded, we need to make some more room at the end of the number for our height. If we reference our initial format design, we can check the field length for height. It was 8 bits.
 
 Introducing the second useful bitwise operator, `<<`. The left bitshift. It simply moves the bit pattern left by how every many places you specify in the right hand side operand.

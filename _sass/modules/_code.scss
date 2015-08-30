@@ -9,6 +9,7 @@
   border-radius: .2em;
   line-height: 1.4em;
   padding: 1em;
+  overflow-x: scroll;
 }
 
 @mixin code-inline {

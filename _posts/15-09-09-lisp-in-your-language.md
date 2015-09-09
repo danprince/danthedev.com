@@ -215,7 +215,7 @@ function def(name, value) {
 
 Our `def` function takes a variable name and a value to assign to it, then it binds it onto the `window` object---which is the global scope in Javascript. However, there's a real elephant in the expression. We aren't responsible for resolving the values of variables within the expression. The Javascript implementation is going to do that for us.
 
-It will try to resolve the value of `a`. We haven't declared, so it will throw an error. Or even worse, if we have declared it, but not initialised it, we'll end up with `undefined` as our name argument. Of course Javascript has an _excellent_ way of dealing with this. Coerce `undefined` to a string, then use it as a key all the same (oh, Javascript...).
+It will try to resolve the value of `a`. We haven't declared it, so it will throw an error. Or even worse, if we have declared it, but not initialised it, we'll end up with `undefined` as our name argument. Of course Javascript has an _excellent_ way of dealing with this. Coerce `undefined` to a string, then use it as a key all the same (oh, Javascript...).
 
 Ah well. The obvious solution is to pass the name as a string instead.
 
@@ -291,7 +291,7 @@ var native = {
 };
 {% endhighlight %}
 
-We've can also add a `print` method, just in case you were fed up of using alert. Let's test that out.
+We can also add a `print` method, just in case you were fed up of using alert. Let's test that out.
 
 {% highlight javascript %}
 ['print', ['def', 'a', 5]]
@@ -335,7 +335,7 @@ var args = expression
 
 ## Do
 
-Let's put test out our new special forms and implement `do`. It evaluates all of its arguments, which allows us to evaluate multiple expressions in series.
+Let's test out our new special forms and implement `do`. It evaluates all of its arguments, which allows us to evaluate multiple expressions in series.
 
 In traditional Lisp:
 
@@ -446,7 +446,7 @@ There it is. Dynamic binding into a lexical scope. Can we just take a moment to 
 // hello world
 {% endhighlight %}
 
-This could definitely be less verbose, so we can take a page from the other Lisp languages and create `defn` as well.
+This could definitely be less verbose, so we can take a hint from some other Lisps and create `defn` too.
 
 {% highlight javascript %}
 var native = {

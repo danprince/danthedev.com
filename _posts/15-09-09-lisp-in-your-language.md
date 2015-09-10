@@ -513,7 +513,7 @@ Now open your editor and do this again in another language, then [tweet me][10] 
 [4]: http://stackoverflow.com/questions/12944987/abbreviating-console-log-in-javascript "Abbreviating console.log"
 [5]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply "MDN Function.prototype.apply"
 [6]: http://www.inf.fu-berlin.de/lehre/WS03/alpi/lambda.pdf "Introduction to the Lambda Calculus"
-[7]: https://github.com/danprince/jsxpr "danprince/jsxpr"
+[7]: https://github.com/danprince/ljsp "danprince/ljsp"
 [8]: http://rosettacode.org/wiki/S-Expressions "S-Expressions"
 [9]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce "MDN Function.prototype.reduce"
 [10]: https://twitter.com/workshydev "Tweet Me"

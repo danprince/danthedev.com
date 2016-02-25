@@ -287,7 +287,7 @@ Check it out on [GitHub][10].
 ## Demo
 Finally, what would this kind of very hypothetical rambling be without a demo to back it up? Below is a minimalistic implementation of a terrain generator, using [tiny-binary-format][10] and the [Diamond-Square][11] implementation from my game.
 
-<a class="jsbin-embed" href="http//jsbin.com/zeqevi/embed?js,output">JS Bin on jsbin.com</a><script src="http//static.jsbin.com/js/embed.min.js?3.34.1"></script>
+<a class="jsbin-embed" href="http://jsbin.com/zeqevi/embed?js,output">JS Bin on jsbin.com</a><script src="http://static.jsbin.com/js/embed.min.js?3.34.1"></script>
 
 All tiles are packed into a binary format, then stored in Uint16Arrays.
 

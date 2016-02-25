@@ -27,7 +27,7 @@ _Great, now I can just write a function which creates these tile objects and the
 
 I suppose you could.
 
-But what happens when you want to generate a map the size of a planet? You end up doing __a lot__ of memory allocation for all of these new objects you're building. The chances are, your Javascript implementation will try and do some very clever stuff in order to optimize this for you, but regardless; you're trying to make a lot of objects.
+But what happens when you want to generate a map the size of a planet? You end up doing __a lot__ of memory allocation for all of these new objects you're building. The chances are, your Javascript runtime will try and do some very clever stuff in order to optimize this for you, but regardless; you're trying to make a lot of objects.
 
 ## Storage
 
@@ -89,12 +89,12 @@ So, we'll use a number. Back up to 64 bits.
 
 Let's take this example setup.
 
-~~~
+{% highlight yaml %}
 Tile:
   type: 4
   height: 0.48
   vegetation: true
-~~~
+{% endhighlight %}
 
 We need to do a small amount of work to the height and vegetation properties, but afterwards, the underlying representation of these values looks like this.
 

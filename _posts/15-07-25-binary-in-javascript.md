@@ -309,6 +309,6 @@ I've got plans for another post, focusing on achieving rendering performance for
 [9]: https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array "MDN Uint16Array"
 [10]: https://github.com/danprince/tiny-binary-format "Tiny Binary Format"
 [11]: https://en.wikipedia.org/wiki/Diamond-square_algorithm "Wikipedia on Diamond Square"
-[12]: http://i.imgur.com/G1Spj4K.png "Memory Profile for Objects"
-[13]: http://i.imgur.com/3bYQ4AI.png "Memory Profile for Binary"
+[12]: https://i.imgur.com/G1Spj4K.png "Memory Profile for Objects"
+[13]: https://i.imgur.com/3bYQ4AI.png "Memory Profile for Binary"
 [14]: https://gist.github.com/danprince/7f4174a11378dc29dcd8 "Gist for Tile Memory"

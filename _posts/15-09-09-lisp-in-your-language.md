@@ -5,7 +5,7 @@ layout: post
 
 I'm a fan of Lisp programming languages, but there's an incredible conceptual elegance that struggles to materialise as readable elegance for many unfamiliar programmers. The underlying concepts are incredibly simple, but the learning curve can represent a disproportionate challenge.
 
-![Conceptual Elegance](http://i.imgur.com/UZzlqUy.jpg)
+![Conceptual Elegance](https://i.imgur.com/UZzlqUy.jpg)
 
 ## Brief History
 
@@ -87,7 +87,7 @@ There's a [good reason][4] why our eval function won't work if you try it with `
 
 ## Expressions All The Way Down
 
-![Turtles All The Way Down](http://i.imgur.com/7cx4nBz.jpg)
+![Turtles All The Way Down](https://i.imgur.com/7cx4nBz.jpg)
 
 From here on, we'll refer to the lists in our code as [expressions][8]. This helps distinguish them from list data structures. What happens when we try and evaluate an expression that already contains another expression?
 
@@ -198,7 +198,7 @@ function eval(expression, native) {
 
 Hopefully, you're wondering why this doesn't feel like the zen of simplicity that is associated with Lisps. And you're right. It's not. But if you wanted simple, then you should ask yourself what on earth are you doing reading about implementing a makeshift lisp in an already confused programming language?
 
-![Makeshift Lisp + Confused Programming Language](http://i.imgur.com/23mGq6v.jpg)
+![Makeshift Lisp + Confused Programming Language](https://i.imgur.com/23mGq6v.jpg)
 
 This is a sandbox for us to do unreasonable things in. Missing out on these kinds of hacks would be a wasted opportunity. Go ahead and implement `+`, `-`, `*`, `/`, `=` and any other operators you think might be useful as native functions. We'll use them later on.
 

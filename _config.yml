@@ -1,11 +1,10 @@
 # Site settings
 title: danthedev
 baseurl: ""
-url: "http://danthedev.com"
+url: "https://danthedev.com"
 email: dan@astraldynamics.co.uk
 twitter_handle: workshydev
 github_handle: danprince
-analytics_id: "UA-53896773-2"
 permalink: "/:year/:month/:day/:title"
 image:
   src: "/img/banner.jpg"

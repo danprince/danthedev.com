@@ -5,8 +5,7 @@ layout: default
   <section class='bio type'>
     <h1>Dan Prince</h1>
     <p>
-      I'm a part time digital nomad, back in North Wales after 4 months
-      travelling Asia.
+      I'm a programmer and writer living in the mountains of North Wales.
     </p>
     <p>
       I'm also a co-founder of
@@ -34,8 +33,15 @@ layout: default
     <ul class='post-list'>
       {% for post in site.posts %}
         <li>
-          <a href='{{ post.url }}'>
+          {% if post.external %}
+            <a href='{{ post.exturl }}'>
+          {% else %}
+            <a href='{{ post.url }}'>
+          {% endif %}
             <span class='date'>{{ post.date | date: '%b %-d, %Y' }}</span>
+            {% if post.external %}
+              <span class='publisher'>({{ post.publisher }})</span>
+            {% endif %}
             <span class='title'>{{ post.title}}</span>
           </a>
         </li>

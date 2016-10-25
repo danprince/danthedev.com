@@ -2,7 +2,7 @@
 title: danthedev
 baseurl: ""
 url: "https://danthedev.com"
-email: dan@astraldynamics.co.uk
+email: dan@kumu.io
 twitter_handle: workshydev
 github_handle: danprince
 permalink: "/:year/:month/:day/:title"

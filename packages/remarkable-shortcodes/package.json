@@ -1,0 +1,10 @@
+{
+  "name": "@danprince/remarkable-shortcodes",
+  "version": "0.0.0",
+  "private": true,
+  "main": "index.js",
+  "dependencies": {
+    "unist-builder": "^1.0.4",
+    "unist-util-map": "^1.0.5"
+  }
+}

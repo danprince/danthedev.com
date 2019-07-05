@@ -1,0 +1,10 @@
+{
+  "name": "@danprince/preact-register",
+  "version": "0.0.0",
+  "private": true,
+  "main": "index.js",
+  "side-effects": "free",
+  "peerDependencies": {
+    "preact": "*"
+  }
+}

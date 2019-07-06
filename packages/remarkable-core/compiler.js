@@ -1,17 +1,19 @@
 let remark = require("remark");
 let html = require("remark-html");
 let shortcodes = require("remark-shortcodes");
-let highlight = require("remark-highlight.js");
+let prism = require("@gridsome/remark-prismjs");
 let slug = require("remark-slug");
+let plugins = require("@danprince/remarkable-plugins");
 let autolink = require("remark-autolink-headings");
 
 let compiler = remark()
   .use(shortcodes)
-  .use(highlight)
+  .use(plugins.shortcodes)
+  .use(prism)
   .use(slug)
   .use(autolink, {
     behavior: "wrap",
-    linkProperties: { class: "anchor" }
+    linkProperties: { class: "heading-anchor" }
   })
   .use(html);
 

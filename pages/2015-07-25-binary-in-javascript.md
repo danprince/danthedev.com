@@ -1,9 +1,8 @@
 ---
 title: Binary in Javascript
-date: 2015/07/25
-url: 2015/07/25/binary-in-javascript
+url: /2015/07/25/binary-in-javascript
 chunks:
- - common
+ - page
 ---
 
 <style>

@@ -1,13 +1,12 @@
 let path = require("path");
-let url = require("url");
 let fs = require("fs-extra");
-let matter = require("gray-matter");
 let { template } = require("lodash");
 let { compileMarkdown } = require("./compiler");
+let { parseFrontMatter } = require("./");
 
 // Keep a cached version of the project's package.json around, so
 // that we don't read it every time we run the loader.
-let pkg = null;
+let pkg = fs.readJSONSync("./package.json");
 
 // Use liquid inspired templating tags that won't be escaped by the
 // markdown parser (the lodash ones are escaped as html).
@@ -19,14 +18,7 @@ let templateOptions = {
 
 async function remarkableSiteLoader(source, loader) {
   // Separate the front-matter from the contents of the file.
-  let { data, content } = matter(source);
-
-  // Use the cached version, or read the site's package.json file
-  pkg = pkg || await fs.readJSON("./package.json");
-
-  // Provide defaults and derived values for the frontmatter
-  data.template = data.template || "default";
-  data.permalink = url.resolve(pkg.site.domain, data.url);
+  let { data, content } = parseFrontMatter(loader.resourcePath, source);
 
   // Compile the contents of the file (everything below the front matter)
   // into html.

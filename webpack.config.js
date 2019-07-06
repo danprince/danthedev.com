@@ -1,26 +1,22 @@
 let path = require("path");
 let glob = require("globby");
-let { CleanWebpackPlugin } = require("clean-webpack-plugin");
-let MiniCssExtractPlugin = require("mini-css-extract-plugin");
+let Remarkable = require("@danprince/remarkable-core");
 let CopyPlugin = require("copy-webpack-plugin");
-let Remarkable = require("@danprince/remarkable-site");
+let MiniCssExtractPlugin = require("mini-css-extract-plugin");
+let TerserJSPlugin = require("terser-webpack-plugin");
+let OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+let { CleanWebpackPlugin } = require("clean-webpack-plugin");
 let { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 let isEnvDevelopment = process.env.NODE_ENV === "development";
 
-let paths = {
-  build: path.resolve("build"),
-  public: path.resolve("public"),
-  content: path.resolve("content"),
-};
-
-module.exports = {
+let config = {
   mode: isEnvDevelopment ? "development" : "production",
 
   devtool: isEnvDevelopment ? "eval" : "source-map",
 
   entry: {
-    "common": "./src/common",
+    "page" : "./pages/page",
   },
 
   resolve: {
@@ -29,7 +25,7 @@ module.exports = {
 
   resolveLoader: {
     modules: [
-      "packages",
+      "packages/remarkable-loaders",
       "node_modules",
     ],
   },
@@ -67,7 +63,7 @@ module.exports = {
     new CleanWebpackPlugin(),
 
     new CopyPlugin([
-      { from: paths.public, to: paths.build }
+      { from: path.resolve("public"), to: path.resolve("build") }
     ]),
 
     new MiniCssExtractPlugin({
@@ -77,14 +73,21 @@ module.exports = {
     }),
 
     ...glob
-      .sync("./content/**/*.md")
+      .sync("./pages/**/*.md")
       .map(Remarkable.createHtmlPlugin),
 
     ...(process.env.ANALYZE == null ? [] : [new BundleAnalyzerPlugin()]),
   ],
 
+  optimization: {
+    minimizer: [
+      new TerserJSPlugin({}),
+      new OptimizeCSSAssetsPlugin({})
+    ],
+  },
+
   output: {
-    path: paths.build,
+    path: path.resolve("build"),
     publicPath: "/",
 
     filename: isEnvDevelopment
@@ -98,9 +101,11 @@ module.exports = {
 
   devServer: {
     stats: "minimal",
-    contentBase: paths.public,
+    contentBase: path.resolve("public"),
     watchContentBase: true,
     overlay: true,
     compress: true,
   },
 };
+
+module.exports = config;

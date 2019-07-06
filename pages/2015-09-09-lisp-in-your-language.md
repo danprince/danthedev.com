@@ -1,9 +1,8 @@
 ---
 title: Lisp in Your Language
-date: 2015-09-09
-url: 2015/09/09/lisp-in-your-language
+url: /2015/09/09/lisp-in-your-language
 chunks:
-  - common
+  - page
 ---
 
 I'm a fan of Lisp programming languages, but there's an incredible conceptual elegance that struggles to materialise as readable elegance for many unfamiliar programmers. The underlying concepts are incredibly simple, but the learning curve can represent a disproportionate challenge.

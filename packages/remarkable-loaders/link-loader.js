@@ -1,5 +1,5 @@
 let format = require("date-fns/format");
-let { parseFrontMatter } = require("@danprince/remarkable-core/matter");
+let { parseFrontMatter } = require("@danprince/remarkable-core");
 
 module.exports = function linkLoader(source) {
   let { data } = parseFrontMatter(this.resourcePath, source);

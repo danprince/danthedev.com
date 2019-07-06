@@ -1,2 +1,2 @@
 # Remarkable Plugins
-Collection of remark plugins that 
+Collection of remark plugins.

@@ -4,6 +4,7 @@
   --font-family-mono: Consolas, "Liberation Mono", Menlo, Courier, monospace;
   --color-primary: #1b8cb5;
   --color-highlight: #f2f2f3;
+  --color-divider: #e0e6e8;
   --syntax-keyword: #738e98;
   --syntax-name: #151515;
   --syntax-punctuation: #aec1c7;
@@ -84,7 +85,7 @@ pre mark {
 
 hr {
   border: 0;
-  border-bottom: solid 1px whitesmoke;
+  border-bottom: solid 1px var(--color-divider);
 }
 
 table {
@@ -108,7 +109,7 @@ table td, table th {
   padding: 8px;
 }
 
-table tr:nth-child(even) {
+table tbody tr:nth-child(odd) {
   background: whitesmoke;
 }
 

@@ -1,8 +1,6 @@
 ---
 title: Binary in Javascript
-url: /2015/07/25/binary-in-javascript
-chunks:
- - page
+permalink: /2015/07/25/binary-in-javascript/index.html
 ---
 
 <style>
@@ -10,6 +8,8 @@ code.alt {
   color: #1b8cb5;
 }
 </style>
+
+> __Heads up!__ This is an old post that contains a lot of naive speculation about how JavaScript memory allocation works.
 
 Over the last week or so, I've spent my spare time working on a new [roguelike][0] game, with a focus on extensive and interesting planet generation. A key characteristic of the genre is that the game world is procedurally generated and this one is no exception.
 
@@ -19,7 +19,7 @@ If you are used to low level memory management style programming or you've been 
 
 ## The Tile
 
-In this game, a tile is defined by its __type__ (earth, water, sand, rock), its __height__ (between 0 and 1) and whether it contains any __vegetation__. These values are very easy to express inside an object.
+In this game, a tile is defined by its _type_ (earth, water, sand, rock), its _height_ (between 0 and 1) and whether it contains any _vegetation_. These values are very easy to express inside an object.
 
 ```js
 var tiles = { WATER: 0, EARTH: 1, SAND: 2, ROCK: 3 };
@@ -35,7 +35,7 @@ _Great, now I can just write a function which creates these tile objects and the
 
 I suppose you could.
 
-But what happens when you want to generate a map the size of a planet? You end up doing __a lot__ of memory allocation for all of these new objects you're building. The chances are, your Javascript runtime will try and do some very clever stuff in order to optimize this for you, but regardless; you're trying to make a lot of objects.
+But what happens when you want to generate a map the size of a planet? You end up doing _a lot_ of memory allocation for all of these new objects you're building. The chances are, your JavaScript runtime will try and do some very clever stuff in order to optimize this for you, but regardless; you're trying to make a lot of objects.
 
 ## Storage
 
@@ -49,7 +49,7 @@ Even if your world is only 512x512, you have to deal with 262144 object instance
 | `"height"`     | 6 | 96 |
 | `"vegetation"` | 10 | 160 |
 
-Altogether we have an extra `350 bits` and that's not even taking null terminators into account (they'll be back). Let's throw that together with the size of our values (`350 + 64 + 64 + 1 = 479`). So, each of our 3 field tile instances takes up `~60 bytes` of memory. Altogether your 512x512 map is taking up `~15695872` bytes or __`~14.97 megabytes`__ of data, just to store tiles. Sure you could shorten your keys and maybe even use an array instead, but you're still allocating huge amounts of memory.
+Altogether we have an extra 350 bits and that's not even taking null terminators into account (they'll be back). Let's throw that together with the size of our values (350 + 64 + 64 + 1 = 479). So, each of our 3 field tile instances takes up ~60 bytes of memory. Altogether your 512x512 map is taking up ~15695872 bytes or ~14.97 megabytes of data, just to store tiles. Sure you could shorten your keys and maybe even use an array instead, but you're still allocating huge amounts of memory.
 
 If we actually perform this experiment in Chrome, we can use the memory profiler to see the amount of allocated memory for these objects.
 

@@ -3,10 +3,15 @@
   --font-family-serif: Karma, serif;
   --font-family-mono: Consolas, "Liberation Mono", Menlo, Courier, monospace;
   --color-primary: #1b8cb5;
-}
-
-* {
-  box-sizing: border-box;
+  --color-highlight: #f2f2f3;
+  --syntax-keyword: #738e98;
+  --syntax-name: #151515;
+  --syntax-punctuation: #aec1c7;
+  --syntax-number: var(--color-primary);
+  --syntax-string: #215a6f;
+  --syntax-tag: var(--syntax-string);
+  --syntax-comment: #6a737d;
+  --syntax-operator: var(--syntax-punctuation);
 }
 
 body {
@@ -58,14 +63,9 @@ code {
 pre {
   font-family: var(--font-family-mono) !important;
   font-size: 13px;
-  padding: 16px;
-  border-radius: 4px;
   overflow-x: scroll;
-  background: white;
-  border: 1px solid;
-  border-color: #ddd #ddd #ccc;
-  border-radius: 3px;
   width: 100%;
+  margin: 32px 0;
 }
 
 pre code {
@@ -73,6 +73,13 @@ pre code {
   padding: 0;
   border-radius: 0;
   font-size: inherit;
+}
+
+pre mark {
+  background: var(--color-highlight);
+  box-shadow: 0 3px var(--color-highlight), 0 -3px var(--color-highlight);
+  padding-right: 2px;
+  border-radius: 2px;
 }
 
 hr {
@@ -106,7 +113,8 @@ table tr:nth-child(even) {
 }
 
 mark {
-  background: #7cdcff;
+  background: var(--color-highlight);
+  border-radius: 3px;
 }
 
 .container {
@@ -129,6 +137,7 @@ mark {
   display: flex;
   position: relative;
   z-index: 2;
+  line-height: 1.3;
 }
 
 #header .icon {
@@ -139,6 +148,7 @@ mark {
   padding: 24px;
   display: inline-block;
   text-decoration: none;
+  max-height: 120px;
 }
 
 #header .meta {
@@ -151,6 +161,12 @@ mark {
   position: relative;
   bottom: -7px;
 }
+
+#header .subtitle {
+  margin: 0;
+  padding: 0;
+}
+
 
 #header .date {
   color: grey;
@@ -190,21 +206,52 @@ mark {
 }
 
 .token.keyword {
-  color: #d73a49;
+  color: var(--syntax-keyword);
+}
+
+.token.punctuation {
+  color: var(--syntax-punctuation);
 }
 
 .token.comment {
-  color: #6a737d;
+  color: var(--syntax-comment);
+  font-style: italic;
 }
 
-.token.number, .token.class-name {
-  color: #005cc5;
+.token.function .token.class-name, .token.attr-name {
+  color: var(--syntax-name);
+}
+
+.token.number {
+  color: var(--syntax-number);
 }
 
 .token.string {
-  color: #032f62;
+  color: var(--syntax-string);
 }
 
-.token.function {
-  color: #6f42c1;
+.token.tag .token.tag,
+.token.tag > :last-child {
+  color: var(--syntax-tag);
+}
+
+.token.builtin {
+  font-weight: bold;
+}
+
+.token.operator {
+  color: var(--syntax-operator);
+  font-weight: bold;
+}
+
+.token.tag, .token.tag .punctuation {
+	color: var(--syntax-punctuation);
+}
+
+.token.script {
+  color: var(--syntax-name);
+}
+
+.token.attr-value {
+  color: var(--syntax-string);
 }

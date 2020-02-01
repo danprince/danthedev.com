@@ -13,12 +13,12 @@ I also like climbing rocks, playing guitar, and finding food in the great outdoo
 {% assign posts = collections.post | reverse %}
 
 <ul>
-  {% for post in posts %}
-  <li>
-    <time datetime={{ post.date }}>{{ post.date | date: "%b %e, %Y"  }}</time>
-    <a href="{{ post.url }}">{{ post.data.title }}</a>
-  </li>
-  {% endfor %}
+  {%- for post in posts -%}
+    <li>
+      <time datetime={{ post.date }}>{{ post.date | date: "%b %e, %Y"  }}</time>
+      <a href="{{ post.url }}">{{ post.data.title }}</a>
+    </li>
+  {%- endfor -%}
 </ul>
 
 [kumu]: https://kumu.io

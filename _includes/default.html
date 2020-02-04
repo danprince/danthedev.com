@@ -28,7 +28,7 @@ styles:
         {% assign date = page.date %}
 
         {% if date and nodate != true %}
-          <time class="date" datetime="{{ date }}">
+          <time class="date" datetime="{{ date | date: "%Y-%m-%d" }}">
             {{ date | date: "%b %e, %Y" }}
           </time>
         {% endif %}

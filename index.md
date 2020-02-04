@@ -4,11 +4,9 @@ layout: default.html
 nodate: true
 ---
 
-I’m a programmer from North Wales, currently taking a year out from [Kumu][kumu] to travel the world.
+I’m a programmer from [North Wales][north-wales-map], currently travelling the world, on a year out from [Kumu][kumu].
 
-Making things, breaking things, or trying to fix the things I’ve broken before someone finds out.
-
-I also like climbing rocks, playing guitar, and finding food in the great outdoors.
+Making things, breaking things, and trying to fix the things I’ve broken before someone finds out.
 
 {% assign posts = collections.post | reverse %}
 
@@ -22,3 +20,4 @@ I also like climbing rocks, playing guitar, and finding food in the great outdoo
 </ul>
 
 [kumu]: https://kumu.io
+[north-wales-map]: https://www.google.co.uk/maps/@53.0850005,-4.6192708,9.3z

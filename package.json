@@ -1,6 +1,7 @@
 {
   "private": true,
   "license": "MIT",
+  "site": "https://danthedev.com",
   "scripts": {
     "clean": "rm -r _site",
     "start:site": "eleventy --watch --serve",

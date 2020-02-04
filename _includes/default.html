@@ -11,6 +11,7 @@ styles:
     <meta name="description" content="{{ page.description }}">
     <meta name="theme-color" content="#1b8cb5">
     <title>{{ title }}</title>
+    <link rel="canonical" href="{{ pkg.site }}{{ page.url }}" />
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora|Karma:400,700">
     {% for style in styles %}

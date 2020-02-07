@@ -2,85 +2,99 @@
   --font-family-display: system-ui, sans-serif;
   --font-family-serif: Karma, serif;
   --font-family-mono: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  --content-width: 680px;
+  --color-background: #ffffff;
+  --color-text: #141d1f;
   --color-primary: #1b8cb5;
-  --color-highlight: #f2f2f3;
+  --color-highlight: #ebf4f7;
   --color-divider: #e0e6e8;
-  --syntax-keyword: #738e98;
+  --color-insert: #ecffec;
+  --color-delete: #ffecec;
+  --syntax-keyword: #8c8c8c;
   --syntax-name: #151515;
-  --syntax-punctuation: #aec1c7;
+  --syntax-punctuation: #c5c5c5;
   --syntax-number: var(--color-primary);
-  --syntax-string: #215a6f;
-  --syntax-tag: var(--syntax-string);
-  --syntax-comment: #6a737d;
+  --syntax-string: #b51d22;
+  --syntax-tag: #215a6f;
+  --syntax-comment: #adadad;
   --syntax-operator: var(--syntax-punctuation);
 }
 
 body {
   margin: 0;
-  color: #141d1f;
-  font-size: 19px;
-  font-family: var(--font-family-serif);
-  line-height: 1.5;
+  color: var(--color-text);
+  background: var(--color-background);
+  font: 18px/1.5 var(--font-family-serif);
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-family-display);
-  margin-bottom: 0;
+/* --- Markdown --- */
+
+h1, h2, h3, h4, p {
+  text-rendering: optimizeLegibility;
+  margin: 0;
+  margin-bottom: 16px;
 }
 
-h4, h6 {
-  font-style: italic;
+h2 {
+  margin-top: 48px;
+  margin-bottom: 8px;
 }
 
-h5, h6 {
-  font-size: 19px;
+h3, h4 {
+  letter-spacing: 2px;
+  text-transform: lowercase;
+  font-variant: small-caps;
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+h4 {
   color: #888;
-  font-weight: normal;
 }
 
 a {
   color: inherit;
 }
 
-h1, h2, h3, h4, h5, h6, p {
-  text-rendering: optimizeLegibility;
+li {
+  margin-bottom: 16px;
+}
+
+li li {
+  margin: 0;
 }
 
 blockquote {
-  font-style: italic;
-  color: #888;
+  color: #545454;
   font-size: 20px;
   margin: 16px;
+  font-family: var(--font-family-display);
+  font-weight: 200;
+}
+
+strong {
+  font-weight: 600;
 }
 
 code {
-  background: whitesmoke;
   font-size: 16px;
   font-family: var(--font-family-mono);
-  padding: 3px 5px;
-  border-radius: 2px;
 }
 
 pre {
-  font-family: var(--font-family-mono) !important;
+  box-sizing: border-box;
+  font-family: var(--font-family-mono);
   font-size: 13px;
   overflow-x: scroll;
   width: 100%;
   margin: 32px 0;
+  padding: 0 24px;
 }
 
 pre code {
   background: none;
   padding: 0;
-  border-radius: 0;
   font-size: inherit;
-}
-
-pre mark {
-  background: var(--color-highlight);
-  box-shadow: 0 3px var(--color-highlight), 0 -3px var(--color-highlight);
-  padding-right: 2px;
-  border-radius: 2px;
 }
 
 hr {
@@ -94,6 +108,7 @@ table {
   width: 100%;
   font-size: 14px;
   font-family: var(--font-family-mono);
+  margin: 32px 0;
 }
 
 table code {
@@ -105,7 +120,6 @@ table th {
 }
 
 table td, table th {
-  border: solid 1px #ddd;
   padding: 8px;
 }
 
@@ -113,25 +127,49 @@ table tbody tr:nth-child(odd) {
   background: whitesmoke;
 }
 
+figure {
+  margin: 32px 0;
+}
+
+figcaption {
+  font-family: var(--font-family-display);
+  font-size: 11pt;
+  font-style: normal;
+  font-weight: 600;
+  color: grey;
+  display: block;
+  text-align: center;
+  padding: 8px 0;
+}
+
+ins {
+  text-decoration: none;
+  background: var(--color-insert);
+}
+
+del {
+  text-decoration: none;
+  background: var(--color-delete);
+}
+
 mark {
   background: var(--color-highlight);
-  border-radius: 3px;
 }
+
+/* --- Site --- */
 
 .container {
   box-sizing: content-box;
-  max-width: 600px;
+  max-width: var(--content-width);
   margin: 0 auto;
   padding: 24px;
 }
 
-.content img {
+.content > p > img,
+.content > figure > img {
   max-width: 100%;
-}
-
-.content {
-  position: relative;
-  padding-top: 0;
+  margin: 0 auto;
+  display: block;
 }
 
 #header {
@@ -160,7 +198,7 @@ mark {
 #header .title {
   margin: 0;
   position: relative;
-  bottom: -7px;
+  bottom: -17px;
 }
 
 #header .subtitle {
@@ -188,23 +226,7 @@ mark {
   margin: 0 8px;
 }
 
-.heading-anchor {
-  text-decoration: none;
-}
-
-.heading-anchor:hover {
-  text-decoration: underline;
-}
-
-@media (max-width: 600px) {
-  #header {
-    display: block;
-  }
-
-  #header .meta {
-    margin: 0;
-  }
-}
+/* --- Syntax Highlighting --- */
 
 .token.keyword {
   color: var(--syntax-keyword);
@@ -255,4 +277,24 @@ mark {
 
 .token.attr-value {
   color: var(--syntax-string);
+}
+
+.highlight-line {
+  border-radius: 2px;
+}
+
+/* --- Mobile --- */
+
+@media (max-width: 600px) {
+  #header {
+    display: block;
+  }
+
+  #header .meta {
+    margin: 0;
+  }
+
+  pre {
+    padding: 0;
+  }
 }

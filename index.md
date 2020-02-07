@@ -13,7 +13,7 @@ Making things, breaking things, and trying to fix the things I’ve broken befor
 <ul>
   {%- for post in posts -%}
     <li>
-      <time datetime={{ post.date | date: "%Y-%m-%d" }}>{{ post.date | date: "%b%e, %Y" }}</time> - 
+      <time datetime={{ post.date | date: "%Y-%m-%d" }}>{{ post.date | date: "%b %e, %Y" }}</time> - 
       <a href="{{ post.url }}">{{ post.data.title }}</a>
     </li>
   {%- endfor -%}

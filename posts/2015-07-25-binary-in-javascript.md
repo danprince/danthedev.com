@@ -9,7 +9,9 @@ code.alt {
 }
 </style>
 
-> __Heads up!__ This is an old post that contains a lot of naive speculation about how JavaScript memory allocation works.
+<p class="note">
+  <b>Heads up!</b> This is an old post that contains a lot of naive speculation about how JavaScript memory allocation works.
+</p>
 
 Over the last week or so, I've spent my spare time working on a new [roguelike][0] game, with a focus on extensive and interesting planet generation. A key characteristic of the genre is that the game world is procedurally generated and this one is no exception.
 

@@ -69,14 +69,6 @@ li li {
   margin: 0;
 }
 
-blockquote {
-  color: #545454;
-  font-size: 20px;
-  margin: 16px;
-  font-family: var(--font-family-display);
-  font-weight: 200;
-}
-
 strong {
   font-weight: 600;
 }
@@ -159,6 +151,11 @@ del {
 
 mark {
   background: var(--color-highlight);
+}
+
+blockquote {
+  color: grey;
+  font-size: 20pt;
 }
 
 /* --- Site --- */
@@ -287,6 +284,17 @@ mark {
 .highlight-line {
   border-radius: 2px;
 }
+
+.note {
+  background: whitesmoke;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.note > :last-child {
+  margin-bottom: 0;
+}
+
 
 /* --- Mobile --- */
 

@@ -103,12 +103,12 @@ table {
   text-align: left;
   border-collapse: collapse;
   width: 100%;
-  font-size: inherit;
+  font-size: 12pt;
   margin: 32px 0;
 }
 
 table code {
-  font-size: 12pt;
+  font-size: 10pt;
 }
 
 table th {

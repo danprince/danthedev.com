@@ -104,7 +104,6 @@ table {
   border-collapse: collapse;
   width: 100%;
   font-size: 14px;
-  font-family: var(--font-family-mono);
   margin: 32px 0;
 }
 

@@ -8,7 +8,7 @@ styles:
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Dan Prince">
-    <meta name="description" content="{{ page.description | default: content | strip_html | truncate: 150 }}">
+    <meta name="description" content="{{ page.description | default: content | strip_html | truncate: 150 | escape }}">
     <meta name="theme-color" content="#1b8cb5">
     <title>{{ title }}</title>
     <link rel="canonical" href="{{ pkg.site }}{{ page.url }}" />
@@ -26,16 +26,16 @@ styles:
         <div>DEV</div>
       </a>
       <div class="meta">
-        {% if page.date and nodate != true %}
-          <time class="date" datetime="{{ page.date | date: "%Y-%m-%d" }}">
-            {{ page.date | date: "%b %e, %Y" }}
-          </time>
-        {% endif %}
-
         {% if title %}
           <a href="{{ page.url }}">
             <h1 class="title">{{ title }}</h1>
           </a>
+        {% endif %}
+
+        {% if page.date and nodate != true %}
+          <time class="date" datetime="{{ page.date | date: "%Y-%m-%d" }}">
+            {{ page.date | date: "%b %e, %Y" }}
+          </time>
         {% endif %}
       </div>
     </header>
@@ -58,7 +58,7 @@ styles:
       </div>
     </footer>
     {% for script in scripts %}
-      <script src="/scripts/{{ script }}.js"></script>
+      <script type="module" src="{{ script }}"></script>
     {% endfor %}
   </body>
 </html>

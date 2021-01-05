@@ -17,11 +17,11 @@ These tools solve important problems and you can make a strong case for any of t
 
 The problems arise when these tools are considered together. They are often non-trivial to configure, especially when correctly configuring one depends on correctly configuring another first. Those are just the first twenty current tools that I could think of off the top of my head. I would hedge a bet that there are some sprawling, dark cornered codebases out there that use even more. I've worked in at least one that used eleven!
 
-The combinatorial complexity of stacking these tools is barrier to entry that can cause beginners to give up before they ever write a line of code.
+The combinatorial complexity of stacking these tools is a barrier to entry that can cause beginners to give up before they ever write a line of code.
 
 Intermediate developers will often find that they know enough to configure the tools in the first place, but not enough to fix them if things go wrong.
 
-Even experienced devs struggle. You'll introduce a simple version mismatch during an upgrade, then find yourself stuck, without useful error messages, hand-editing code inside `node_modules`, wondering where your life went wrong.
+Even experienced developers can struggle. You'll introduce a simple version mismatch during an upgrade, then find yourself stuck, without useful error messages, hand-editing code inside `node_modules`, wondering where your life went wrong.
 
 These experiences encourage people towards integrated tools like [Create React App][cra] and zero configuration bundlers like [Parcel][parcel]—opting to trade some control for a lower maintenance burden. These are good tools! Time spent configuring, fixing and upgrading tools is time you could have spent ideating, creating, or solving your problem.
 
@@ -76,7 +76,7 @@ If you don't have Python, or you want a server that will automatically reload th
 ## Dependencies
 Traditionally, using other people's code has required some combination of [npm][npm] and [yarn][yarn] to download those modules (and their dependencies) from the npm registry. By default, those modules (and their dependencies) can [execute arbitrary code](https://blog.npmjs.org/post/141702881055/package-install-scripts-vulnerability) on your machine after installation, so there's a lot of trust involved when you hit install.
 
-(If you use npm at all, then you should probably run `npm config set ignore-scripts true` unless you want to feel very silly one day).
+(If you use npm at all, then you should probably run `npm config set ignore-scripts true` unless you want to feel [very silly one day](https://blog.npmjs.org/post/141702881055/package-install-scripts-vulnerability)).
 
 You can bypass npm entirely by importing your dependencies directly from a CDN instead. I like to use [Skypack][skypack] and [UNPKG][unpkg]. 
 
@@ -113,9 +113,9 @@ import * as Preact from "./lib/preact.js";
 
 [Import Maps](https://github.com/WICG/import-maps) will eventually solve this problem, but that's still [some time away](https://caniuse.com/import-maps) for now.
 
-Skypack also wraps [CommonJS code](https://nodejs.org/docs/latest/api/modules.html) with an interop layer, so that you can import older packages too.
+Skypack also wraps [CommonJS code](https://nodejs.org/docs/latest/api/modules.html) with some compatibility code, so that you can import older packages too.
 
-I'm generally happy with this setup, but the one rough edge that I do run into is the need for a constant internet connection during development.
+The rough edge that I do run into is the need for a constant internet connection during development.
 
 This time last year I was crossing Russia by train. Lots of free time and very little connectivity. Not a typical development environment perhaps, but sometimes you don't have internet access and it's frustrating when that gets in the way of working. I was building [a web app](https://github.com/danprince/siberia) with a single dependency, which I ended up vendoring (which still works brilliantly as an alternative) during a window of 4G, whilst stopped at a city along the way.
 
@@ -126,7 +126,7 @@ With the growing number of syntactic improvements that have come to JavaScript i
 
 At the time of writing, modules are supported by [92.66% of users globally](https://caniuse.com/es6-module), async functions are at [94.11%](https://caniuse.com/async-functions), classes are at [95.51%](https://caniuse.com/es6-class), and so on. If [GitHub](https://docs.github.com/en/free-pro-team@latest/github/getting-started-with-github/supported-browsers), [YouTube](https://support.google.com/youtube/answer/175292?hl=en), [Discord](https://twitter.com/discord/status/944929631966285824), [Spotify](https://support.spotify.com/us/article/webplayer/), and  [Slack](https://slack.com/intl/en-gb/help/articles/115002037526-Minimum-requirements-for-using-Slack) don't support IE11, then you probably don't need to for your side project either.
 
-Not all popular syntax is on a standards track that browsers will implement though. [JSX](https://reactjs.org/docs/introducing-jsx.html) is a syntax extension for React (but now used by plenty of other frameworks) for writing declarative element expressions inside JavaScript files.
+Not all popular syntax is on a standards track that browsers will implement though. [JSX](https://reactjs.org/docs/introducing-jsx.html) is a syntax extension for React (but now used by plenty of other frameworks) for writing declarative element expressions in JavaScript.
 
 Unless you are living in an alternate timeline where [E4X wasn't deprecated long ago](https://en.wikipedia.org/wiki/ECMAScript_for_XML), your browser considers the following code to have syntax errors.
 
@@ -142,7 +142,7 @@ function PanGalacticGargleBlaster() {
 }
 ```
 
-But unless you've been hiding from the JavaScript ecosystem for the past 7 years, you'll have seen a lot of JSX around. It's a popular way to describe markup for component based frameworks because of the visual parity with the HTML that they eventually generate.
+But unless you've been hiding from the JavaScript ecosystem for the past 7 years, you'll have seen a lot of JSX around. It's a popular way to describe markup for component based frameworks, because of the visual parity with the HTML the frameworks eventually generate.
 
 You may also know that JSX is a syntax alternative for a less succinct way to express the same idea with regular code.
 
@@ -319,7 +319,7 @@ This [paths](https://www.typescriptlang.org/tsconfig#paths) configuration tells 
 
 Like type checking, this is also an opt-in step. Another programmer without npm or TypeScript installed can still work on this code without running into environmental setup errors.
 
-This point has caused me the most pain so far, but I'm getting more comfortable foregoing types for dependencies that have minimal contact with my code (a handful of function calls) vs libraries that I use extensively across multiple files in my codebase, where I opt to install a strictly development version of the libary (or just its types). This involves a bit of version syncing, but for small projects, that's generally not too bad.
+This point has caused me the most pain so far, but I'm getting more comfortable foregoing types for dependencies that have minimal contact with my code (a handful of function calls) vs libraries that I use extensively across multiple files in my codebase, where I opt to install a strictly development version of the libary (or just its types). This involves a bit of version syncing, but for small projects that's not too painful.
 
 In an ideal future, TypeScript would take a leaf out of Deno's book and respect the [`X-TypeScript-Types` header](https://deno.land/manual/getting_started/typescript) for any remote imports, but that's not a goal for TypeScript in the short term, so you might be stuck with the current situation for a while.
 
@@ -336,7 +336,7 @@ The future of tooling for web development is far from bleak and despondent thoug
 * [Rome][rome] promises to be a unified toolchain for the whole of the web. With so many source-to-source tools that separately parse and print code, it seems like a no-brainer to build a set of tools that can all work on the same syntax tree. Also cool: [no dependencies](https://github.com/rome/tools/blob/9ddf92ba7944b2013c4ae439242def512b32ba38/package.json#L8-L9).
 * [Snowpack][snowpack] is a module-first build tool from the team behind [Skypack][skypack]. It takes advantage of the fact that most browsers support modules now, and therefore spends no development time stitching your code together to create bundled files.
 * [Vite][vite] is another module-first build tool, from the team behind Vue. When I have a project that outgrows my minimal tool setup, Vite is my first port of call. I don't actually use Vue much, but Vite works brilliantly regardless.
-* [esbuild][esbuild] is a performant bundler and minifier written in Go that is actually used in Snowpack and Vite. I'm generally excited about tools for JS that are written in faster compiled languages.
+* [esbuild][esbuild] is a performant bundler and minifier written in Go that is actually used in Snowpack and Vite. I'm excited about tools for JS that are written in faster compiled languages.
 * [swc][swc] is another performant JavaScript compiler with a bundler, written in Rust.
 * [Deno][deno] is a reimagining of Node.js, but with first class TypeScript support and without a central package repository. Less of a tool and more of a platform, but it comes with a [unified toolchain](https://deno.land/manual/tools).
 
@@ -344,7 +344,7 @@ The future of tooling for web development is far from bleak and despondent thoug
 
 Someone starting out with web development can use these techniques to create a complex app before they ever think about installing Node and npm. A burnt out web developer can breathe fresh life into their next project by sidestepping tool configurations and boilerplates.
 
-If you end up making something cool, more people are likely to play with it and contribute if they don't have to spend 5 minutes installing tools to get it running.
+If you end up making something cool, more people are likely to play with it and contribute when they don't have to spend 5 minutes installing tools to get it running.
 
 There used to be a joke that went something like this:
 

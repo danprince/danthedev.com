@@ -19,16 +19,18 @@ The problems arise when these tools are considered together. They are often non-
 
 The combinatorial complexity of stacking these tools is barrier to entry that can cause beginners to give up before they ever write a line of code.
 
-It's not just a problem for less experienced devs either. Sometimes you'll introduce a simple version mismatch during an upgrade, then find yourself [without a towel](https://en.wikipedia.org/wiki/Towel_Day) or any useful error messages, hand-editing code inside `node_modules`, wondering where your life went wrong.
+Intermediate developers will often find that they know enough to configure the tools in the first place, but not enough to fix them if things go wrong.
+
+Even experienced devs struggle. You'll introduce a simple version mismatch during an upgrade, then find yourself stuck, without useful error messages, hand-editing code inside `node_modules`, wondering where your life went wrong.
 
 These experiences encourage people towards integrated tools like [Create React App][cra] and zero configuration bundlers like [Parcel][parcel]—opting to trade some control for a lower maintenance burden. These are good tools! Time spent configuring, fixing and upgrading tools is time you could have spent ideating, creating, or solving your problem.
 
 Most of the tools mentioned here were created to solve problems that you won't have while you're learning web development, or building a prototype, or a side project. The browser has matured enough that you can build a complex app without any of the above tools—or resorting to old school script tags and global variables.
 
-I want to share my setup for building _small projects_ that don't rely on hundreds of megabytes of development dependencies. There are still some rough edges, but removing the reliance on build tools has helped restore some of the joy that I first felt when starting out with web development many years ago.
+I want to share my setup for building _small projects_ that don't rely on hundreds of megabytes of development dependencies. There are still some rough edges, but removing the build step has helped restore some of the joy that I first felt when I started programming.
 
 ## Modules
-It all starts with an `index.html` that imports a [module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) directly.
+It always starts with an `index.html` that imports a [module](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) directly.
 
 ```html/8
 <!doctype html>
@@ -191,9 +193,9 @@ function getTheAnswer(config) {
 
 You know you want the answer, but what should you pass as an argument? A reasonable guess might be an object, but as the parameters weren't documented, you have no idea which properties to try. Usually this involves hunting around the codebase for other calls to this function to use as examples, or worse, reading the entire function body to see which properties are accessed.
 
-This problem doesn't exist when you use type annotations and a static type checker. Your editor will let you know exactly which properties are required, which are optional and the type of each one.
+This problem doesn't exist when you use type annotations and a static type checker. Your editor will let you know exactly which properties are required, which are optional, and the type of each one.
 
-It's absolutely true that you don't _need_ a type checker for smaller projects, but once you've spent any significant time using them, going back to untyped JavaScript is worse than [listening to Vogon poetry](https://en.wikipedia.org/wiki/Vogon#Poetry). I'll be damned if I have to give up type safety for my small projects.
+It's absolutely true that you don't _need_ a type checker for smaller projects, but once you spend any significant time using them, going back to untyped JavaScript is worse than listening to [Vogon poetry](https://en.wikipedia.org/wiki/Vogon#Poetry). I'll be damned if I have to give up type safety for my small projects.
 
 TypeScript actually exposes a large subset of its functionality through [JSDoc annotations](https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html) that work in JavaScript files, and you can ship these same files to a browser without a build step.
 
@@ -229,7 +231,7 @@ function getTheAnswer(life, universe, everything) {
 
 Most TypeScript syntax can be converted over to JSDoc annotations, which are usually more verbose than the original syntax, but still enable all the same features for type checking and refactoring (renaming symbols, finding jumping to definitions and implementations, etc). It's also worth mentioning that often you can skip the annotations and let TypeScript infer the types too.
 
-Is it as pleasant to write as regular TypeScript syntax? No, but it's not as bad as you might think either. And for those times when you have lengthy unions, or complex conditional/mapped types, you can use TypeScript syntax to export or declare them globally in a `.d.ts` file.
+Is it as pleasant to write as regular TypeScript? No, but it's not too bad either. For the times when you have unwieldy unions, or complex conditional/mapped types, you can use TypeScript syntax to [export](https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html#import-types) or declare them in a `.d.ts` file.
 
 If you're not convinced, then go and check out the source for a large project, like [Webpack](https://github.com/webpack/webpack), which uses JSDoc syntax extensively throughout its codebase.
 
@@ -246,7 +248,7 @@ Be realistic about how much code you are actually delivering, and how much of it
 
 Ask yourself who is likely to use the thing you're making. Is it business critical that the page loads in the first 50ms so you can convert viewers into customers? Or is it something you're building for fun that can be safely and reliably cached for future visits.
 
-Benchmark your code. Fire up the devtools and [throttle the network](https://developers.google.com/web/tools/chrome-devtools/network#throttle) to whatever speed you need your page to be snappy at. Is it too slow? Is loading and parsing code the bottleneck? That's the time to start thinking about integrating a bundler and minifying your code. Solve the problem you have right now, not for one you might have in the future.
+Benchmark your code. Fire up the devtools and [throttle the network](https://developers.google.com/web/tools/chrome-devtools/network#throttle) to whatever speed you need your page to be snappy at. Is it too slow? Is loading the code definitely the bottleneck? That's the time to start thinking about bundling and minification. Solve the problem you have right now, not the one you _might_ have in the future.
 
 Depending on when and where (and if) you eventually deploy your project, there's a good chance that you'll be able to enable gzip compression, which can go a long way to reducing the overall size of larger files (but will never be comparable to the savings of bundling, minifying, and _then gzipping_).
 
@@ -264,7 +266,7 @@ If you're using a bundler to import your stylesheets directly from JS files, the
 If you're not writing CSS directly, then you probably fall into one of the following camps.
 
 ### PostCSS / Sass
-These are languages to which you will have to say goodbye, if you want a tool-free setup. For some people this will be a deal-breaker. All I can say is that CSS is probably better than you remember it being.
+If you want a tool-free setup, then these are languages to which you will have to say goodbye. For some, this will be a deal-breaker. All I can say is that CSS is probably better than you remember it being.
 
 ### CSS-in-JS
 If your library of choice works without a build step, then you can pick your flavour of CSS-in-JS and load it from a CDN, the same as any other library.
@@ -282,7 +284,7 @@ Many can also apply a content based fingerprint to the resulting URL of a bundle
 
 One extreme workaround is to use a [`Cache-control: no-cache`](https://tools.ietf.org/html/rfc7234#section-5.2.2.2) header to guarantee that your assets are always up to date.
 
-Another is to add a poor man's fingerprint that you update each time you update an asset, but this doesn't scale up for lots of projects.
+Another is to add a poor man's fingerprint that you update with each asset, but this doesn't scale up for lots of projects.
 
 ```html
 <!-- changing the asset name with each update -->
@@ -315,28 +317,21 @@ However, you can configure TypeScript to interpret remote imports as references 
 
 This [paths](https://www.typescriptlang.org/tsconfig#paths) configuration tells the type checker to resolve Skypack imports to local files. For example an import for `https://cdn.skypack.dev/preact` would be resolved to `node_modules/preact` and then `node_modules/@types/preact` in that order. Depending on your setup, you may also need mappings for resolving URLs with pinned versions and minification flags too.
 
-You don't have to install the types with npm either, often you can vendor straight them into your project instead. For example:
-
-```bash
-# assuming you have lib/preact.js
-curl https://cdn.skypack.com/preact/src/index.d.ts > lib/preact.d.ts
-```
-
 Like type checking, this is also an opt-in step. Another programmer without npm or TypeScript installed can still work on this code without running into environmental setup errors.
 
-This is the point that has caused me the most pain so far, but I'm getting more comfortable foregoing types for dependencies that have a minimal contact point with my code (a small handful of discrete function calls) vs libraries that I use extensively across multiple files in my codebase, where I opt to install a strictly development version of the libary (or just its types). This involves a bit of version syncing, but for small projects, that's generally not too bad.
+This point has caused me the most pain so far, but I'm getting more comfortable foregoing types for dependencies that have minimal contact with my code (a handful of function calls) vs libraries that I use extensively across multiple files in my codebase, where I opt to install a strictly development version of the libary (or just its types). This involves a bit of version syncing, but for small projects, that's generally not too bad.
 
 In an ideal future, TypeScript would take a leaf out of Deno's book and respect the [`X-TypeScript-Types` header](https://deno.land/manual/getting_started/typescript) for any remote imports, but that's not a goal for TypeScript in the short term, so you might be stuck with the current situation for a while.
 
 ## Migrating
 
-Sometimes you will hit one of the afforementioned 'deal-breakers' which leaves you with no other choice than to add a build step to your codebase. Time to rewrite everything? Not at all. The majority of your code is already written with relative module imports that all bundlers understand.
+Sometimes you will hit one of the afforementioned 'deal-breakers' which leaves you with no other choice than to go back to npm and add a build step to your project. Time to rewrite everything?
 
-You'll probably want to switch to using local dependencies, but bundlers with configurable module resolution can alias your existing CDN URLs to local ones to ease the transition.
+Not at all. The majority of your code is already written with relative module imports that all bundlers understand. You'll probably want to switch to using local dependencies, but bundlers with configurable module resolution can alias your existing CDN URLs to local ones to ease the transition.
 
 ## The Future
 
-The future of tooling for web development is far from bleak and despondent though. In fact, there are plenty of tools that represent an exciting direction of travel for larger projects with teams.
+The future of tooling for web development is far from bleak and despondent though. In fact, there are plenty of tools that represent an exciting direction of travel for projects and teams of all sizes.
 
 * [Rome][rome] promises to be a unified toolchain for the whole of the web. With so many source-to-source tools that separately parse and print code, it seems like a no-brainer to build a set of tools that can all work on the same syntax tree. Also cool: [no dependencies](https://github.com/rome/tools/blob/9ddf92ba7944b2013c4ae439242def512b32ba38/package.json#L8-L9).
 * [Snowpack][snowpack] is a module-first build tool from the team behind [Skypack][skypack]. It takes advantage of the fact that most browsers support modules now, and therefore spends no development time stitching your code together to create bundled files.
@@ -349,7 +344,7 @@ The future of tooling for web development is far from bleak and despondent thoug
 
 Someone starting out with web development can use these techniques to create a complex app before they ever think about installing Node and npm. A burnt out web developer can breathe fresh life into their next project by sidestepping tool configurations and boilerplates.
 
-If you end up making something cool, more people are likely to want to play with it and contribute if they don't have to spend 5 minutes installing tools to get it running.
+If you end up making something cool, more people are likely to play with it and contribute if they don't have to spend 5 minutes installing tools to get it running.
 
 There used to be a joke that went something like this:
 

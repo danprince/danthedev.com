@@ -1,5 +1,5 @@
 ---
-title: Web Dev (Without All the Tools)
+title: Web Dev Without Tools
 ---
 
 Most frontend web development projects rely on a complex stack of tools that turn code into code, or code into errors. In a given project, there's a good chance you'll see some combination of the following:
@@ -75,8 +75,6 @@ If you don't have Python, or you want a server that will automatically reload th
 
 ## Dependencies
 Traditionally, using other people's code has required some combination of [npm][npm] and [yarn][yarn] to download those modules (and their dependencies) from the npm registry. By default, those modules (and their dependencies) can [execute arbitrary code](https://blog.npmjs.org/post/141702881055/package-install-scripts-vulnerability) on your machine after installation, so there's a lot of trust involved when you hit install.
-
-(If you use npm at all, then you should probably run `npm config set ignore-scripts true` unless you want to feel [very silly one day](https://blog.npmjs.org/post/141702881055/package-install-scripts-vulnerability)).
 
 You can bypass npm entirely by importing your dependencies directly from a CDN instead. I like to use [Skypack][skypack] and [UNPKG][unpkg]. 
 
@@ -316,6 +314,8 @@ However, you can configure TypeScript to interpret remote imports as references 
 ```
 
 This [paths](https://www.typescriptlang.org/tsconfig#paths) configuration tells the type checker to resolve Skypack imports to local files. For example an import for `https://cdn.skypack.dev/preact` would be resolved to `node_modules/preact` and then `node_modules/@types/preact` in that order. Depending on your setup, you may also need mappings for resolving URLs with pinned versions and minification flags too.
+
+This only works when the installed types actually export modules though. You can get part way there with `esModuleInterop` but a `export * from "fjords"` won't work if `"fjords"` is a CommonJS module.
 
 Like type checking, this is also an opt-in step. Another programmer without npm or TypeScript installed can still work on this code without running into environmental setup errors.
 

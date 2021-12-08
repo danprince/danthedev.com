@@ -1,12 +1,24 @@
 let syntax = require("@11ty/eleventy-plugin-syntaxhighlight");
 let markdown = require("markdown-it");
-let markdownLinkAttrs = require("markdown-it-link-attributes");
+let linkAttrs = require("markdown-it-link-attributes");
+let anchor = require("markdown-it-anchor");
 
 module.exports = config => {
   config.addPlugin(syntax);
-  config.addPassthroughCopy("styles");
-  config.addPassthroughCopy("scripts");
-  config.addPassthroughCopy("favicon.ico");
+
+  config.addPassthroughCopy({ "public": "/" })
+
+  // These files will be copied through in-place
+  config.setTemplateFormats(["md", "css", "js"]);
+
+  config.addFilter("filterBySeries", (posts, series) => {
+    return posts.filter(post => {
+      return (
+        post.data.series === series &&
+        post.data.index !== true
+      );
+    });
+  });
 
   let md = markdown({
     html: true,
@@ -14,7 +26,20 @@ module.exports = config => {
     breaks: true,
   });
 
-  md.use(markdownLinkAttrs, {
+  md.use(anchor, {
+    permalink: anchor.permalink.headerLink({
+      class: "permalink"
+    }),
+    slugify: title => title
+      .replace(/ & /g, " and ")
+      .replace(/[']/g, "")
+      .replace(/[^\w]+/g, " ")
+      .trim()
+      .replace(/\s+/g, "-")
+      .toLowerCase(),
+  });
+
+  md.use(linkAttrs, {
     pattern: /^https?:/,
     attrs: {
       target: "_blank",

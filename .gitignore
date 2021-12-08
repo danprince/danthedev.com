@@ -1,4 +1,4 @@
 node_modules
-_site
 *.log
-.ideas.org
+.DS_Store
+_site

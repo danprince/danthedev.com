@@ -1,6 +1,5 @@
 {
-  "layout": "default.html",
+  "layout": "page.html",
   "permalink": "{{ page.fileSlug }}/index.html",
-  "tags": ["post"],
-  "styles": ["default"]
+  "tags": ["post"]
 }

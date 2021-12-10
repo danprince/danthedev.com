@@ -1,5 +1,6 @@
 {
   "private": true,
+  "url": "https://danthedev.com",
   "scripts": {
     "start": "eleventy --serve",
     "build": "eleventy"

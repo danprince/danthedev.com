@@ -9,12 +9,18 @@ styles:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Dan Prince">
     <meta name="theme-color" content="blue">
-    <meta name="description" content="{{ description | default: content | strip_html | truncate: 150 | strip }}">
+    <meta property="og:title" content="{{ title }}" />
+    <meta property="og:type" content="{{ og_type | default: 'article' }}" />
+    <meta property="og:url" content="{{ pkg.url }}{{ page.url }}" />
+    {% if description %}<meta name="description" content="{{ description }}">{% endif %}
+    {% if cover %}<meta property="og:image" content="{{ pkg.url }}{{ cover.url }}" />{% endif %}
     <link rel="icon" href="/favicon.svg">
+    <link rel="canonical" href="{{ pkg.url }}{{ page.url }}">
     <title>{{ title }}</title>
-    {% for style in styles %}
+
+    {%- for style in styles -%}
       <link rel="stylesheet" href="{{ style }}">
-    {% endfor %}
+    {%- endfor -%}
   </head>
   <body>
     {{ content }}

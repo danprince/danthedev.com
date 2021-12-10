@@ -1,0 +1,37 @@
+---
+layout: page.html
+---
+
+<header class="post-header container">
+  <a class="icon" href="/" aria-label="Home"></a>
+
+  <h1 class="title">{{ title }}</h1>
+  <div class="meta">
+    {% if page.date and index != true %}
+      <time class="date" datetime="{{ page.date | date: "%Y-%m-%d" }}">
+        {{ page.date | date: "%b %e, %Y" }}
+      </time>
+    {% endif %}
+    {% if index != true %}
+      <a class="series-title" href="{{ path }}">
+        {{ series }}
+      </a>
+    {% endif %}
+  </div>
+
+  {% if cover %}
+    <div class="cover" role="img" aria-label="{{ cover.alt || cover.title }}" title="{{ cover.title }}" style="background-image: url('{{ cover.url }}')"></div>
+  {% endif %}
+</header>
+
+<main class="container post-content">
+  {{ content }}
+</main>
+
+{% assign rest = collections.series | filterBySeries: series | reverse %}
+
+{% if series and index != true %}
+  <footer class="post-footer container">
+    <p>Read more from: <a href="{{ path }}">{{ series }}</a>.</p>
+  </footer>
+{% endif %}

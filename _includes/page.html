@@ -9,7 +9,7 @@ styles:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Dan Prince">
     <meta name="theme-color" content="blue">
-    <meta name="description" content="{{ page.description | default: content | strip_html | truncate: 150 | escape }}">
+    <meta name="description" content="{{ description | default: content | strip_html | truncate: 150 | strip }}">
     <link rel="icon" href="/favicon.svg">
     <title>{{ title }}</title>
     {% for style in styles %}
@@ -17,31 +17,7 @@ styles:
     {% endfor %}
   </head>
   <body>
-    <header class="container">
-      <a class="icon" href="/" aria-label="Home"></a>
-
-      <h1 class="title">{{ title }}</h1>
-      <div class="meta">
-        {% if page.date and index != true %}
-          <time class="date" datetime="{{ page.date | date: "%Y-%m-%d" }}">
-            {{ page.date | date: "%b %e, %Y" }}
-          </time>
-        {% endif %}
-        {% if series and index != true %}
-          <a class="series-title" href="{{ root }}">
-            {{ series }}
-          </a>
-        {% endif %}
-      </div>
-
-      {% if cover %}
-        <div class="cover" role="img" aria-label="{{ cover.alt }}" title="{{ cover.title }}" style="background-image: url('{{ cover.url }}')"></div>
-      {% endif %}
-    </header>
-
-    <main class="container">
-      {{ content }}
-    </main>
+    {{ content }}
 
     {% for script in scripts %}
       <script type="module" src="{{ script }}"></script>

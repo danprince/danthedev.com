@@ -1,6 +1,7 @@
 let syntax = require("@11ty/eleventy-plugin-syntaxhighlight");
 let markdown = require("markdown-it");
 let linkAttrs = require("markdown-it-link-attributes");
+let attrs = require("markdown-it-attrs");
 let anchor = require("markdown-it-anchor");
 
 module.exports = config => {
@@ -38,6 +39,8 @@ module.exports = config => {
       .replace(/\s+/g, "-")
       .toLowerCase(),
   });
+
+  md.use(attrs);
 
   md.use(linkAttrs, {
     pattern: /^https?:/,

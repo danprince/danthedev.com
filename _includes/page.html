@@ -13,7 +13,13 @@ styles:
     <meta property="og:type" content="{{ og_type | default: 'article' }}" />
     <meta property="og:url" content="{{ pkg.url }}{{ page.url }}" />
     {% if description %}<meta name="description" content="{{ description }}">{% endif %}
-    {% if cover %}<meta property="og:image" content="{{ pkg.url }}{{ cover.url }}" />{% endif %}
+
+    {%- if cover -%}
+    <meta property="og:image" content="{{ pkg.url }}{{ cover.url }}" />
+    {%- else -%}
+    <meta property="og:image" content="{{ pkg.url }}/favicon.svg" />
+    {%- endif -%}
+
     <link rel="icon" href="/favicon.svg">
     <link rel="canonical" href="{{ pkg.url }}{{ page.url }}">
     <title>{{ title }}</title>

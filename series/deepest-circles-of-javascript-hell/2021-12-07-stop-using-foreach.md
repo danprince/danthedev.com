@@ -110,7 +110,7 @@ async function prayForDeliverance(gods) {
 
 `prayForDeliverance` will return an promise that always resolves to an empty array.
 
-Then at _some point in the future_, the `fetch` calls start to resolve in an potentially unpredictable order, and that array starts to mutate underneath you.
+Then at _some point in the future_, the `fetch` calls start to resolve in an unpredictable order, and that array starts to mutate underneath you.
 
 You're dealing with race conditions, asynchronous mutations, and unhandled promise exceptions in this little function, all because you used `forEach`.
 

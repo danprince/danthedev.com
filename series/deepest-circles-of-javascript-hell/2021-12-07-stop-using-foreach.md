@@ -5,6 +5,8 @@ cover:
   title: Next time, I'll use a for loop...
   alt: A kraken destroys a ship.
   url: /covers/kraken-foreach.png
+description: >
+  The Deepest Circles of JavaScript hell are reserved for people who use forEach.
 ---
 
 The deepest circles of JavaScript hell are reserved for people that use [`forEach`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach).

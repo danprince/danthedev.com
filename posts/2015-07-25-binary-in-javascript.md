@@ -3,15 +3,7 @@ title: Binary in Javascript
 permalink: /2015/07/25/binary-in-javascript/index.html
 ---
 
-<style>
-code.alt {
-  color: #1b8cb5;
-}
-</style>
-
-<p class="note">
-  <b>Heads up!</b> This is an old post that contains a lot of naive speculation about how JavaScript memory allocation works.
-</p>
+_**Heads up!** This is an old post that contains a lot of naive speculation about how JavaScript memory allocation works._
 
 Over the last week or so, I've spent my spare time working on a new [roguelike][0] game, with a focus on extensive and interesting planet generation. A key characteristic of the genre is that the game world is procedurally generated and this one is no exception.
 
@@ -110,13 +102,13 @@ We need to do a small amount of work to the height and vegetation properties, bu
 
 | Field | Decimal | Binary |
 | ----- | ------: | -----: |
-| type       | <code class="alt">4</code>  | `00000100` |
-| height     | <code class="alt">48</code> | `00110000` |
-| vegetation | <code class="alt">1</code>  | `1` |
+| type       | `4`  | `00000100` |
+| height     | `48` | `00110000` |
+| vegetation | `1`  | `1` |
 
 Here is our packaged up tile data type in all of its 17 bits of glory.
 
-`00000100001100001` or just <code class="alt">2145</code>.
+`00000100001100001` or just `2145`.
 
 Now we come across another problem, how do we get those values into a number? `parseInt` with base 2? [Binary literals][5]?
 
@@ -126,7 +118,7 @@ From here on, I'm going to assume that you have a degree of familiarity with log
 
 ## Bitwise Operations
 
-So, I want to take <code class="alt">4</code> (type), <code class="alt">48</code> (height) and <code class="alt">1</code> (vegetation) and end up with <code class="alt">2145</code>. The naive implementation might look something like this:
+So, I want to take `4` (type), `48` (height) and `1` (vegetation) and end up with `2145`. The naive implementation might look something like this:
 
 ```js
 function pack(type, height, vegetation) {
@@ -221,7 +213,7 @@ assert.equal(2145, pack(4, 48, 1));
 
 Tests passing. Spot on.
 
-But how do we get values back out of this binary/number thing? Quite simply, do the opposite. For instance, let's say we want to read the height of our tile, but what we have in our tile array is <code class="alt">2145</code>.
+But how do we get values back out of this binary/number thing? Quite simply, do the opposite. For instance, let's say we want to read the height of our tile, but what we have in our tile array is `2145`.
 
 ### Shift Right (`>>`)
 
@@ -240,7 +232,7 @@ To get it out, we need to find a way to ignore whatever comes behind it. We'll n
 
 A bitmask is just a pattern of bits that can be used with bitwise operators to modify other patterns in useful ways. In this case, we'll create a bitmask to help us isolate the first 8 bits of our number.
 
-Not surprisingly, it looks like this: `000000011111111` or <code class="alt">255</code>.
+Not surprisingly, it looks like this: `000000011111111` or `255`.
 
 Combine that with a bitwise AND and you will left with all other bits zero'ed except for in the first 8 positions.
 

@@ -2,7 +2,6 @@
   --sans: 'Helvetica Neue', 'Arial Nova', Helvetica, Arial, sans-serif;
   --serif: 'Georgia', 'Times New Roman', serif;
   --mono: Consolas, Menlo, Monaco, monospace;
-  --lang-name: "";
 }
 
 body {
@@ -20,6 +19,7 @@ code {
   font-family: var(--mono);
   background-color: ghostwhite;
   padding: 0.25rem;
+  white-space: nowrap;
 }
 
 .container > pre {
@@ -36,8 +36,10 @@ pre {
 }
 
 pre code {
+  padding: 0;
   font-size: 1rem;
   line-height: 2.2rem;
+  white-space: inherit;
 }
 
 pre mark {
@@ -106,6 +108,12 @@ a.icon {
 a.permalink {
   text-decoration: none;
   color: inherit;
+}
+
+a.center {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
 }
 
 .token.comment { color: darkgrey; }

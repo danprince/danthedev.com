@@ -32,7 +32,7 @@ pre {
   border-radius: 0.25rem;
   padding: 1rem;
   background: ghostwhite;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 pre code {

@@ -110,7 +110,7 @@ async function prayForDeliverance(gods) {
 
 `forEach` quietly ignores the `async` nature of the callback, and `await` quietly ignores the `undefined` that `forEach` returns.
 
-`prayForDeliverance` will return an promise that always resolves to an empty array.
+`prayForDeliverance` will return a promise that always resolves to an empty array.
 
 Then at _some point in the future_, the `fetch` calls start to resolve in an unpredictable order, and that array starts to mutate underneath you.
 

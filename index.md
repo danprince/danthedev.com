@@ -29,9 +29,7 @@ Making things, breaking things, and trying to fix the things I've broken before 
   {%- for post in posts -%}
     {%- if post.data.series == nil -%}
       <li>
-        <a href="{{ post.url }}">
-          {{ post.data.title }}
-        </a>
+        <a href="{{ post.url }}">{{ post.data.title }}</a>
       </li>
     {%- endif -%}
   {%- endfor -%}

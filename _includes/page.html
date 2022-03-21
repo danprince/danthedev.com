@@ -34,5 +34,9 @@ styles:
     {% for script in scripts %}
       <script type="module" src="{{ script }}"></script>
     {% endfor %}
+
+    {% if bundle %}
+      {% esbuild bundle %}
+    {% endif %}
   </body>
 </html>

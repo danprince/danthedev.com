@@ -2,6 +2,7 @@
 index: true
 title: Advent of Nim
 permalink: /advent-of-nim/index.html
+date: 2021-12-01
 cover:
   url: /covers/advent/2021/day-00.jpg
   alt: Nim's Crown

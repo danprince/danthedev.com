@@ -1,5 +1,5 @@
 ---
-title: Why Does JavaScript Have A Dependency Problem?
+title: JavaScript's Dependency Problem
 cover:
   alt: Lego bricks
   url: /covers/lego-bricks.png
@@ -15,9 +15,9 @@ There are no regulatory guarantees for third-party code. When a product-cripplin
 
 When you trace it back to the wonky line of code in one of your "blazing fast" dependencies, you can get angry on GitHub, but that's about it. You didn't pay for that code, and that means the chain of responsibility stops with you.
 
-Dependency management in JavaScript has become unmanageable because developers think that they are the drivers in this analogy. They're supposed to be the mechanics.
+Dependency management in JavaScript has become unmanageable because developers started to think of themselves as the drivers in this analogy. They're supposed to be the mechanics.
 
-I don't blame them though. If you've worked in a large JavaScript project recently, you'll know that the `node_modules` folder is a wild place. The average codebase has hundreds, if not [thousands of transitive dependencies][growing-pains] and trying to audit them all is an exercise in futility.
+I don't blame them though. Anyone who's worked in a large JavaScript project knows that the `node_modules` folder is a wild place. The average codebase has hundreds, if not [thousands of transitive dependencies][growing-pains] and trying to audit them all is an exercise in futility.
 
 With nearly two million packages overall, the npm registry is already an order of magnitude larger than equivalent registries for other programming languages.
 
@@ -34,25 +34,25 @@ Change happens slowly with append-only language design. We see a handful of exte
 
 To make matters worse, both Node.js and the web have been cursed with mid-level standard libraries. Too low-level to use directly in applications, but high-level enough that the average developer can see opportunities for abstractions.
 
-This created a culture of using libraries to solve all but the simplest problems. If you want to build a user interface, you reach for something like React, not `document.createElement`. If you want to build a server, you reach for something like `express`, not `http`. Even before npm existed, working directly with the DOM was unthinkable. Everyone reached for JQuery.
+This created a culture of using libraries to solve all but the simplest problems. If you want to build a user interface, you reach for something like React, not `document.createElement`. If you want to build a server, you reach for something like Express, not `http.createServer`. Even before npm existed, working directly with the DOM was uncommon. Almost everyone reached for jQuery.
 
-When programmers learn that libraries are the best way to solve problems, then their response to solving a novel problem tends to be to create a novel library. The more programmers are using the language, the more novel problems (real and imagined) they will face, the more packages are published.
+When programmers learn that libraries are the best way to solve problems, then they solve novel problems (real and imagined) with novel libraries. More programmers, more problems. More problems, more packages.
 
 ### External Tools
-With many modern frameworks you'll notice that the majority of the dependencies are only used during development. This is because JavaScript has no central distribution, and the most common runtime (Node.js) ships with very few of the tools that programmers have come to expect when managing a complex codebase.
+The majority of the dependencies for modern frameworks are only used during development. This is largely because JavaScript has no central distribution, and the most common runtime (Node.js) ships without any tools for managing complex codebases.
 
 Instead, you learn to reach for libraries. Projects often begin with the installation of a formatter, a linter, a bundler, a type checker, a minifier, a testing framework, or some combination of the above.
 
-These tools are developed in relative isolation. The formatter knows nothing about the linter, the linter knows nothing about the type checker, and so on. These packages are wired together with plugins and configurations. This creates another explosion of packages that help those tools work together.
+These tools are developed in relative isolation. The formatter knows nothing about the linter, the linter knows nothing about the type checker, and so on. These tools need to be wired together with plugins and configuration files. This creates another explosion of supporting packages.
 
 ### Tribalism 
 As the [lingua franca of the web][lingua-franca], people from all kinds of programming backgrounds use JavaScript at some point in their careers.
 
-This creates a melting pot of ideas, opinions, and subcultures. It helps the language learn from the successes and failures of other languages. It also fragments the identity of the language, the idioms from which people learn, and the ecosystem as a whole.
+This melting pot of ideas, opinions, and subcultures helps the language learn from the successes and failures of other languages. It also fragments the identity of the language, the idioms from which people learn, and the ecosystem as a whole.
 
-Almost every popular package that solves a problem with object oriented programming, has an alternative that provides the same functionality with a pure functional flavour. For each package which embraces the dynamic aspects of the language, there's another which constrains them with static types. Every school of thought believes their  way is best, and they all rewrite existing libraries to prove it.
+Almost every popular package that solves a problem with object oriented programming, has an alternative that provides the same functionality with a pure functional flavour. For each package which embraces the dynamic aspects of the language, there's another which constrains them with static types. Every school of thought believes that their way is best, and they all rewrite existing libraries to prove it.
 
-These rivalries don't stop at the boundaries of linguistic heritage either. Some language features have proven to be controversial enough to create their own divisions. It's easy to forget how many libraries were duplicated whilst the community took a few years to decide that promises were probably better than callbacks.
+These rivalries don't stop at the boundaries of linguistic paradigms either. Some language features have proven to be controversial enough to create their own divisions. It's easy to forget how many libraries were duplicated whilst the community took a few years to decide that promises were probably better than callbacks.
 
 ### Small Modules
 Many JavaScript applications become interactive after downloading the source code. As a rule of thumb, shipping less code makes for a better user experience and that has created a whole new class of package duplication.

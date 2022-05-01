@@ -1,16 +1,14 @@
 ---
 title: Stop Using forEach!
-phrasing: People who use forEach
 cover:
   title: Next time, I'll use a for loop...
   alt: A kraken destroys a ship.
   url: /covers/kraken-foreach.png
 description: >
-  The Deepest Circles of JavaScript hell are reserved for people who use forEach.
+  The deepest circles of JavaScript hell are reserved for people who use forEach.
 ---
 
-The deepest circles of JavaScript hell are reserved for people that use [`forEach`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach).
-
+The deepest circles of JavaScript hell are reserved for people that use [`forEach`][for-each].
 
 ```js
 krakenTentacles.forEach(tentacle => tentacle.mutate()); // uh-oh!
@@ -226,6 +224,7 @@ You can fall back to a `for` loop if you need the index variable too.
 
 `forEach` was the short-term fix, but `for..of` is the long-term solution!
 
+[for-each]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach
 [array-methods]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
 [reflection]: https://en.wikipedia.org/wiki/Reflective_programming
 [break]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/break

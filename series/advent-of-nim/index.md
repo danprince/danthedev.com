@@ -11,7 +11,7 @@ Each year, I try to do [Advent of Code](https://adventofcode.com/) in a programm
 
 This year I'm using [Nim](https://nim-lang.org/).
 
-{% assign posts = collections.series | filterBySeries: series | reverse %}
+{% assign posts = collections.series | filterBySeries: series %}
 
 <ul>
   {%- for post in posts -%}

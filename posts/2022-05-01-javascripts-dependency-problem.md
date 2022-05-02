@@ -9,7 +9,7 @@ Dependency management in modern JavaScript has become comically and ironically u
 
 Isn't this the point of abstraction, after all? You don't need to understand internal combustion engines and fuel injectors to drive a car.
 
-But corporate entities manufacture those engines with legal guarantees, regulatory frameworks, and an international reputation to maintain. When an engine fails, mandatory insurance covers recovery, diagnosis, and repair.
+But corporate entities manufacture those engines with legal guarantees, regulatory frameworks, and an international reputation to maintain. When an engine fails, insurance covers recovery, diagnosis, and repair.
 
 There are no regulatory guarantees for third-party code. When a product-crippling bug appears in the middle of the night, you aren't insured, and there's no one to sue. There's no recovery team coming. 
 

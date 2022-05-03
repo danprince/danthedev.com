@@ -5,17 +5,17 @@ cover:
   url: /covers/lego-bricks.png
 ---
 
-Dependency management in modern JavaScript has become comically and ironically unmanageable. `node_modules` has become the black box that allows other programmers to solve problems for you.
+Dependency management in modern JavaScript has become comically and ironically unmanageable. `node_modules` is the black box where other programmers solve your problems.
 
-Isn't this the point of abstraction, after all? You don't need to understand internal combustion engines and fuel injectors to drive a car.
+Isn't this the point of abstraction? You don't need to understand internal combustion engines and fuel injectors to drive a car.
 
-But corporate entities manufacture those engines with legal guarantees, regulatory frameworks, and an international reputation to maintain. When an engine fails, insurance can cover recovery, diagnosis, and repair.
+But corporate entities manufacture those components with legal guarantees, regulatory frameworks, and an international reputation to maintain. When they fail, insurance can cover recovery, diagnosis, and repair.
 
 There are no regulatory guarantees for third-party code. When a product-crippling bug appears in the middle of the night, you aren't insured, and there's no one to sue. There's no recovery team coming. 
 
-When you trace it back to the wonky line of code in one of your "blazing fast" dependencies, you can get angry on GitHub, but that's about it. You didn't pay for that code, and that means the chain of responsibility stops with you.
+When you trace the bug back to a wonky line of code in one of your "blazing fast" dependencies, all you can do is get angry on GitHub. You didn't pay for the code, and that means the chain of responsibility stops with you.
 
-Dependency management in JavaScript has become unmanageable because developers started to think of themselves as the drivers in this analogy. They're supposed to be the mechanics.
+Dependency management in JavaScript has become unmanageable because developers started to think of themselves as the drivers in this analogy, instead of as the mechanics.
 
 I don't blame them though. Anyone who's worked in a large JavaScript project knows that the `node_modules` folder is a wild place. The average codebase has hundreds, if not [thousands of transitive dependencies][growing-pains] and trying to audit them all is an exercise in futility.
 
@@ -23,25 +23,25 @@ With nearly two million packages overall, the npm registry is already an order o
 
 ![](/package-stats.png)
 
-Why does JavaScript have so many packages?
+## Why does JavaScript have so many packages?
 
-The simple answer is that JavaScript is the most popular programming language, but we're not interested in simple answers today. Like any complex problem, there are factors to consider individually.
+The simple answer is to do with popularity, but we're not interested in simple answers today. Like any complex problem, there are many factors to consider.
 
 ### Standard Library
-JavaScript has a unique evolutionary path because of its significance on the web. The commitment to backwards compatibility is maintained by a committee who try to ensure that the growth of the language is indefinitely sustainable.
+JavaScript has a taken a unique evolutionary path because of its role on the web. The commitment to backwards compatibility is maintained by a committee who try to ensure that the growth of the language is indefinitely sustainable.
 
-Change happens slowly with append-only language design. We see a handful of extensions to the language specification each year. At this velocity, it becomes hard for JavaScript to ever seriously compete against languages with comprehensive standard libraries.
+We see a modest handful of extensions to the language specification each year. At this velocity, it becomes hard for JavaScript to ever seriously compete against general purpose programming languages with comprehensive standard libraries.
 
-To make matters worse, both Node.js and the web have been cursed with mid-level standard libraries. Too low-level to use directly in applications, but high-level enough that the average developer can see opportunities for abstractions.
+It doesn't help that both Node.js and the web have 'mid-level' standard libraries, either. Too low-level to use directly in applications, but high-level enough that the average developer can spot opportunities for abstractions.
 
-This created a culture of using libraries to solve all but the simplest problems. If you want to build a user interface, you reach for something like React, not `document.createElement`. If you want to build a server, you reach for something like Express, not `http.createServer`. Even before npm existed, working directly with the DOM was uncommon. Almost everyone reached for jQuery.
+These gaps created a culture of using libraries to solve all but the simplest problems. If you want to build a user interface, you reach for something like React, not `document.createElement`. If you want to build a server, you reach for something like Express, not `http.createServer`. Even before npm existed, working directly with the DOM was uncommon. Almost everyone reached for jQuery.
 
-When programmers learn that libraries are the best way to solve problems, then they solve novel problems (real and imagined) with novel libraries. More programmers, more problems. More problems, more packages.
+When you learn that libraries are the way to solve problems, then you solve novel problems (real and imagined) with novel libraries. More programmers, more problems. More problems, more packages.
 
 ### External Tools
-The majority of the dependencies for modern frameworks are only used during development. This is largely because JavaScript has no central distribution, and the most common runtime (Node.js) ships without any tools for managing complex codebases.
+A majority of the dependencies for modern frontend development are only used during development. This is largely because JavaScript has no official distribution, and the popular runtimes don't include tools for managing codebases.
 
-Instead, you learn to reach for libraries. Projects often begin with the installation of a formatter, a linter, a bundler, a type checker, a minifier, a testing framework, or some combination of the above.
+Instead, you reach for libraries. Projects often begin with the installation of a formatter, a linter, a bundler, a type checker, a minifier, a testing framework, or some combination of the above.
 
 These tools are developed in relative isolation. The formatter knows nothing about the linter, the linter knows nothing about the type checker, and so on. These tools need to be wired together with plugins and configuration files. This creates another explosion of supporting packages.
 
@@ -52,10 +52,12 @@ This melting pot of ideas, opinions, and subcultures helps the language learn fr
 
 Almost every popular package that solves a problem with object oriented programming, has an alternative that provides the same functionality with a pure functional flavour. For each package which embraces the dynamic aspects of the language, there's another which constrains them with static types. Every school of thought believes that their way is best, and they all rewrite existing libraries to prove it.
 
-These rivalries don't stop at the boundaries of linguistic paradigms either. Some language features have proven to be controversial enough to create their own divisions. It's easy to forget how many libraries were duplicated whilst the community took a few years to decide that promises were probably better than callbacks.
+These tribal rivalries also bleed into stylistic preferences for frameworks. React, Vue, Svelte, Angular, Web Components and more. These ecosystems tend to solve the same kinds of problems in parallel, each creating a unique package ecosystem.
+
+Even language features have proven to be controversial enough to create their own divisions. It's easy to forget how many libraries were duplicated whilst the community took a few years to decide that promises were probably better than callbacks.
 
 ### Small Modules
-Many JavaScript applications become interactive after downloading the source code. As a rule of thumb, shipping less code makes for a better user experience and that has created a whole new class of package duplication.
+Many JavaScript applications become interactive after downloading the source code. As a rule of thumb, shipping less code makes for a better user experience. That created another class of package duplication.
 
 JavaScript suffers from an above-average problem with technical debt. Partly because the dynamic nature of the language allows you to write code in unsustainable ways, and partly because the popularity of the language creates demand for adjacent problem solutions.
 
@@ -91,14 +93,23 @@ The darker side of this problem is known as [typosquatting][typosquatting] and i
 
 npm has [naming rules][new-rules] that prevent some common techniques for typosquatting, but while humans have fat-fingers and slow response times, we'll keep making mistakes, and bad actors will capitalise on them because it is laughably easy for them to publish packages on npm.
 
+## Why Does It Matter?
+The dilution of npm should matter to you, because understanding the code that you add to your project is important.
+
+You should know whether you just installed something that's [going to try to steal crypto from your users][copay]. You should know whether the package is actively maintained, or whether it's going to be your job to make sure that the code is still secure. 
+
+You don't need to understand low-level implementation details, but you should at least have a high level of understanding of how a package works, unless you want to be caught with your hands in your pockets when something goes wrong.
+
+With a high quality package registry, you can install packages with confidence that the code is correct, that the code is maintained, and that the code is not malicious. There's a better chance that semantic versioning is applied correctly and that breaking changes will be documented.
+
 ## Where Do We Go From Here?
-It's too late for npm to ever become a high quality package registry. [Death by a thousand cuts][lingchi] has taken its toll on the ecosystem and the idea of a fresh slate like [Deno][deno] is appealing to many.
+It's too late for npm to ever become a high quality package registry. [Death by a thousand cuts][lingchi] has taken its toll on the ecosystem and the idea of a fresh start with [Deno][deno] is appealing to many.
 
 There's still plenty that we can do to improve the current story though.
 
-We can support the [TC39 proposals][tc39] that take the best ideas from libraries and turn JavaScript into a better general purpose programming language.
+We can support the [TC39 proposals][tc39] that turn JavaScript into a better general purpose programming language.
 
-We can encourage the trend towards integrated tools. Node's move towards a [standard test runner][node-test] is a step in the right direction. The fewer tools we need to install to be productive, the better.
+We can encourage the trend towards integrated tools. Node's move towards a [standard test runner][node-test] is a step in the right direction. The [fewer tools we need to install to be productive, the better][without-tools].
 
 We can prefer lego sets to lego bricks. Use the standard library when possible. Don't use one-line packages when the equivalent method exists in `lodash`. The current generation of build tools are great at removing unused code from your bundles, and unifying around high quality packages gives the whole community a shared frame of reference.
 
@@ -106,7 +117,7 @@ We can aim to create a culture of contribution. It's easy to shame mature packag
 
 We can make a habit of picking one package with many contributors, rather than many packages with one contributor. We can make a habit of picking the package with zero dependencies.
 
-We can reduce tribalism by being open to solutions written in different programming styles, even when that means sacrificing some purity of our own projects.
+We can reduce tribalism by being open to solutions written in different programming styles, even when that means sacrificing some purity in our own projects.
 
 We can take more responsibility when deciding to publish packages. Is the problem that we're solving real or imagined? Have we shared the codebase with other developers to find out whether the solution is generally applicable? Are the appropriate tests and documentation in place? Are we committed to maintaining the codebase, or is it just a completed weekend project?
 
@@ -130,3 +141,5 @@ We don't need two million packages. We probably don't even need two thousand.
 [npm-danprince]: https://www.npmjs.com/~danprince
 [squatting]: https://docs.npmjs.com/policies/disputes#squatting
 [growing-pains]: https://blog.appsignal.com/2020/05/14/javascript-growing-pains-from-0-to-13000-dependencies.html
+[copay]: https://blog.npmjs.org/post/180565383195/details-about-the-event-stream-incident
+[without-tools]: /web-dev-without-tools/

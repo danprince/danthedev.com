@@ -18,7 +18,7 @@ Making things, breaking things, and trying to fix the things I've broken before 
       </li>
     {%- elsif post.data.index -%}
       <li>
-        <a href="{{ post.url }}">{{ post.data.series }} (series)</a>
+        <a href="{{ post.url }}">{{ post.data.series }}</a>
       </li>
     {%- endif -%}
   {%- endfor -%}

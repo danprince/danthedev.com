@@ -30,8 +30,12 @@ layout: page.html
 
 {% assign rest = collections.series | filterBySeries: series | reverse %}
 
-{% if series and index != true %}
+{% if index != true %}
   <footer class="post-footer container">
-    <p>Read more from: <a href="{{ path }}">{{ series }}</a>.</p>
+    {% if series %}
+      <p>Read more from: <a href="{{ path }}">{{ series }}</a>.</p>
+    {% endif %}
+
+    <a class="icon" href="/"></a>
   </footer>
 {% endif %}

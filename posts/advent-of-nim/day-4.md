@@ -1,5 +1,7 @@
 ---
 title: "Day 4: Giant Squid"
+date: 2021-12-4
+series: ./
 ---
 
 Nothing gets you in the mood for Christmas like unethically rigging a game of chance in your favour.
@@ -41,7 +43,7 @@ Nim's syntax is clear enough that this almost reads like pseudocode.
 
 Initially I tripped up by using `del` to remove the number from `drawNumbers`, which makes deletion an O(1) time operation by swapping the deleted index with the final index, the presumably shrinking the sequence by one in memory.
 
-```nim/2
+```nim/3
 proc drawNextNumber(game: var Game) =
   let num = game.drawNumbers[0]
   game.drawNumbers.del(0)
@@ -66,7 +68,7 @@ proc score(game: var Game, board: Board): int =
 
 The solution for part two of the puzzle involved finding the last rather than the first board, which meant that I was able to reuse most of the code. My first attempt looked something like this:
 
-```nim/6
+```nim/7
 proc part2(input: string): int =
   var game = parseGame(input)
   while game.drawNumbers.len > 0:
@@ -82,7 +84,7 @@ This didn't work, because Nim doesn't allow you to modify the value of the thing
 
 I solved this by filtering the entire list after each pass instead.
 
-```nim/9
+```nim/10
 proc part2(input: string): int =
   var game = parseGame(input)
   while game.drawNumbers.len > 0:
@@ -132,4 +134,4 @@ when isMainModule:
 
 Here's today's code!
 
-[![GitHub](/icons/github.svg) Day 4](https://github.com/danprince/advent-of-code/blob/master/2021/day-04/main.nim){.center}
+[![GitHub](/icons/github.svg) Day 4](https://github.com/danprince/advent-of-code/blob/master/2021/day-04/main.nim)

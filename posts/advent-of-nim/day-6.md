@@ -1,5 +1,7 @@
 ---
 title: "Day 6: Lanternfish"
+date: 2021-12-6
+series: ./
 ---
 
 This puzzle laid a deliberate trap, and I walked straight into it.
@@ -115,4 +117,4 @@ proc part2(input: string): int =
 
 Here's the rest of the code.
 
-[![GitHub](/icons/github.svg) Day 6](https://github.com/danprince/advent-of-code/blob/master/2021/day-06/main.nim){.center}
+[![GitHub](/icons/github.svg) Day 6](https://github.com/danprince/advent-of-code/blob/master/2021/day-06/main.nim)

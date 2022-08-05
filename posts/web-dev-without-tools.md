@@ -1,5 +1,6 @@
 ---
 title: Web Dev Without Tools
+date: 2021-01-04
 ---
 
 Most frontend web development projects rely on a complex stack of tools that turn code into code, or code into errors. In a given project, there's a good chance you'll see some combination of the following:

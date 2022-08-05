@@ -1,5 +1,6 @@
 ---
 title: JavaScript's Dependency Problem
+date: 2022-05-01
 cover:
   alt: Lego bricks
   url: /covers/lego-bricks.png

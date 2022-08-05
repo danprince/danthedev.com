@@ -1,5 +1,7 @@
 ---
 title: "Day 9: Smoke Basin"
+date: 2021-12-9
+series: ./
 ---
 
 Today's puzzle required us to find low points and basins in a heightmap like this:
@@ -153,4 +155,4 @@ It wasn't a huge change, but I think it's easier to write code that reads natura
 
 Here's all that code together:
 
-[![GitHub](/icons/github.svg) Day 9](https://github.com/danprince/advent-of-code/blob/master/2021/day-09/main.nim){.center}
+[![GitHub](/icons/github.svg) Day 9](https://github.com/danprince/advent-of-code/blob/master/2021/day-09/main.nim)

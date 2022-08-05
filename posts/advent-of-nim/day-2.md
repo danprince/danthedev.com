@@ -1,5 +1,7 @@
 ---
 title: "Day 2: Dive!"
+date: 2021-12-2
+series: ./
 cover:
   url: /covers/advent/2021/day-02.jpg
 ---
@@ -43,7 +45,7 @@ Finally, the `quote do:` statement describes the code that we want to generate w
 
 When invoked with the example instructions, you can imagine that this macro expands to the following code.
 
-```nim/4-9
+```nim/5-10
 var x, y = 0
 proc up(n: int) = y -= n
 proc down(n: int) = y += n
@@ -60,7 +62,7 @@ x * y
 After adding a similar solution for part 2, I discovered that the variables names clash between the two macros. I was expecting Nim's `genSym` to generate a unique symbol for each variable at runtime, this didn't happen, but I was able to solve by wrapping both macro bodies in blocks.
 
 
-```nim/4
+```nim/5
 macro part1(expr: static string): int =
   let code = parsestmt(expr)
 
@@ -86,4 +88,4 @@ static:
 
 It's surprisingly novel to see the puzzle output show up before the compiler hints finish.
 
-[![GitHub](/icons/github.svg) Day 2](https://github.com/danprince/advent-of-code/blob/master/2021/day-02/){.center}
+[![GitHub](/icons/github.svg) Day 2](https://github.com/danprince/advent-of-code/blob/master/2021/day-02/)

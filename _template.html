@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Dan Prince">
+    <meta name="theme-color" content="blue">
+    <meta property="og:title" content="{{ .Data.title }}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="{{ .Url }}" />
+    {{ with .Data.description }}<meta name="description" content="{{ . }}">{{ end }}
+
+    {{ with .Data.cover -}}
+      <meta property="og:image" content="{{ .url }}" />
+    {{- else }}
+      <meta property="og:image" content="/favicon.svg" />
+    {{- end }}
+
+    <link rel="icon" href="/favicon.svg">
+    {{ with .Data.title -}}
+      <title>{{ . }}</title>
+    {{- end }}
+    <link rel="stylesheet" href="/theme.css">
+
+    {{ range .Data.styles -}}
+      <link rel="stylesheet" href="{{ . }}">
+    {{- end }}
+  </head>
+  <body>
+    <header class="post-header container">
+      <a class="icon" href="/" aria-label="Home"></a>
+
+      {{ $series := false }}
+      {{ with .Data.series }}
+        {{ $series = page . }}
+      {{ end }}
+
+      {{ with .Data.title -}}
+        <h1 class="title">{{ . }}</h1>
+      {{- end }}
+
+      <div class="meta">
+        {{ if .Data.date -}}
+          <time class="date" datetime='{{ .Date.Format "2006-01-02" }}'>
+            {{ .Date.Format "Jan 2, 2006" }}
+          </time>
+        {{- end }}
+        {{ with $series -}}
+          <a class="series-title" href="{{ .Url }}">
+            {{ .Data.title }}
+          </a>
+        {{- end }}
+      </div>
+
+      {{ with .Data.cover }}
+        <div class="cover" role="img" aria-label="{{ or .alt .title }}" title="{{ .title }}" style="background-image: url('{{ .url }}')"></div>
+      {{ end }}
+    </header>
+
+    <main class="container post-content">
+      {{ .Contents }}
+
+      {{ if .Data.index -}}
+        {{ $order := (or .Data.order "desc") }}
+        <ul>
+          {{ range index | orderByDate $order -}}
+            <li>
+              <a href="{{- .Url -}}">
+                {{- .Data.title -}}
+              </a>
+            </li>
+          {{- end }}
+        </ul>
+      {{- end }}
+    </main>
+
+    {{ if not .Data.index -}}
+      <footer class="post-footer container">
+        {{ with $series -}}
+          <p>
+            Read more from <a class="series-title" href="{{ .Url }}">{{ .Data.title }}</a>
+          <p>
+        {{- end }}
+        <a class="icon" href="/"></a>
+      </footer>
+    {{- end }}
+  </body>
+</html>

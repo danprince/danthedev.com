@@ -53,19 +53,6 @@ pre, pre code {
   font-size: 1rem;
 }
 
-pre mark {
-  position: relative;
-  background: transparent;
-  font-weight: bold;
-}
-
-pre mark:before {
-  position: absolute;
-  content: " ";
-  left: -1rem;
-  box-shadow: inset 4px 0 blue;
-}
-
 details {
   border-left: solid 4px whitesmoke;
   padding-left: 2rem;
@@ -129,9 +116,21 @@ a.center {
   gap: 0.5em;
 }
 
-.token.comment { color: darkgrey; }
-.token.keyword { color: blue; }
-.token.number { color: blue; }
-.token.attr-value { color: blue; }
-.token.attr-equals { color: black; }
-.token.tag .punctuation { color: blue; }
+.chroma .c, .chroma .c1, .chroma .cm { color: darkgrey }
+.chroma .mi { color: blue }
+.chroma .k, .chroma .kd, .chroma .kr, .chroma .kc { color: blue }
+.chroma .s, .chroma .si, .chroma .s2, .chroma .sb, .chroma .se { color: blue }
+
+pre .line.hl {
+  position: relative;
+  background: transparent;
+  font-weight: bold;
+}
+
+pre .line.hl:before {
+  position: absolute;
+  content: " ";
+  left: -1rem;
+  box-shadow: inset 4px 0 blue;
+  line-height: 1.6em;
+}

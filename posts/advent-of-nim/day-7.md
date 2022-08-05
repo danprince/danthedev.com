@@ -1,5 +1,7 @@
 ---
 title: "Day 7: The Treachery of Whales"
+date: 2021-12-7
+series: ./
 ---
 
 Today's puzzle involved figuring out the fastest way to align a swarm of horizontal trajectory crab submarines. The submarines each use one unit of fuel when they move to an adjacent position.
@@ -52,4 +54,4 @@ I haven't talked about it yet, but Nim's `result` variable is `return` keyword. 
 
 There's not much on GitHub that didn't make it into the blog today, but here's the code, nonetheless!
 
-[![GitHub](/icons/github.svg) Day 7](https://github.com/danprince/advent-of-code/blob/master/2021/day-07/main.nim){.center}
+[![GitHub](/icons/github.svg) Day 7](https://github.com/danprince/advent-of-code/blob/master/2021/day-07/main.nim)

@@ -1,5 +1,7 @@
 ---
 title: "Day 11: Dumbo Octopus"
+date: 2021-12-11
+series: ./
 ---
 
 Looks like we can also cross [Cellular Automata](https://en.wikipedia.org/wiki/Cellular_automaton) off the bingo card!

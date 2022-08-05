@@ -1,8 +1,3 @@
 [build]
   publish = "_site/"
-  command = "yarn build"
-
-[[redirects]]
-  from = "/deepest-circles-of-javascript-hell/stop-using-foreach/"
-  to = "/stop-using-foreach"
-  status = 301
+  command = "go install github.com/danprince/sietch@latest && sietch"

@@ -1,6 +1,6 @@
 ---
 title: Binary in Javascript
-permalink: /2015/07/25/binary-in-javascript/index.html
+date: 2015-07-25
 ---
 
 _**Heads up!** This is an old post that contains a lot of naive speculation about how JavaScript memory allocation works._

@@ -1,5 +1,7 @@
 ---
 title: "Day 8: Seven Segment Search"
+date: 2021-12-8
+series: ./
 ---
 
 This was a great puzzle! Easily my favourite so far this year, but also the one where I was the least satisfied with my code at the end.
@@ -249,4 +251,4 @@ My original solution used `HashSet` and did a lot of extra work getting elements
 
 As always, here's the full solution:
 
-[![GitHub](/icons/github.svg) Day 8](https://github.com/danprince/advent-of-code/blob/master/2021/day-08/main.nim){.center}
+[![GitHub](/icons/github.svg) Day 8](https://github.com/danprince/advent-of-code/blob/master/2021/day-08/main.nim)

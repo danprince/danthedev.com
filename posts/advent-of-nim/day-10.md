@@ -1,5 +1,7 @@
 ---
 title: "Day 10: Syntax Scoring"
+date: 2021-12-10
+series: ./
 ---
 
 Bracket matching algorithms are on everyone's Advent of Code bingo cards, so I wasn't suprised to see one appear today.

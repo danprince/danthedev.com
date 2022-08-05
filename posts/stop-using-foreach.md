@@ -1,5 +1,6 @@
 ---
 title: Stop Using forEach!
+date: 2021-12-07
 cover:
   title: Next time, I'll use a for loop...
   alt: A kraken destroys a ship.
@@ -62,7 +63,7 @@ However... JavaScript has improved a lot since `forEach` first appeared. Most of
 ## It's not a loop!
 You can't `return` a value early.
 
-```js/3
+```js/4
 function findLoadedCannon(cannons) {
   cannons.forEach(cannon => {
     if (cannon.isLoaded()) {
@@ -74,7 +75,7 @@ function findLoadedCannon(cannons) {
 
 You can't [`break`][break] or [`continue`][continue].
 
-```js/2
+```js/3
 escapeRoutes.forEach(escapeRoute => {
   if (escapeRoute.isOpen()) {
     break; // SyntaxError
@@ -84,7 +85,7 @@ escapeRoutes.forEach(escapeRoute => {
 
 You can't use [`await`][await] or [`yield`][yield].
 
-```js/2
+```js/3
 async function prayForDeliverance(gods) {
   gods.forEach(god => {
     let answer = await prayTo(god); // SyntaxError
@@ -134,7 +135,7 @@ new Set(["spyglass", "compass", "rum"]).forEach();
 
 Or any other third party data structure that implements the [iterable protocol][iterable].
 
-```js/4
+```js/3
 import { PegLegTree } from "@pirates/trees";
 
 new PegLegTree(23, 54, 64, 12).forEach();
@@ -185,7 +186,7 @@ for (let tentacle of krakenTentacles) {
 
 You _can_ `return` from inside.
 
-```js/3
+```js/4
 function findLoadedCannon(cannons) {
   for (let cannon of cannons) {
     if (cannon.isLoaded()) {
@@ -197,7 +198,7 @@ function findLoadedCannon(cannons) {
 
 You _can_ [`break`][break] and [`continue`][continue].
 
-```js/2
+```js/3
 for (let escapeRoute of escapeRoutes) {
   if (escapeRoute.isOpen()) {
     break;
@@ -207,7 +208,7 @@ for (let escapeRoute of escapeRoutes) {
 
 You _can_ use [`await`][await] and [`yield`][yield].
 
-```js/2
+```js/3
 async function prayForDeliverance(gods) {
   for (let god of gods) {
     let answer = await prayTo(god);

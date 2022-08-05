@@ -1,0 +1,11 @@
+# Jekyll Era
+/2015/07/25/binary-in-javascript/ /binary-in-javascript.html
+/2015/09/09/lisp-in-your-language/ /lisp-in-your-language.html
+
+# Eleventy Era
+/web-dev-without-tools/ /web-dev-without-tools.html
+/stop-using-foreach/ /stop-using-foreach.html
+/javascripts-dependency-problem/ /javascripts-dependency-problem.html
+
+# Renamed posts/series
+/deepest-circles-of-javascript-hell/stop-using-foreach/ /stop-using-foreach

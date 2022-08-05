@@ -1,5 +1,7 @@
 ---
 title: "Day 12: Passage Pathing"
+date: 2021-12-12
+series: ./
 ---
 
 Today's problem was a spin on a pathfinding puzzle. We're given a set of instructions, like:
@@ -78,7 +80,7 @@ Given that we're looking for all paths (rather than the shortest path) a depth-f
 
 I ended up using an object type to represent a specific search, to make it easier to track whether a given cave had already been visited.
 
-```nim/3-5
+```nim/4-6
 type
   Node = string
   Graph = Table[Node, seq[Node]]
@@ -138,7 +140,7 @@ I couldn't think of a efficient way to encode this with a `VisitRule` without ha
 
 I ended up just tracking whether we'd visited a duplicate as part of the `Search` object.
 
-```nim/4
+```nim/5
 type
   Search = object
     node: Node
@@ -148,7 +150,7 @@ type
 
 This also required a tweak to the `add` proc.
 
-```nim/4-6
+```nim/5-7
 proc add(search: Search, node: Node): Search =
   result = search
   result.node = node
@@ -171,5 +173,5 @@ proc part2(input: string): int =
 
 Complete solution on GitHub:
 
-[![GitHub](/icons/github.svg) Day 12](https://github.com/danprince/advent-of-code/blob/master/2021/day-12/main.nim){.center}
+[![GitHub](/icons/github.svg) Day 12](https://github.com/danprince/advent-of-code/blob/master/2021/day-12/main.nim)
 

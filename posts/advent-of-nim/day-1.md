@@ -1,5 +1,7 @@
 ---
 title: "Day 1: Sonar Sweep"
+date: 2021-12-1
+series: ./
 cover:
   url: /covers/advent/2021/day-01.jpg
   alt: Scanning the seafloor from a submarine
@@ -50,4 +52,4 @@ I didn't try to do anything clever here (although I vaguely remember learning ab
 
 Feels good to be learning!
 
-[![GitHub](/icons/github.svg) Day 1](https://github.com/danprince/advent-of-code/blob/master/2021/day-01/main.nim){.center}
+[![GitHub](/icons/github.svg) Day 1](https://github.com/danprince/advent-of-code/blob/master/2021/day-01/main.nim)

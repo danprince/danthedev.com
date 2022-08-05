@@ -1,5 +1,7 @@
 ---
 title: "Day 3: Binary Diagnostic"
+date: 2021-12-3
+series: ./
 ---
 
 I saw binary strings, got excited, and immediately fell into the trap of reading up on Nim's [`bitops`][bitops] before I made a proper start on the first part of day 3.
@@ -84,7 +86,7 @@ I wasn't super happy with this duplication, but it felt like it would have been 
 
 I haven't quite made up my mind about the [`It` templates](https://nim-lang.org/docs/sequtils.html#18) from `sequtils`.
 
-```nim/1
+```nim/2
 let bit = mostCommonBit(queue, i).invert
 queue = queue.filterIt(it[i] == bit)
 if queue.len == 1:
@@ -93,7 +95,7 @@ if queue.len == 1:
 
 This `filterIt` macro is essentially just a shorthand way to write a more verbose proc passing version of `filter`.
 
-```nim/1-2
+```nim/2-3
 let bit = mostCommonBit(queue, i).invert
 queue = queue.filter(proc (it: string): bool =
   it[i] == bit)
@@ -121,6 +123,6 @@ queue = queue.filter((str) => str[i] == bit)
 
 Including this syntax in the sugar module (rather than being a part of the grammar) reinforces the idea that it's not really the preferred way to do things though. I'll keep experimenting!
 
-[![GitHub](/icons/github.svg) Day 3](https://github.com/danprince/advent-of-code/blob/master/2021/day-03/main.nim){.center}
+[![GitHub](/icons/github.svg) Day 3](https://github.com/danprince/advent-of-code/blob/master/2021/day-03/main.nim)
 
 [bitops]: https://nim-lang.org/docs/bitops.html

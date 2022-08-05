@@ -1,5 +1,7 @@
 ---
 title: "Day 5: Hydrothermal Venture"
+date: 2021-12-5
+series: ./
 ---
 
 Today's problem involved mapping lines of geothermal vents on the ocean floor.
@@ -124,7 +126,7 @@ The second part required you to also include diagonal lines as part of your mapp
 
 Adding support for diagonals to the `points` iterator was quite a natural extension.
 
-```nim/11-17
+```nim/12-18
 iterator points(line: Line): Point =
   let (p1, p2) = line
   let (x1, y1) = p1
@@ -150,7 +152,7 @@ We have a guarantee that the diagonals will always be 45 degrees, which means we
 
 Adding the diagonal case to the `points` iterator breaks part one, so I had to go back and skip diagonal lines there.
 
-```nim/0-4,11-12
+```nim/1-5,12-13
 proc isDiagonal(line: Line): bool =
   let (p1, p2) = line
   let (x1, y1) = p1
@@ -177,4 +179,4 @@ I'm starting to feel a bit more confident with Nim. I still don't always find th
 
 Here's today's code!
 
-[![GitHub](/icons/github.svg) Day 5](https://github.com/danprince/advent-of-code/blob/master/2021/day-05/main.nim){.center}
+[![GitHub](/icons/github.svg) Day 5](https://github.com/danprince/advent-of-code/blob/master/2021/day-05/main.nim)

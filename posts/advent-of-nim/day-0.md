@@ -1,5 +1,7 @@
 ---
 title: Why Nim?
+date: 2021-12-1
+series: ./
 cover:
   url: /covers/advent/2021/day-00.jpg
   alt: Nim's Crown

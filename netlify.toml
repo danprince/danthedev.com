@@ -1,3 +1,6 @@
 [build]
   publish = "_site/"
   command = "go get github.com/danprince/sietch && sietch"
+
+[build.environment]
+  GO_VERSION = "1.18"

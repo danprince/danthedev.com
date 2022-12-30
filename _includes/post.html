@@ -12,11 +12,6 @@ layout: page.html
         {{ page.date | date: "%b %e, %Y" }}
       </time>
     {% endif %}
-    {% if index != true %}
-      <a class="series-title" href="{{ path }}">
-        {{ series }}
-      </a>
-    {% endif %}
   </div>
 
   {% if cover %}
@@ -28,14 +23,8 @@ layout: page.html
   {{ content }}
 </main>
 
-{% assign rest = collections.series | filterBySeries: series | reverse %}
-
 {% if index != true %}
   <footer class="post-footer container">
-    {% if series %}
-      <p>Read more from: <a href="{{ path }}">{{ series }}</a>.</p>
-    {% endif %}
-
     <a class="icon" href="/"></a>
   </footer>
 {% endif %}

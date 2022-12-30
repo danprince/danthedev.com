@@ -1,6 +1,0 @@
-{
-  "layout": "post.html",
-  "permalink": "{{ path }}/{{ page.fileSlug }}/index.html",
-  "tags": ["post", "series"],
-  "series": true
-}

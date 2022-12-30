@@ -12,14 +12,8 @@ Making things, breaking things, and trying to fix the things I've broken before 
 
 <ul>
   {%- for post in posts -%}
-    {%- if post.data.series == nil -%}
-      <li>
-        <a href="{{ post.url }}">{{ post.data.title }}</a>
-      </li>
-    {%- elsif post.data.index -%}
-      <li>
-        <a href="{{ post.url }}">{{ post.data.series }}</a>
-      </li>
-    {%- endif -%}
+    <li>
+      <a href="{{ post.url }}">{{ post.data.title }}</a>
+    </li>
   {%- endfor -%}
 </ul>

@@ -45,15 +45,6 @@ module.exports = config => {
 
   config.addWatchTarget("**/*.ts");
 
-  config.addFilter("filterBySeries", (posts, series) => {
-    return posts.filter(post => {
-      return (
-        post.data.series === series &&
-        post.data.index !== true
-      );
-    });
-  });
-
   let md = markdown({
     html: true,
     linkify: true,

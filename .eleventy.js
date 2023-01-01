@@ -52,8 +52,10 @@ module.exports = config => {
   });
 
   md.use(anchor, {
-    permalink: anchor.permalink.headerLink({
-      class: "permalink"
+    permalink: anchor.permalink.linkInsideHeader({
+      symbol: "#",
+      class: "permalink",
+      placement: "before",
     }),
     slugify: title => title
       .replace(/ & /g, " and ")

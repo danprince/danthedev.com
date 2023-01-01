@@ -118,9 +118,19 @@ a.icon {
   content: "D";
 }
 
-a.permalink {
+.permalink {
+  float: left;
+  color: lightgray;
+  padding-right: 0.5em;
+  margin-left: -1em;
+  margin-top: 0.3em;
+  font-size: 0.8em;
   text-decoration: none;
-  color: inherit;
+  opacity: 0;
+}
+
+:hover > .permalink {
+  opacity: 1;
 }
 
 a.center {

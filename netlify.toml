@@ -5,4 +5,11 @@
 [[redirects]]
   from = "/deepest-circles-of-javascript-hell/stop-using-foreach/"
   to = "/stop-using-foreach"
-  status = 301
+
+[[redirects]]
+  from = "/2015/07/25/binary-in-javascript/"
+  to = "/binary-in-javascript"
+
+[[redirects]]
+  from = "/2015/09/09/lisp-in-your-language/"
+  to = "/lisp-in-your-language"

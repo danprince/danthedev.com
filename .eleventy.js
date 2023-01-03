@@ -1,10 +1,12 @@
 let path = require("path");
 let esbuild = require("esbuild");
 let syntax = require("@11ty/eleventy-plugin-syntaxhighlight");
+let image = require("@11ty/eleventy-img");
 let markdown = require("markdown-it");
 let linkAttrs = require("markdown-it-link-attributes");
 let attrs = require("markdown-it-attrs");
 let anchor = require("markdown-it-anchor");
+const { join } = require("path");
 
 /**
  * @param {string[]} entryPoints
@@ -33,6 +35,25 @@ async function esbuildShortcode(entryPoint) {
   return `<script src="${output}"></script>`;
 }
 
+async function imageShortcode(src, alt) {
+  // Ensure src is relative
+  src = join(__dirname, src);
+
+  const width = 700;
+
+  let metadata = await image(src, {
+    widths: [width, width * 2],
+    outputDir: join(__dirname, "_site/img"),
+  });
+
+  return image.generateHTML(metadata, {
+    alt,
+    sizes: "100%",
+    loading: "lazy",
+    decode: "async",
+  });
+}
+
 module.exports = config => {
   config.addPlugin(syntax);
 
@@ -42,6 +63,7 @@ module.exports = config => {
   config.setTemplateFormats(["md", "css"]);
 
   config.addShortcode("esbuild", esbuildShortcode);
+  config.addShortcode("image", imageShortcode);
 
   config.addWatchTarget("**/*.ts");
 

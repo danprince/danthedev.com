@@ -22,6 +22,10 @@ h2, h3, h4 {
   max-width: 100%;
 }
 
+.container img[width][height] {
+  height: auto;
+}
+
 code {
   font-size: 1.1rem;
   font-family: var(--mono);

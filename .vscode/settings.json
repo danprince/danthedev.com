@@ -1,0 +1,7 @@
+{
+  // Extension: https://github.com/mushanshitiancai/vscode-paste-image
+  "pasteImage.prefix": "/",
+  "pasteImage.path": "${projectRoot}/img/",
+  "pasteImage.basePath": "${projectRoot}",
+  "pasteImage.insertPattern": "{% image \"${imageFilePath}\" \"\" %}"
+}

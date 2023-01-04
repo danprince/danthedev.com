@@ -24,15 +24,25 @@ async function esbuildShortcode(entryPoint) {
     metafile: true,
     bundle: true,
     outdir: path.resolve("_site/assets"),
+    jsxImportSource: "preact",
   });
 
-  let output = Object.keys(result.metafile.outputs).find(key => {
-    let output = result.metafile.outputs[key];
-    return output.entryPoint === entryPoint;
+  if (result.errors.length) {
+    for (let err of result.errors) {
+      console.error(err);
+    }
+
+    throw new Error("esbuild bundle error");
+  }
+
+  let tags = Object.keys(result.metafile.outputs).map(key => {
+    let src = key.replace(/^_site/, "");
+    if (/\.js$/.test(src)) return `<script src="${src}"></script>`;
+    if (/\.css$/.test(src)) return `<link rel="stylesheet" href="${src}" />`;
+    return "";
   });
 
-  output = output.replace(/^_site/, "");
-  return `<script src="${output}"></script>`;
+  return tags.join("\n");
 }
 
 async function imageShortcode(src, alt) {

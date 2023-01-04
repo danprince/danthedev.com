@@ -4,6 +4,7 @@ let syntax = require("@11ty/eleventy-plugin-syntaxhighlight");
 let image = require("@11ty/eleventy-img");
 let markdown = require("markdown-it");
 let linkAttrs = require("markdown-it-link-attributes");
+let toc = require("markdown-it-table-of-contents");
 let attrs = require("markdown-it-attrs");
 let anchor = require("markdown-it-anchor");
 const { join } = require("path");
@@ -89,13 +90,7 @@ module.exports = config => {
       class: "permalink",
       placement: "before",
     }),
-    slugify: title => title
-      .replace(/ & /g, " and ")
-      .replace(/[']/g, "")
-      .replace(/[^\w]+/g, " ")
-      .trim()
-      .replace(/\s+/g, "-")
-      .toLowerCase(),
+    slugify,
   });
 
   md.use(attrs);
@@ -108,5 +103,20 @@ module.exports = config => {
     }
   });
 
+  md.use(toc, {
+    slugify,
+    includeLevel: [2,3]
+  });
+
   config.setLibrary("md", md);
+}
+
+function slugify(str) {
+  return str
+    .replace(/ & /g, " and ")
+    .replace(/[']/g, "")
+    .replace(/[^\w]+/g, " ")
+    .trim()
+    .replace(/\s+/g, "-")
+    .toLowerCase();
 }

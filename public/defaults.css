@@ -128,10 +128,9 @@ a.icon {
   color: lightgray;
   padding-right: 0.5em;
   margin-left: -1em;
-  margin-top: 0.3em;
-  font-size: 0.8em;
   text-decoration: none;
   opacity: 0;
+  user-select: none;
 }
 
 :hover > .permalink {

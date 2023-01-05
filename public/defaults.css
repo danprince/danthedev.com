@@ -68,6 +68,7 @@ pre mark:before {
   content: " ";
   left: -1rem;
   box-shadow: inset 4px 0 blue;
+  height: 1.6em;
 }
 
 details {

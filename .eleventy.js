@@ -55,6 +55,7 @@ async function imageShortcode(src, alt) {
   let metadata = await image(src, {
     widths: [width, width * 2],
     outputDir: join(__dirname, "_site/img"),
+    sharpOptions: { animated: true },
   });
 
   return image.generateHTML(metadata, {
@@ -65,6 +66,9 @@ async function imageShortcode(src, alt) {
   });
 }
 
+/**
+ * @param {import("@11ty/eleventy/src/UserConfig")} config
+ */
 module.exports = config => {
   config.addPlugin(syntax);
 
@@ -77,6 +81,7 @@ module.exports = config => {
   config.addShortcode("image", imageShortcode);
 
   config.addWatchTarget("**/*.ts");
+  config.addWatchTarget("**/*.tsx");
 
   let md = markdown({
     html: true,

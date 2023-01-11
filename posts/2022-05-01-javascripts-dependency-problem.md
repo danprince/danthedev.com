@@ -57,7 +57,7 @@ Some package authors despise object oriented programming, some want to express e
 There's a reason that toy shops don't sell lego bricks individually. Small modules dilute the coherence of the ecosystem as a whole.
 
 ### Inexperienced Developers
-For better or worse, new programmers often start with JavaScript. It's a deceptively simple language, and the permissive design means we can become productive relatively quickly. Throughout their learning experiences, many arrive at [false summits][false-peaks] where they mistakenly assume they have mastered the language.
+For better or worse, new programmers often start with JavaScript. It's a deceptively simple language, and the permissive design means they can become productive relatively quickly. Throughout their learning experiences, many arrive at [false summits][false-peaks] where they mistakenly assume they have mastered the language.
 
 These inexperienced but overconfident developers tend to discover that it is harder to make a meaningful contribution to an existing package than it is to create a simpler version from scratch.
 
@@ -67,7 +67,7 @@ There are hundreds of thousands of unused and unmaintained packages by developer
 
 I'm as guilty as anyone else. [My own npm profile][npm-danprince] lists some shamefully empty packages that my younger self thought would grow into popular and useful open source projects.
 
-Not everyone there has misplaced their confidence though; some just want to look better on paper, some don't realise that they're solving a solved problem, and others are so afraid of repeating themselves that they package up and publish every tiny abstraction they ever stumble upon.
+Not everyone there has misplaced their confidence though; some people want to look better on paper, some don't realise that they're solving a solved problem, and others are so afraid of repeating themselves that they package up and publish every tiny abstraction they ever stumble upon.
 
 ### Squatters
 The name of a package is a critical part of its identity. It's the part that users have to type out every time they install it. Short names are faster to type, and catchy names are easier to remember. Despite squatting being a [violation of npm's terms of use][squatting] many package names are registered prematurely and never used.

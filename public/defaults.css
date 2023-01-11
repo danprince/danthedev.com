@@ -149,3 +149,21 @@ a.center {
 .token.attr-value { color: blue; }
 .token.attr-equals { color: black; }
 .token.tag .punctuation { color: blue; }
+
+/* Posts list */
+.post-list-item {
+  display: flex;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.post-list-item time {
+  text-align: right;
+  color: gray;
+  display: inline-block;
+  flex: 1 1;
+}
+
+.post-list-item span {
+  text-decoration: underline;
+}

@@ -1,31 +1,12 @@
 ---
 title: JavaScript's Dependency Problem
-cover:
-  alt: Lego bricks
-  url: /covers/lego-bricks.png
 ---
 
-Dependency management in modern JavaScript has become comically and ironically unmanageable. `node_modules` is the black box where other programmers solve your problems.
-
-Isn't this the point of abstraction? You don't need to understand internal combustion engines and fuel injectors to drive a car.
-
-But corporate entities manufacture those components with legal guarantees, regulatory frameworks, and an international reputation to maintain. When they fail, insurance can cover recovery, diagnosis, and repair.
-
-There are no regulatory guarantees for third-party code. When a product-crippling bug appears in the middle of the night, you aren't insured, and there's no one to sue. There's no recovery team coming. 
-
-When you trace the bug back to a wonky line of code in one of your "blazing fast" dependencies, all you can do is get angry on GitHub. You didn't pay for the code, and that means the chain of responsibility stops with you.
-
-Dependency management in JavaScript has become unmanageable because developers started to think of themselves as the drivers in this analogy, instead of as the mechanics.
-
-I don't blame them though. Anyone who's worked in a large JavaScript project knows that the `node_modules` folder is a wild place. The average codebase has hundreds, if not [thousands of transitive dependencies][growing-pains] and trying to audit them all is an exercise in futility.
-
-With nearly two million packages overall, the npm registry is already an order of magnitude larger than equivalent registries for other programming languages.
+With nearly two million packages, JavaScript's de facto package registry is already an order of magnitude larger than equivalent registries for other programming languages.
 
 ![](/package-stats.png)
 
-## Why does JavaScript have so many packages?
-
-The simple answer is to do with popularity, but we're not interested in simple answers today. Like any complex problem, there are many factors to consider.
+JavaScript is probably a more popular programming language, but we're still way off the normal scale here. Why is that? And does it matter?
 
 ### Standard Library
 JavaScript has a taken a unique evolutionary path because of its role on the web. The commitment to backwards compatibility is maintained by a committee who try to ensure that the growth of the language is indefinitely sustainable.
@@ -34,14 +15,14 @@ We see a modest handful of extensions to the language specification each year. A
 
 It doesn't help that both Node.js and the web have 'mid-level' standard libraries, either. Too low-level to use directly in applications, but high-level enough that the average developer can spot opportunities for abstractions.
 
-These gaps created a culture of using libraries to solve all but the simplest problems. If you want to build a user interface, you reach for something like React, not `document.createElement`. If you want to build a server, you reach for something like Express, not `http.createServer`. Even before npm existed, working directly with the DOM was uncommon. Almost everyone reached for jQuery.
+These gaps created a culture of using libraries to solve all but the simplest problems. If we want to build user interfaces, we reach for React, not `document.createElement`. If we want to build servers, we reach for Express, not `http.createServer`. Even before npm existed, working directly with the DOM was uncommon. Everyone reached for jQuery.
 
-When you learn that libraries are the way to solve problems, then you solve novel problems (real and imagined) with novel libraries. More programmers, more problems. More problems, more packages.
+When we learn that libraries are the way to solve problems, then we solve novel problems (real and imagined) with novel libraries. More programmers, more problems. More problems, more packages.
 
 ### External Tools
 A majority of the dependencies for modern frontend development are only used during development. This is largely because JavaScript has no official distribution, and the popular runtimes don't include tools for managing codebases.
 
-Instead, you reach for libraries. Projects often begin with the installation of a formatter, a linter, a bundler, a type checker, a minifier, a testing framework, or some combination of the above.
+Instead, we reach for libraries. Projects often begin with the installation of a formatter, a linter, a bundler, a type checker, a minifier, a testing framework, or some combination of the above.
 
 These tools are developed in relative isolation. The formatter knows nothing about the linter, the linter knows nothing about the type checker, and so on. These tools need to be wired together with plugins and configuration files. This creates another explosion of supporting packages.
 
@@ -59,7 +40,7 @@ Even language features have proven to be controversial enough to create their ow
 ### Small Modules
 Many JavaScript applications become interactive after downloading the source code. As a rule of thumb, shipping less code makes for a better user experience. That created another class of package duplication.
 
-JavaScript suffers from an above-average problem with technical debt. Partly because the dynamic nature of the language allows you to write code in unsustainable ways, and partly because the popularity of the language creates demand for adjacent problem solutions.
+JavaScript suffers from an above-average problem with technical debt. Partly because the dynamic nature of the language allows us to write code in unsustainable ways, and partly because the popularity of the language creates demand for adjacent problem solutions.
 
 Maturing packages tend to lose velocity as they grow in size, and developers begin to search for alternatives that solve a vertical slice of the problem with significantly fewer lines of code.
 
@@ -69,12 +50,14 @@ For the authors, these tiny modules are easier to reason about in isolation, whi
 
 The dream is a lego brick utopia. Each package solves a single problem, and they all slot together neatly [to build a lego castle][small-modules].
 
-However, not everyone is putting lego into the bucket. The classical inheritance fans are using wooden bricks, the functional folks prefer magnets, the reactive streams crowd have marbles, and the well-meaning but misguided rookies are pushing playdough into the gaps.
+Lego works well because the bricks are standardised. Every lego set uses studs with equivalent size and spacing, allowing the blocks to fit together consistently. But we're programmers. We all have our own ideas about the tradeoffs that packages should make, and these opinions almost always bleed into the public interfaces of packages.
+
+Some package authors despise object oriented programming, some want to express everything with chained method calls, others strive for the kinds of performance you can only achieve through mutable programming, whilst others are so horrified by mutability that they work with third party data structures that need to be serialised back and forth to be used by normal code. Often these "bricks" don't fit together without some glue.
 
 There's a reason that toy shops don't sell lego bricks individually. Small modules dilute the coherence of the ecosystem as a whole.
 
 ### Inexperienced Developers
-For better or worse, new programmers often start with JavaScript. It's a deceptively simple language, and the permissive design means you can become productive relatively quickly. Throughout their learning experiences, many arrive at [false summits][false-peaks] where they mistakenly assume they have mastered the language.
+For better or worse, new programmers often start with JavaScript. It's a deceptively simple language, and the permissive design means we can become productive relatively quickly. Throughout their learning experiences, many arrive at [false summits][false-peaks] where they mistakenly assume they have mastered the language.
 
 These inexperienced but overconfident developers tend to discover that it is harder to make a meaningful contribution to an existing package than it is to create a simpler version from scratch.
 
@@ -94,26 +77,26 @@ The darker side of this problem is known as [typosquatting][typosquatting] and i
 npm has [naming rules][new-rules] that prevent some common techniques for typosquatting, but while humans have fat-fingers and slow response times, we'll keep making mistakes, and bad actors will capitalise on them because it is laughably easy for them to publish packages on npm.
 
 ## Why Does It Matter?
-The dilution of npm should matter to you, because understanding the code that you add to your project is important.
+Anyone who's worked in a large JavaScript project knows that the `node_modules` folder is a wild place. Codebases have hundreds, if not [thousands of transitive dependencies][growing-pains] and trying to understand or audit them all is an exercise in futility.
 
-You should know whether you just installed something that's [going to try to steal crypto from your users][copay]. You should know whether the package is actively maintained, or whether it's going to be your job to make sure that the code is still secure. 
+The quality dilution of npm should matter to all of us, because understanding the code that we add to our projects is important.
 
-You don't need to understand low-level implementation details, but you should at least have a high level of understanding of how a package works, unless you want to be caught with your hands in your pockets when something goes wrong.
+We should know whether we just installed something that's [going to try to steal crypto from our users][copay]. We should know whether the package is actively maintained, or whether it's going to be our job to make sure that the code is still secure. 
 
-With a high quality package registry, you can install packages with confidence that the code is correct, that the code is maintained, and that the code is not malicious. There's a better chance that semantic versioning is applied correctly and that breaking changes will be documented.
+We don't need to understand low-level implementation details, but we should at least have a high level of understanding of how a package works, unless we want to be caught with our hands in our pockets when something goes wrong.
+
+It's currently hard to install packages with confidence that the code is correct, that the code is maintained, and that the code is not malicious. There no real guarantee that semantic versioning is applied correctly and that breaking changes will be documented.
 
 ## Where Do We Go From Here?
-It's too late for npm to ever become a high quality package registry. [Death by a thousand cuts][lingchi] has taken its toll on the ecosystem and the idea of a fresh start with [Deno][deno] is appealing to many.
-
-There's still plenty that we can do to improve the current story though.
+Might might be too late for npm to ever become a high quality package registry, but there's still plenty that we can do to improve the current story.
 
 We can support the [TC39 proposals][tc39] that turn JavaScript into a better general purpose programming language.
 
 We can encourage the trend towards integrated tools. Node's move towards a [standard test runner][node-test] is a step in the right direction. The [fewer tools we need to install to be productive, the better][without-tools].
 
-We can prefer lego sets to lego bricks. Use the standard library when possible. Don't use one-line packages when the equivalent method exists in `lodash`. The current generation of build tools are great at removing unused code from your bundles, and unifying around high quality packages gives the whole community a shared frame of reference.
+We can prefer lego sets to individual lego bricks. Use the standard library when possible. Don't use one-line packages when the equivalent method exists in `lodash`. The current generation of build tools are great at removing unused code from our bundles, and unifying around coherent packages gives the whole community a shared frame of reference.
 
-We can aim to create a culture of contribution. It's easy to shame mature packages for having clunky codebases and huge bundle sizes, but it's better to join the conversation to see what is being done and how you can help. When popular packages are improved rather than abandoned, everyone wins.
+We can try to create a culture of contribution. It's easy to shame mature packages for having clunky codebases and huge bundle sizes, but it's better to join the conversation to see what is being done and how we can help. When popular packages are improved rather than abandoned, everyone wins.
 
 We can make a habit of picking one package with many contributors, rather than many packages with one contributor. We can make a habit of picking the package with zero dependencies.
 
@@ -121,9 +104,9 @@ We can reduce tribalism by being open to solutions written in different programm
 
 We can take more responsibility when deciding to publish packages. Is the problem that we're solving real or imagined? Have we shared the codebase with other developers to find out whether the solution is generally applicable? Are the appropriate tests and documentation in place? Are we committed to maintaining the codebase, or is it just a completed weekend project?
 
-If I was designing a new package registry for JavaScript, I would reserve the top level namespace for packages that were manually verified to be high quality and important. Anyone would be able to publish packages into their own scope (e.g. `@danprince/foo`), but to be published without a scope (e.g. `foo`) the package would need to reach a high integrity score (some combination of downloads, contributors, and published versions) and would need to undergo a manual quality and security review.
+If we were designing a hypothetical new package registry for JavaScript, we might choose to reserve the top level namespace for packages that were manually verified to be high quality and important. Anyone would be able to publish packages into their own scope (`@danprince/foo`), but to be published without a scope (`foo`) the package would need to reach a high integrity score—some combination of downloads, contributors, and published versions—and would need to undergo a manual quality and security review.
 
-Unscoped packages would be blessed as part of the ecosystem, a mark of quality which would help us all navigate the registry. If we can have a committee that decides on language features, I see no reason why we couldn't have a similar process for blessing packages too.
+These unscoped packages would be blessed as part of the ecosystem, a mark of quality which would help us all navigate the registry. If we can have a committee that decides on language features, then why shouldn't we aspire to have a similar process for blessing packages?
 
 We don't need two million packages. We probably don't even need two thousand.
 

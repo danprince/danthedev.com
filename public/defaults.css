@@ -160,6 +160,7 @@ a.center {
 .post-list-item time {
   text-align: right;
   color: gray;
+  white-space: nowrap;
 }
 
 .post-list-item span {

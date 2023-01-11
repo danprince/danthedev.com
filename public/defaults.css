@@ -152,16 +152,14 @@ a.center {
 
 /* Posts list */
 .post-list-item {
-  display: flex;
-  gap: 8px;
   text-decoration: none;
+  display: flex;
+  gap: 0.5em;
 }
 
 .post-list-item time {
   text-align: right;
   color: gray;
-  display: inline-block;
-  flex: 1 1;
 }
 
 .post-list-item span {

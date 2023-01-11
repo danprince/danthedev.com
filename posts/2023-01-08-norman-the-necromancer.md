@@ -3,7 +3,9 @@ title: Norman the Necromancer
 description: A post-mortem of a necromantic action game.
 ---
 
-Most years I attempt [JS13K](https://js13kgames.com/), a month-long challenge where developers build a game for the web that cannot exceed 13KB. Most engines, fonts, textures, and audio samples will immediately blow the entire budget, so almost everyone works from scratch, relying on low level browser APIs and creativity to create the digital equivalent of a board game that fits in a matchbox.
+Most years I take part in [JS13K](https://js13kgames.com/), a month-long challenge to build a game for the web that must not exceed 13KB.
+
+Most engines, fonts, textures, and audio samples will immediately blow the entire budget. Almost everyone works from scratch, relying on low level browser APIs and creativity to create the digital equivalent of a board game that fits in a matchbox.
 
 When ["DEATH"](https://medium.com/js13kgames/js13kgames-2022-has-started-73a7bd31721b) was announced this year's theme, I resurrected an idea from a note and mockup that I made a few years ago.
 
@@ -11,25 +13,23 @@ When ["DEATH"](https://medium.com/js13kgames/js13kgames-2022-has-started-73a7bd3
 >
 > {% image "/img/2023-01-03-22-48-04.png" "An early mockup of how the game might look" %}
 
-This iteration of the jam was the first time I actually submitted a game. Let's look back at what worked, what didn't, and what I learned from building ["Norman the Necromancer"](https://js13kgames.com/games/norman-the-necromancer/index.html).
+This iteration of the jam was the first time I actually finished and submitted a game. I want to look back at what worked, what didn't, and what I learned from building ["Norman the Necromancer"](https://js13kgames.com/games/norman-the-necromancer/index.html).
 
 [[toc]]
 
 ## What Worked Well?
-Norman the Necromancer is a very simple game and I was able to finish the core gameplay in two or three days. I spent the rest of the jam designing levels, music, rituals and enemies. I was happy enough to have submitted a game, so it was a lovely surprise when Norman came in [3rd place](https://js13kgames.com/#winners). Something in there worked for the folks that played it too!
+I feel a bit uncomfortable patting myself on the back and saying "well done", but there were  positive aspects of the game and the development process that will influence the way I approach building small games in the future. Hopefully some of that can be useful to you too.
 
 ### 1. Visuals
-At the risk of blowing my own trumpet, I think the game looks great. Visuals can be one of the hardest challenges with a 13KB game and many of the traditional options leave you almost no room to make the game. Luckily for me, pixel art is one of the most efficient ways to pack detail into those precious bytes, and I love making pixel art.
-
-I managed to fit 83 sprites and a 96 character font into a 160x70 sprite sheet.
+Visuals are arguably the hardest part of making a game this small. For JS13K I usually generate my graphics with code, but this year I was resolute about using pixel art and managed to fit 83 sprites and a 96 character font into a 160x70 sprite sheet.
 
 {% image "/img/2023-01-04-22-48-38.png" "" %}
 
-For anyone that's curious, [Aseprite](https://www.aseprite.org/) is the program I use, and the blue rectangles are [slices](https://www.aseprite.org/docs/slices/) that define named sprites. I export the bounds of each sprite to a [JSON file](https://github.com/danprince/norman-the-necromancer/blob/cc9ba92ffd5f5bc19e0f5a0bbb38847b2651611e/src/sprites.json) so that I can refer to those sprites by name. TypeScript's [`resolveJsonModule` option](https://www.typescriptlang.org/tsconfig#resolveJsonModule) ensures that there's a compile  error if anything goes out of sync.
+I draw with a program called [Aseprite](https://www.aseprite.org/) and the blue rectangles are [slices](https://www.aseprite.org/docs/slices/) that define named sprites. I export the bounds of each sprite to a [JSON file](https://github.com/danprince/norman-the-necromancer/blob/cc9ba92ffd5f5bc19e0f5a0bbb38847b2651611e/src/sprites.json) so that I can refer to those sprites by name. TypeScript's [`resolveJsonModule` option](https://www.typescriptlang.org/tsconfig#resolveJsonModule) ensures that there's a compile  error if anything goes out of sync.
 
 It might seem odd to include a font, but it's almost impossible to render conventional text at this resolution without anti-aliasing creating a blurry mess. You _can_ render text above the canvas with HTML and a web font, but that ruins the low resolution aesthetic. I also happen to like making fonts and text renderers!
 
-Tweens and particle effects are both classic ["juice"](https://www.youtube.com/watch?v=Fy0aCDmgnxg) techniques that hide the static nature of these sprites. Instead of using animation frames for walk cycles, entities hop with a sinusoidal tween. For almost everything else, I used particle emitters and burst them to show that something happened.
+Tweens and particle effects are both classic ["juice"](https://www.youtube.com/watch?v=Fy0aCDmgnxg) techniques that hide the static nature of these sprites. Instead of using animation frames for walk cycles, objects hop with a sinusoidal tween. For almost everything else, I used particle emitters and burst them to show that something happened.
 
 <div style="display: flex; justify-content: space-around;">
 {% image "/img/norman-particles-bones.gif" "" %}
@@ -37,23 +37,23 @@ Tweens and particle effects are both classic ["juice"](https://www.youtube.com/w
 {% image "/img/norman-particles-heal.gif" "" %}
 </div>
 
-There's a lot more to say about particle effects in this game, so let's talk about spells!
+The rest of the aesthetics are minimal, partly to stay within the budget and partly to keep the focus on the foreground as much as possible. The hallway in which the game takes place is barely visible pattern of repeating tiles, and the UI elements try not to compete for attention by staying well away from the action.
 
 ### 2. Spells
-Despite the necromancer context and narrative, this game largely ended up being a game about magic and spells. There's more about resurrection mechanics later, but the spellcasting system ended up being the one I explored the most throughout development.
+Despite the curious necromancer narrative, this game largely ended up being about magic and spells. Norman ended up as more of a spell-slinger than a reclusive scientist.
 
 {% image "/img/norman-spells.gif" "" %}
-
-[Noita](https://noitagame.com/)'s [synergistic collection of spells](https://noita.fandom.com/wiki/Spells) were a major influence on the game. There's also some unintentional visual crossover, with the low-res particle effects.
 
 The basic casting mechanics are very basic. The player chooses an angle and shoots a gravity-affected projectile at a fixed velocity. Not a huge amount of fun, but the interesting stuff happens when you use souls to perform rituals at the end of each level. Many of these rituals alter Norman's spellcasting.
 
 For example, "Drunkard" makes the spells stronger, but messes with your aim. "Weightless" negates the effects of gravity. "Bleed" adds a bleeding status to anything your spells hit. "Hunter" adds a guidance system to projectiles. And on and on. 13 of the game's 20 rituals focus on spellcasting. The goal was to have a large enough variety of rituals that every play through would feel different. That didn't quite happen, but more on that later!
 
-### 3. Objects
-Almost everything you see in the foreground of this game is a [`GameObject`](https://github.com/danprince/js13k-2022/blob/cc9ba92ffd5f5bc19e0f5a0bbb38847b2651611e/src/game.ts#L29) but you won't find `extends GameObject` anywhere in the codebase. This flat architecture has two separate sources of inspiration. The first is the codebase for [Rift Wizard](https://store.steampowered.com/app/1271280/Rift_Wizard/) (I ended up diving into the source whilst trying to get it to run on Mac) where units are defined inside factory functions. The second is the message about classes working really well for shallow but wide inheritance hierarchies, from the fantastic talk ["Is There More to Game Architecture than ECS?"](https://www.youtube.com/watch?v=JxI3Eu5DPwE).
+[Noita](https://noitagame.com/)'s [synergistic collection of spells](https://noita.fandom.com/wiki/Spells) were a major influence on the game. There's also some unintentional visual crossover, with the low resolution particle effects. I don't think there's any way to avoid this when you're using 1x1 pixel particles.
 
-Here's the code for `Villager` (the default type of enemy).
+### 3. Objects
+Almost everything you see in the foreground of this game is a [`GameObject`](https://github.com/danprince/js13k-2022/blob/cc9ba92ffd5f5bc19e0f5a0bbb38847b2651611e/src/game.ts#L29) but you won't find `extends GameObject` anywhere in the codebase. This flat architecture has two separate sources of inspiration. The first is the codebase for [Rift Wizard](https://store.steampowered.com/app/1271280/Rift_Wizard/) (I ended up diving into the source whilst trying to get it to run on MacOS one rainy weekend) where all units are defined inside factory functions. The second is the message about classes working really well for shallow but wide inheritance hierarchies, from ["Is There More to Game Architecture than ECS?"](https://www.youtube.com/watch?v=JxI3Eu5DPwE).
+
+Here's the code for a villager.
 
 ```ts
 export function Villager() {
@@ -124,7 +124,7 @@ export let Seer: Ritual = {
 };
 ```
 
-These game objects and patterns ended up being flexible enough that they never really got in the way of inspiration whilst programming. It also results in less code than a classical inheritance model, which is great for JS13K, but still suffers from ["the diamond problem"](https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem) and might struggle to scale up for games with significant behavioural complexity.
+These game objects and patterns ended up being flexible enough that they never really got in the way of inspiration whilst programming. They still suffer from ["the diamond problem"](https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem) and might struggle to scale up for games with lots of hierarchical complexity.
 
 ### 4. Behaviours
 One of the ways I kept the `GameObject` class small was to offload lots of complexity out to _systems_ (for example [rendering](https://github.com/danprince/js13k-2022/blob/cc9ba92ffd5f5bc19e0f5a0bbb38847b2651611e/src/renderer.ts#L25) and [physics](https://github.com/danprince/js13k-2022/blob/cc9ba92ffd5f5bc19e0f5a0bbb38847b2651611e/src/game.ts#L367)) and _behaviours_, which might be a less obvious abstraction.
@@ -150,7 +150,9 @@ export class Behaviour {
 
 Each object has an internal update speed to create variance between the different types of enemies, and in turn, each behaviour has a `turns` timer. When the parent object updates, `timer` goes up, and when `timer > turns` we call the `onUpdate` method. The other events are more intuitive.
 
-Here's the implementation for the invulnerable behaviour, which prevents certain enemies from taking damage in some scenarios.
+This is where things start to look a little bit more like [composition (rather than inheritance)](https://en.wikipedia.org/wiki/Composition_over_inheritance) but this isn't a novel pattern. Many game engines have stabilised on similar architectures where you add scripts, or handlers, or logic nodes to objects instead of extending them. I just don't feel like I see it in JavaScript very often, so it's worth mentioning here.
+
+As a simple example, here's the implementation for the invulnerable behaviour, which prevents certain enemies from taking damage in some scenarios.
 
 ```ts
 export class Invulnerable extends Behaviour {
@@ -195,14 +197,14 @@ export function Monk() {
 }
 ```
 
-These behaviours were great for prototyping, and many enemies came together incredibly quickly as a result. My favourite example is the [`Summon`](https://github.com/danprince/js13k-2022/blob/cc9ba92ffd5f5bc19e0f5a0bbb38847b2651611e/src/behaviours.ts#L144) behaviour which I built so that the [`Piper`](https://github.com/danprince/js13k-2022/blob/cc9ba92ffd5f5bc19e0f5a0bbb38847b2651611e/src/objects.ts#L260-L268) could _summon_ rats as he jigs through the level. This ended up becoming the core mechanic for [`Wizard`](https://github.com/danprince/js13k-2022/blob/cc9ba92ffd5f5bc19e0f5a0bbb38847b2651611e/src/objects.ts#L357) who _summons_ portals. In turn, those portals _summon_ random enemies.
+These behaviours were great for prototyping, and many enemies came together incredibly quickly as a result. My favourite example is the [`Summon`](https://github.com/danprince/js13k-2022/blob/cc9ba92ffd5f5bc19e0f5a0bbb38847b2651611e/src/behaviours.ts#L144) behaviour which I built so that the [`Piper`](https://github.com/danprince/js13k-2022/blob/cc9ba92ffd5f5bc19e0f5a0bbb38847b2651611e/src/objects.ts#L260-L268) could _summon_ rats as he comes through the level. This ended up becoming the core mechanic for [`Wizard`](https://github.com/danprince/js13k-2022/blob/cc9ba92ffd5f5bc19e0f5a0bbb38847b2651611e/src/objects.ts#L357) who _summons_ portals. In turn, those portals _summon_ random enemies.
 
 {% image "/img/norman-behaviours-wizard.gif" "" %}
 
 I had already drawn a sprite for the wizard before I decided on the behaviour, but it must have taken about 5 minutes to draw the portal sprite, define the particle effects, and add the summon behaviours to both. These kinds of feedback cycles make a huge difference for development velocity!
 
 ### 5. Music
-It's easy to overlook sound as an important part of making a game, but it makes a _huge_ difference. I debated writing about sound in the _What Didn't Work_ section, because I wasn't able to get any sound effects into the game, which was a shame. However, I'm still pleased with how the musical aspects turned out.
+It's easy to overlook sound as an important part of making a game, but it makes a _huge_ difference. I debated writing about sound in the _What Didn't Work_ section, because I was disappointed not to get any sound effects into the game. However, I'm still pleased with how the musical aspects turned out.
 
 I decided to make the music in the game build as Norman progresses through the waves of villagers. Things start with a solitary "organ" pedalling away at a single note, before its joined by a randomly generated bassline, and eventually a kick drum. I tried generating lead synth lines, hi-hats and snare layers, but they all ended up having so much procedural variance that I didn't feel comfortable keeping them.
 
@@ -211,7 +213,9 @@ I decided to make the music in the game build as Norman progresses through the w
 <em>A flavour of the music from the game</em>
 </center>
 
-Aside from being ridiculously fun to implement, procedurally generated music has a significant benefit for us developers. You don't go crazy listening to the same short melody again and again!
+Aside from being ridiculously fun to implement and a great chance to apply some music theory to programming, procedurally generated music has a significant benefit for developers. You don't go crazy listening to the same short melody again and again!
+
+I regularly found myself tapping a foot, determined not to lose a given run because I was enjoying a particular groove too much to let it stop.
 
 Here's an example of how these tracks get setup.
 
@@ -267,40 +271,40 @@ The simplest example is the big shelled knights that spend half their time insid
 
 {% image "/img/norman-royal-guard.gif" "" %}
 
-These guys used to reflect Norman's own projectiles back at him, until I inflicted bleed on myself during a playthrough and realised there was no cure.
+_These guys used to reflect Norman's own projectiles back at him, until I inflicted bleed on myself during a playthrough and realised there was no cure._
 
-Generally, I think these kinds of little games are better off being interesting and easy, than boring and hard, but I do wish I'd landed a better balance. Ideally, players could have enjoyed working their way to the end of the game across a few runs, rather than it being possible to completely steamroll the entire thing on their first try.
+Generally, I think that little games are better off being interesting and easy, than boring and hard, but I do wish I'd landed on a better balance. Ideally, players could have enjoyed working their way to the end of the game across a few runs, rather than it being possible to completely steamroll the entire thing on their first try.
 
 ### 2. Resurrection Mechanics
 For a game about necromancy, the resurrection mechanic should have been a primary focus and strategy, but instead it took a bit of a backseat to the overpowered, colourful spellcasting. There's very little guidance explaining the resurrections and it's quite possible to beat the game without using it once.
 
 When villagers meet their demise, they have a fixed chance to drop a skull onto the ground. One of Norman's talents is the power to bring each of those corpses back to defend him, as a skeletal thrall, marching against the villagers.
 
-I designed quite a few of the rituals around this ability, ultimately it just wasn't as fun as bouncing lightning off the ceiling. The closest I got to a satisfying mechanic here was the "Riders" ritual, which summons a bone chariot after each resurrection.
+I designed quite a few of the rituals around this ability, ultimately it just wasn't as fun as bouncing lightning off the ceiling. The closest I got to a satisfying mechanic here was the "Riders" ritual, which summoned a bone chariot after each resurrection.
 
 {% image "/img/norman-bone-chariot.gif" "" %}
 
-Sadly, this was also wildy overpowered, and the sprite had to be removed to make space before submission.
+Sadly, I couldn't justify the enormous sprite for a relatively small mechanic, and this ritual ended up getting replaced ["Allegiance"](https://github.com/danprince/js13k-2022/blob/cc9ba92ffd5f5bc19e0f5a0bbb38847b2651611e/src/rituals.ts#L208).
 
-In retrospect, I think that I should have tried harder to tie resurrections into the other core mechanics. Maybe resurrections should have been way to earn souls?
+In retrospect, I think that I should have worked harder to weave resurrections deeper into the other core mechanics. One idea that I'd like to have tried would be making resurrections the only way to earn souls.
 
 ### 3. UI / Controls
-Whilst functional, the user interface for this game is a bit of a mess.
+Whilst functional, the user interface for this game is a bit of a mess. I can't really blame the budget too much here either, I ended up being too complacent about the early-stage prototype user interfaces and running out of time to build proper versions.
 
-The worst problem is the shop UI. This is still the version that I built to test the functionality. The "Continue" option is an item you buy for zero souls, which causes the shop to close. That's the level of hacky we're talking here. To make matters worse, it can only be controlled with keyboard, making it inaccessible to mobile users, creating a glaring inconsistency with the controls outside the shop, which have no key bindings. By the time I was ready to create a proper UI, I'd already run out of budget for new sprites and handling mouse interactions properly.
+The worst offender is the shop UI. It's completely text based and the "Continue" option is an item you buy for zero souls, which causes the shop to close. That's the level of hacky we're talking here. To make matters worse, it can only be controlled with keyboard, making it inaccessible to mobile users, creating a glaring inconsistency with the controls outside the shop, which have no key bindings.
 
-The game is awkward to play on a trackpad, compared to a mouse, because it involves lots of simultaneous aiming and clicking, a perfect fit for keys, but I quickly scrapped the naive keyboard controls implementation because I wasn't going to have the budget available to implement the aiming in a granular way. I think this game would also work quite well with a gamepad, the joysticks are a perfect fit for aiming, and a pair of triggers would do nicely for casting/resurrecting.
+The game is awkward to play on a trackpad, compared to a mouse, because it involves lots of simultaneous aiming and clicking—a perfect fit for keyboards—but I quickly scrapped my naive keyboard controls implementation because I didn't have the budget to handle smooth angular velocity for aiming. I think this game would also work quite well with a gamepad, the joysticks are a perfect fit for aiming, and a pair of triggers would do nicely for casting/resurrecting.
 
 The rest of the game UI is pretty minimal, and it works well enough, but it doesn't feel polished to me. One notable problem is that you can't review your rituals anywhere. This relies on the player remembering what they picked, or otherwise inferring it from what's happening onscreen.
 
 For a game jam, these sins are probably forgivable, but for a version of this game that I would be happy to call _finished_, I'd probably want a menu, an integrated tutorial, and clearer indicators for souls, streaks, and the resurrection mechanic cooldown.
 
 ### 4. Narrative
-I enjoyed building a little storyline around the game as I went along. A mostly benign necromancer, cast out from his local village, and seeking refuge from the angry mob of villagers, villagers determined to put an end to his morbid curiosities. Sadly, I wasn't able to translate very much of this into the game itself in a satisfying way.
+I enjoyed building a little storyline around the game as I went along. A mostly benign necromancer, cast out from his local village, and seeking refuge from the angry mob of villagers; villagers determined to put an end to his morbid curiosities. Sadly, I wasn't able to translate very much of this into the game itself in a satisfying way.
 
 On the day of submission, I hacked together a quick dialogue system that would set the scene with a few quickly written sentences, and give a vague conclusion after the end of the final level. These dialogues look as hacky as they sound. I didn't even manage to fix the alignment on the ending dialogue, so you'll notice that it's all skewed to the left of the screen.
 
-The game has a pleasant cyclical structure where after Norman dies, he becomes skeletal remains that can be resurrected to start the next attempt. However, the implementation is incredibly jarring. How's this line of code for a hacky way to restart a game?
+The game has a novel cyclical structure where after Norman dies, he becomes skeletal remains that can be resurrected to start the next attempt. However, the implementation is incredibly jarring. How's this for a bodge?
 
 ```ts
 player.onDeath = () => window.location = window.location;
@@ -308,23 +312,23 @@ player.onDeath = () => window.location = window.location;
 
 Story is a hard thing to get right in action games. No one is going to read a wall of text, but working the narrative into the game itself is an incredibly difficult feat to pull off. I'm reminded of the genius of Supergiant's [Hades](https://store.steampowered.com/app/1145360/Hades/) which manages an immaculate blend of run-based gameplay, which also advances an interwoven character-driven storyline as you progress. I'd love to figure out a better balance for narrative in games that I create in the future.
 
-### 5. Submitting
-My motivation for developing the game dipped noticeably in September, and the morning of the submission ended up being a bit of a crunch. After thinking I had been over budget for days, I realised I'd made a [rookie error in my measuring script](https://github.com/danprince/norman-the-necromancer/commit/b3577738deed453abd17a8e9f4d515a51ff0e84e), which freed up space to smooth off some edges and try a bit more balancing.
+### 5. Submission
+My motivation for developing the game dipped noticeably in September, and the morning of the submission ended up being a bit of a crunch. After thinking I had been over budget for days, I realised I'd made a [rookie error in my measuring script](https://github.com/danprince/norman-the-necromancer/commit/b3577738deed453abd17a8e9f4d515a51ff0e84e), which freed up space to smooth off some edges and try some last minute balancing.
 
-Note to future self. You should not be making commits [like this](https://github.com/danprince/norman-the-necromancer/commit/f11214147a9f08db2050ecbedb9f28de941ba28e) in the final few minutes:
+Note to future self: you should not be making commits [like this](https://github.com/danprince/norman-the-necromancer/commit/f11214147a9f08db2050ecbedb9f28de941ba28e) in the final few minutes:
 
 > Showing 12 changed files with 111 additions and 53 deletions.
 
 I had no time to play test many of these changes, and they were done on instinct, worryingly close to the end of the jam. I didn't check the submission format ahead of time, and it hadn't even occurred to me that I'd need a screenshot and a textual description of the game. That's why the [game's page](https://js13kgames.com/entries/norman-the-necromancer) has a stretched, blurry image, and nothing but the basic controls as text. 
 
-I actually ended up submitting a broken game, because my final build tried to load the spritesheet from an absolute path (fine in development and fine on the Netlify version) but because JS13K hosts games at unique paths, there was a 404 and there was nothing to see. Thanks to Andrzej for accepting an "oh shit" resubmission after the deadline!
+I actually ended up submitting a broken game, because my final build tried to load the spritesheet from an absolute path (fine in development and fine on the Netlify version) but because JS13K hosts games at unique paths, there was a 404 and nothing to see. Thanks to Andrzej for accepting an "oh shit" resubmission after the deadline!
 
 The lesson learned here is that the final day should be saved for the submission. The screenshot is especially important to get right, because the name and thumbnail are all that reviewers have to go on when selecting a game to try from a list of hundreds.
 
 Next time I'll also try using the [bot](https://github.com/js13kGames/bot) to submit.
 
 ## What's Next?
-Well, it took me roughly three months to cobble together this post-mortem, so I wouldn't hold your breath for updates to the game, but it's been fun revisiting the codebase, and considering this is _jam code_, it's really quite approachable. Folks have [contributed bugfixes](https://github.com/danprince/norman-the-necromancer/pulls?q=is%3Apr+is%3Aclosed) and others have even forked the game to [remix their own versions](https://63832559acf33a4e8ea9c543--subtle-hotteok-e1718e.netlify.app/).
+Well, it took me roughly three months to cobble together this retrospective, so I wouldn't hold your breath for updates to the game, but it's been fun revisiting the codebase, and considering this is _jam code_, it's really quite approachable. Folks have [contributed bugfixes](https://github.com/danprince/norman-the-necromancer/pulls?q=is%3Apr+is%3Aclosed) and others have even forked the game to [remix their own versions](https://63832559acf33a4e8ea9c543--subtle-hotteok-e1718e.netlify.app/).
 
 I suspect that if I revisit the game one day, it'll be a ground up rewrite, which will undo some of the simplifications from the original to create a more balanced game, and to clean up some of the hackier patterns that appeared later into development.
 

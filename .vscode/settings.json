@@ -3,5 +3,4 @@
   "pasteImage.prefix": "/",
   "pasteImage.path": "${projectRoot}/img/",
   "pasteImage.basePath": "${projectRoot}",
-  "pasteImage.insertPattern": "{% image \"${imageFilePath}\" \"\" %}"
 }

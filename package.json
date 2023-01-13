@@ -2,7 +2,7 @@
   "private": true,
   "url": "https://danthedev.com",
   "scripts": {
-    "start": "eleventy --serve --quiet --incremental",
+    "start": "eleventy --serve --quiet",
     "build": "eleventy"
   },
   "devDependencies": {

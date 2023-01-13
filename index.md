@@ -1,5 +1,5 @@
 ---
-title: Dan Prince
+title: Posts
 layout: post.html
 index: true
 description: |

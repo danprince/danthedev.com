@@ -27,29 +27,23 @@ h2, h3, h4 {
 }
 
 code {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-family: var(--mono);
-  background-color: ghostwhite;
-  padding: 0.25rem;
+  font-weight: bold;
   white-space: nowrap;
 }
 
 .container > pre {
-  margin: 2rem -1rem;
-  width: 100%;
+  margin: 2rem 0;
 }
 
 pre {
-  margin: 2rem 0;
-  border-radius: 0.25rem;
-  padding: 1rem;
-  background: ghostwhite;
   overflow-x: auto;
 }
 
 pre code {
-  padding: 0;
   white-space: inherit;
+  font-weight: normal;
 }
 
 pre, pre code {
@@ -58,17 +52,8 @@ pre, pre code {
 }
 
 pre mark {
-  position: relative;
   background: transparent;
   font-weight: bold;
-}
-
-pre mark:before {
-  position: absolute;
-  content: " ";
-  left: -1rem;
-  box-shadow: inset 4px 0 blue;
-  height: 1.6em;
 }
 
 details {
@@ -149,6 +134,12 @@ a.center {
 .token.attr-value { color: blue; }
 .token.attr-equals { color: black; }
 .token.tag .punctuation { color: blue; }
+.token.prefix { user-select: none; }
+.token.inserted.prefix { color: seagreen; background: honeydew; }
+.token.deleted.prefix { color: crimson; background: mistyrose; }
+.token.inserted { color: seagreen; }
+.token.deleted { color: crimson; }
+.token.unchanged { opacity: 0.5; }
 
 /* Posts list */
 .post-list-item {

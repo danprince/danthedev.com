@@ -2,7 +2,7 @@
 title: Zig Iterators
 ---
 
-I came across an interesting little problem when converting some Python to Zig for a [recent project](https://github.com/danprince/zigrl). The code in question needed to wrap long strings of text to a fixed line length.
+I came across an interesting little problem while converting some Python to Zig. The code in question needed to wrap long strings of text to a fixed line length.
 
 The `wrap` function from Python's [`textwrap`](https://docs.python.org/3/library/textwrap.html) module has the following basic signature.
 
@@ -23,14 +23,14 @@ assert lines == [
 ]
 ```
 
-A direct equivalent in Zig would look something like this.
+A direct translation to Zig would look something like this.
 
 ```zig
-// []const u8 is Zig's equivalent to `str`
+// []const u8 is Zig's str
 fn wrap(text: []const u8, width: usize) [][]const u8
 ```
 
-This signature is problematic because the length of the return type (a [slice](https://ziglang.org/documentation/master/#Slices) of strings) can't be known at compile time. This means the slice's backing array can't be compiled into the stack frame.
+This signature is problematic because the compiler doesn't know the length of the return type (a [slice](https://ziglang.org/documentation/master/#Slices) of strings) at compile time. This prevents it from compiling a backing array into the function's stack frame.
 
 The simple way to sidestep this problem is to accept an allocator and declare the array on the heap instead.
 
@@ -43,7 +43,7 @@ fn wrap(text: []const u8, width: usize, allocator: std.mem.Allocator) [][]const 
 }
 ```
 
-A direct port of the Python code would use this approach, but Zig doesn't have a garbage collector, so the caller becomes responsible for providing an allocator and eventually freeing that memory.
+Zig has no garbage collector, so the caller must provide an allocator and free that memory.
 
 ```zig
 const lines = wrap(text, 40, allocator);
@@ -51,11 +51,11 @@ defer allocator.free(lines);
 // ...
 ```
 
-One of my earliest stumbling blocks in Zig was that splitting a string with `std.mem.split` returns a `SplitIterator` and not a slice of strings.
+One of my early stumbling blocks in Zig was splitting strings. `std.mem.split` returns a `SplitIterator` and not—as I imagined—a slice of strings.
 
-This pattern of returning an iterator is what allows the function to execute on the stack, with a fixed amount of memory. We can use an iterator to implement text wrapping with no memory allocations.
+This pattern of returning an iterator is what allows the function to execute on the stack, with a fixed amount of memory. We can use an iterator to the same effect to implement text wrapping with no memory allocations.
 
-The general pattern for iterators in Zig is to use a struct with a `next` function that returns an optional value. It returns `null` when the iterator has finished.
+Iterators in Zig are structs with a `next` function that returns an optional value. When `next` returns `null` the iterator has finished.
 
 ```zig
 const TextWrapIterator = struct {
@@ -118,7 +118,7 @@ test "text wrapping" {
 }
 ```
 
-Time to implement it! The first case we need to handle is stopping the iterator when there is no more text.
+Now let's make that test pass. The first case we need to handle is stopping the iterator when there is no more text.
 
 ```diff-zig
   pub fn next(self: *TextWrapIterator) ?[]const u8 {
@@ -126,9 +126,9 @@ Time to implement it! The first case we need to handle is stopping the iterator 
   }
 ```
 
-There are [multiple algorithms](https://en.wikipedia.org/wiki/Line_wrap_and_word_wrap#Algorithm) for deciding where to add line breaks, but for this program it can be as simple as just breaking at the last space in each line.
+There are [a few algorithms](https://en.wikipedia.org/wiki/Line_wrap_and_word_wrap#Algorithm) for deciding where to add line breaks, but this program only needs to break at the last space in each line.
 
-Before we look for the last space, we need to consider all of the characters eligible to be in the current line. Zig's debug and safe [release modes](https://ziglang.org/documentation/master/#Build-Mode) include bounds checks that prevent us from accessing outside bounds of an array.
+Before we look for the last space, we need to consider all characters in the current line. Zig's default [release mode](https://ziglang.org/documentation/master/#Build-Mode) will panic if we access indexes outside the bounds of an array.
 
 ```zig
 // This will cause a runtime panic if `self.width > self.text.len`
@@ -159,7 +159,7 @@ Now we can use [`std.mem.lastIndexOfScalar`](https://ziglang.org/documentation/0
   }
 ```
 
-To get the tests passing we need to remove the spaces that we break on. The exclusive slicing syntax means the space ends up at the start of the next line.
+To match the test outputs we need to remove the spaces too. The exclusive slicing syntax means the space ends up at the start of the next line.
 
 ```diff-zig
   pub fn next(self: *TextWrapIterator) ?[]const u8 {
@@ -183,11 +183,9 @@ Finally, we need to remove the line from the text inside the iterator before we 
   }
 ```
 
-This simple algorithm that doesn't account for many common considerations such as breaking on punctuation, respecting manual line breaks, soft-wrapping, or hyphenating split words, but a more complex version of `TextWrapIterator.next` could handle that stuff.
+A more complex version of TextWrapIterator.next could also perform soft wrapping, manual line breaks, hyphenated word splits, and other common requirements.
 
-Let's throw some more tests at this code to check that it handles edge cases properly.
-
-[Table driven tests](https://dave.cheney.net/2019/05/07/prefer-table-driven-tests) are a great way to reduce noise when testing these kinds of functions.
+Let's throw some more tests at this code to check that it handles edge cases. [Table driven tests](https://dave.cheney.net/2019/05/07/prefer-table-driven-tests) are a great way to reduce noise when testing these kinds of functions.
 
 ```zig
 const cases = [_]struct {
@@ -243,13 +241,13 @@ test "wrap" {
 }
 ```
 
-This will catch regressions, but unless the test cases are completely unambiguous it can be hard to tell exactly which one failed.
+This will catch regressions but failing tests only report the first mismatched line. This can make it hard to tell which case failed.
 
-A more robust approach might involve using `actual_iter` to build an `actual` string, then comparing `actual` to `case.expect`. The conventional way of doing this involves heap allocations and therefore it has no place in this post!
+Instead, we can our iterator to build a string of the same format as `case.expect`, then compare the two directly. The conventional way to concatenate strings involves heap allocations. We've avoided them so far, why not continue?
 
-When you write a string literal in a Zig program (such as the strings in our table driven tests) the length is fixed and the character data can be compiled directly into the executable's program data. We can take advantage of these known lengths to have the compiler allocate stack frame space for our `actual` strings.
+String literals in Zig programs have fixed lengths and are compiled into the [constant data segment of the executable](https://ziglang.org/documentation/master/#toc-Where-are-the-bytes). They don't live on the stack or the heap. We can use the lengths of the strings in `cases` to have the compiler allocate stack frame space for our `actual` strings.
 
-The obvious implementation doesn't work though, because array lengths must be "comptime known" and inside the loop `case.expect.len` isn't a comptime value.
+The obvious implementation doesn't work. Array lengths must be "comptime known" and inside the loop `case.expect.len` isn't a comptime value.
 
 ```diff-zig
   for (cases) |case| {
@@ -270,7 +268,7 @@ We can solve this problem with [inline loops](https://ziglang.org/documentation/
 
 Unrolling the loop allows the compiler to resolve the values inside the loop at compile time.
 
-Now we just need to stick the string back together with some newlines as it comes out of the iterator.
+Now we can patch the string back together with some newlines as it comes out of the iterator.
 
 ```zig
 inline for (cases) |case| {
@@ -291,11 +289,11 @@ inline for (cases) |case| {
 }
 ```
 
-Now we'll see the the full context when there are regressions, rather than just the first line where there was a difference. Much better!
+Now we'll see the the full context if any of the test cases fail.
 
-I hit a problem with the iterator approach as soon as I started using it in practice. The message log that I was implementing is printed from bottom to top, but the messages themselves need to be printed top to bottom. That would involve either needing to reverse the iterator which isn't possible, or knowing the number of lines before we wrap the text so that we can offset the printing.
+I hit a problem with the iterator approach when I started using it in practice. The message log that I was implementing is printed from bottom to top, but the lines of each message need to be printed top to bottom. Unlike a slice, we can't reverse an iterator. We also don't know how many lines the iterator will yield until it has finished.
 
-A simple solution to this problem is to iterate twice, using the first iterator to calculate the offset, and the second to print the text.
+A simple solution to this problem is to iterate twice. The first iterator to calculates the height. The second iterator prints the text.
 
 ```zig
 var lines_iter = wrap(message.text, panel.width);
@@ -311,7 +309,7 @@ while (lines_iter.next()) |line| {
 }
 ```
 
-There are a few opportunities for things to go out of sync which could be solved by implementing some kind of `TextWrapIterator.reset` function, but in this specific scenario we can do even better.
+There's a nontrivial chance for the calls to `wrap` to go out of sync here. We could improve this with a `TextWrapIterator.reset` function, but in this specific scenario we can do even better.
 
 We know the max width of each line, we know the length of the text, and our iterator doesn't respect manual line breaks. We can use that calculate the number of lines this text will split onto.
 
@@ -327,10 +325,6 @@ We know the max width of each line, we know the length of the text, and our iter
 
 Division between `usize` integers will round down, hence the need for a `+ 1`.
 
-The subtle problem with this function is that it will return an incorrect result if it's called after you start iterating and `self.text` starts changing. If that's a problem, then you can keep a reference to the original string in the struct and use that instead.
-
-Here's the final version with a single iteration.
-
 ```zig
 var lines_iter = wrap(message.text, panel.width);
 y -= lines_iter.height();
@@ -341,7 +335,9 @@ while (lines_iter.next()) |line| {
 }
 ```
 
-As a finishing touch we can add a safety check to prevent an infinite loop if the caller tries to wrap the string to a line width of `0`. Technically we don't need to account for negative line widths because `width` is an unsigned integer.
+There's a subtle problem with this function. If we call it after the iterator has started then it will return an incorrect value. If that's a problem, then keep a reference to the original string in the struct and use that instead.
+
+As a finishing touch we can add a safety check to `wrap`. If a caller tries to wrap text to a width of `0` then the iterator won't ever finish. We don't need to worry about negative values because `width` is already an unsigned integer.
 
 ```diff-zig
   pub fn wrap(text: []const u8, width: usize) TextWrapIterator {

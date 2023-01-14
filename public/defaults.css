@@ -39,6 +39,7 @@ code {
 
 pre {
   overflow-x: auto;
+  font-family: var(--mono);
 }
 
 pre code {

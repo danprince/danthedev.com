@@ -135,10 +135,10 @@ a.center {
 .token.attr-equals { color: black; }
 .token.tag .punctuation { color: blue; }
 .token.prefix { user-select: none; }
-.token.inserted.prefix { color: seagreen; background: honeydew; }
-.token.deleted.prefix { color: crimson; background: mistyrose; }
-.token.inserted { color: seagreen; }
-.token.deleted { color: crimson; }
+.token.inserted.prefix { color: seagreen; }
+.token.deleted.prefix { color: crimson; }
+.language-diff .token.inserted { color: seagreen; }
+.token.deleted, .token.deleted * { color: crimson !important; }
 .token.unchanged { opacity: 0.5; }
 
 /* Posts list */
@@ -156,4 +156,15 @@ a.center {
 
 .post-list-item span {
   text-decoration: underline;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: black;
+    color: white;
+  }
+
+  .permalink {
+    color: gray;
+  }
 }

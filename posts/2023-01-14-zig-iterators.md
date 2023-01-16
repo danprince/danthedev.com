@@ -2,7 +2,7 @@
 title: Zig Iterators
 ---
 
-I came across an interesting little problem while converting some Python to Zig. The code in question needed to wrap long strings of text to a fixed line length.
+I came across an interesting little problem while converting some Python to Zig. The code in question needs to wrap a string of text into lines with a fixed maximum length.
 
 The `wrap` function from Python's [`textwrap`](https://docs.python.org/3/library/textwrap.html) module has the following basic signature.
 

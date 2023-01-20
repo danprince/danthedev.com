@@ -53,6 +53,7 @@ pre, pre code {
 }
 
 pre mark {
+  color: inherit;
   background: transparent;
   font-weight: bold;
 }
@@ -110,10 +111,7 @@ a.icon {
 }
 
 .permalink {
-  float: left;
   color: lightgray;
-  padding-right: 0.5em;
-  margin-left: -1em;
   text-decoration: none;
   opacity: 0;
   user-select: none;
@@ -161,11 +159,16 @@ a.center {
 
 @media (prefers-color-scheme: dark) {
   body {
-    background: black;
+    background: #112;
     color: white;
   }
 
-  .permalink {
-    color: gray;
-  }
+  .permalink { color: royalblue; }
+  a { color: dodgerblue; }
+  :visited { color: mediumorchid; }
+  .token.comment { color: royalblue; }
+  .token.keyword { color: cornflowerblue; }
+  .token.number { color: cornflowerblue; }
+  .token.attr-value { color: cornflowerblue; }
+  .token.tag .punctuation { color: cornflowerblue; }
 }

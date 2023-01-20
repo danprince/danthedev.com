@@ -70,7 +70,7 @@ module.exports = config => {
     permalink: anchor.permalink.linkInsideHeader({
       symbol: "#",
       class: "permalink",
-      placement: "before",
+      placement: "after",
     }),
     slugify,
   });

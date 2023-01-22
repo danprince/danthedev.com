@@ -183,7 +183,7 @@ Finally, we need to remove the line from the text inside the iterator before we 
   }
 ```
 
-A more complex version of TextWrapIterator.next could also perform soft wrapping, manual line breaks, hyphenated word splits, and other common requirements.
+A more complex version of `TextWrapIterator.next` could also perform soft wrapping, manual line breaks, hyphenated word splits, and other common requirements.
 
 Let's throw some more tests at this code to check that it handles edge cases. [Table driven tests](https://dave.cheney.net/2019/05/07/prefer-table-driven-tests) are a great way to reduce noise when testing these kinds of functions.
 

@@ -5,9 +5,8 @@ layout: page.html
 <header class="post-header container">
   <a class="icon" href="/" aria-label="Home"></a>
 
-  {% if index != true %}
-    <h1 class="title">{{ title }}</h1>
-  {% endif %}
+  <h1 class="title">{{ title }}</h1>
+
   <div class="meta">
     {% if page.date and index != true %}
       <time class="date" datetime="{{ page.date | date: "%Y-%m-%d" }}">

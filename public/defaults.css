@@ -141,10 +141,9 @@ a.center {
 .token.unchanged { opacity: 0.5; }
 
 /* Posts list */
-.post-list-item {
+
+.post-list-item a {
   text-decoration: none;
-  display: flex;
-  gap: 0.5em;
 }
 
 .post-list-item time {

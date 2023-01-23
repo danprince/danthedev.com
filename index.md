@@ -11,8 +11,10 @@ description: |
 {% assign posts = collections.post | reverse %}
 
 {%- for post in posts -%}
-  <a class="post-list-item" href="{{ post.url }}" >
-    <time>{{ post.date | date: "%b %d, %y" }}</time>
-    <span>{{ post.data.title }}</span>
-  </a>
+  <div class="post-list-item">
+    <a href="{{ post.url }}" >
+      <time>{{ post.date | date: "%b %d, %y" }}</time>
+      <span>{{ post.data.title }}</span>
+    </a>
+  </div>
 {%- endfor -%}

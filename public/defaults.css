@@ -20,6 +20,8 @@ h2, h3, h4 {
 
 .container img {
   max-width: 100%;
+  display: block;
+  margin: 0 auto;
 }
 
 .container img[width][height] {
@@ -170,4 +172,8 @@ a.center {
   .token.number { color: cornflowerblue; }
   .token.attr-value { color: cornflowerblue; }
   .token.tag .punctuation { color: cornflowerblue; }
+}
+
+.pixelated {
+  image-rendering: pixelated;
 }

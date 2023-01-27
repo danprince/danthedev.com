@@ -10,7 +10,7 @@ Technology is the primary focus and namesake of this blog, but some weeks I fini
 
 Sometimes my escape is cooking. Sometimes it's rock climbing. Sometimes it's playing guitar. Sometimes it's foraging for mushrooms. It would be fun to write more about that in the future. This week, it's been juggling and pixel art.
 
-I started juggling nearly 20 years ago, and joined a juggling club in the village where I grew up. Juggling was sidelined once I discovered unicycles, and I never went much beyond a three ball cascade and some simple tricks. Can I juggle on unicycle, though? Absolutely!
+I started juggling nearly 20 years ago, and joined a juggling club in the village where I grew up. Juggling was sidelined once I discovered unicycles, and I never went much beyond a three ball cascade and some simple tricks. Can I juggle on a unicycle, though? Absolutely!
 
 For the last 10 years, I really haven't juggled much. Only really with rocks, pinecones, and mismatched pieces of fruit. In January I decided to remedy the rustiness and added three juggling balls to my rucksack for another year of life on the road.
 
@@ -50,9 +50,7 @@ In an ongoing attempt to improve at pixel art animation, I've been working my wa
 
 ![](/img/33-character-juggling.gif){.pixelated}
 
-Animating juggling is a worthwhile challenge, because there's a lot of subtle consistency that needs to captured. Balls travel quickly when thrown, gradually slowing at the top of their arc, then falling slowly at first and gaining speed until they are caught. The catching hand absorbs the impact and travels along its own arc to start another throw. Any deviation from the gravitational path will be jarring.
-
-It's a playground for the [twelve basic principles of animation](https://en.wikipedia.org/wiki/Twelve_basic_principles_of_animation). The shape of the hands change (and the shape of the balls if you're animating balls stuffed with beans). There are arcs with inertia everywhere everywhere you look.
+Animating juggling is a worthwhile challenge, because there's a lot of subtle consistency that needs to captured. Balls travel quickly when thrown, gradually slowing at the top of their arc, then falling slowly at first and gaining speed until they are caught. The catching hand absorbs the impact and travels along its own arc to start another throw. Any deviation from the gravitational path will be jarring. It's a playground for the [twelve basic principles of animation](https://en.wikipedia.org/wiki/Twelve_basic_principles_of_animation). 
 
 If you want things to look smooth, you need to use a _lot_ of frames. The animations in this post are all between 20 and 24 individual frames and they _still_ look quite janky. Drawing each frame from scratch would take forever, so I drew 1 ball and 5 hand positions, which reverse to become the other hand.
 

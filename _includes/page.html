@@ -27,6 +27,8 @@ styles:
     {%- for style in styles -%}
       <link rel="stylesheet" href="{{ style }}">
     {%- endfor -%}
+
+    {% include imports.html %}
   </head>
   <body>
     {{ content }}
@@ -34,9 +36,5 @@ styles:
     {% for script in scripts %}
       <script type="module" src="{{ script }}"></script>
     {% endfor %}
-
-    {% if bundle %}
-      {% esbuild bundle %}
-    {% endif %}
   </body>
 </html>

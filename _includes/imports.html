@@ -1,0 +1,23 @@
+{% if env.NODE_ENV == "production" %}
+  <script type="importmap">
+    {
+      "imports": {
+        "preact": "https://esm.sh/preact@10.11.3",
+        "preact/jsx-runtime": "https://esm.sh/preact@10.11.3/jsx-runtime",
+        "preact/hooks": "https://esm.sh/preact@10.11.3/hooks"
+      }
+    }
+  </script>
+{% else %}
+  <script type="importmap">
+    {
+      "imports": {
+        "preact": "https://esm.sh/preact@10.11.3?dev",
+        "preact/jsx-runtime": "https://esm.sh/preact@10.11.3/jsx-runtime?dev",
+        "preact/hooks": "https://esm.sh/preact@10.11.3/hooks?dev"
+      }
+    }
+  </script>
+{% endif %}
+
+<script type="module" src="https://esm.sh/es-module-shims@1.6.3"></script>

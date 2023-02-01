@@ -4,7 +4,7 @@ let linkAttrs = require("markdown-it-link-attributes");
 let toc = require("markdown-it-table-of-contents");
 let attrs = require("markdown-it-attrs");
 let anchor = require("markdown-it-anchor");
-let islands = require("./11ty/islands.cjs");
+let islands = require("./_11ty/islands.cjs");
 
 /**
  * @param {import("@11ty/eleventy/src/UserConfig")} config

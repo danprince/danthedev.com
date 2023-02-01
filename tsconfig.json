@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "es2018",
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+    "module": "node16",
+    "moduleResolution": "node16",
+    "esModuleInterop": true,
+    "outDir": "_site/js",
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "rootDir": "src"
+  }
+}

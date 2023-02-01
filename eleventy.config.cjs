@@ -6,20 +6,14 @@ let attrs = require("markdown-it-attrs");
 let anchor = require("markdown-it-anchor");
 let islands = require("./_11ty/islands.cjs");
 
-/**
- * @param {import("@11ty/eleventy/src/UserConfig")} config
- */
 module.exports = config => {
   config.addPlugin(syntax);
   config.addPlugin(islands);
+  config.setTemplateFormats(["md"]);
+  config.addPassthroughCopy({ "public": "/" });
 
-  config.addPassthroughCopy({ "public": "/" })
-
-  // These files will be copied through in-place
-  config.setTemplateFormats(["md", "css"]);
-
-  config.addWatchTarget("**/*.ts");
-  config.addWatchTarget("**/*.tsx");
+  config.addWatchTarget("./src");
+  config.setWatchThrottleWaitTime(300);
 
   let md = markdown({
     html: true,
@@ -54,6 +48,10 @@ module.exports = config => {
   config.setLibrary("md", md);
 }
 
+/**
+ * @param {string} str 
+ * @returns {string}
+ */
 function slugify(str) {
   return str
     .replace(/ & /g, " and ")

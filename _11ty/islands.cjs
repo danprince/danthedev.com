@@ -29,7 +29,7 @@ function createIslandShortcode(mode) {
    */
   return async (entryPoint, ...propArgs) => {
     let islandId = Math.random().toString(16).slice(2, 8);
-    let publicDir = path.resolve(__dirname, "../.cache");
+    let publicDir = path.resolve(__dirname, "../_site/");
     let entryFile = path.join(publicDir, entryPoint);
 
     let { h } = await import("preact");

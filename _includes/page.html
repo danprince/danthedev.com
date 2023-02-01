@@ -12,13 +12,11 @@ styles:
     <meta property="og:title" content="{{ title }}" />
     <meta property="og:type" content="{{ og_type | default: 'article' }}" />
     <meta property="og:url" content="{{ pkg.url }}{{ page.url }}" />
-    {% if description %}<meta name="description" content="{{ description }}">{% endif %}
-
-    {%- if cover -%}
-    <meta property="og:image" content="{{ pkg.url }}{{ cover.url }}" />
-    {%- else -%}
     <meta property="og:image" content="{{ pkg.url }}/favicon.svg" />
-    {%- endif -%}
+
+    {% if description %}
+    <meta name="description" content="{{ description }}">
+    {% endif %}
 
     <link rel="icon" href="/favicon.svg">
     <link rel="canonical" href="{{ pkg.url }}{{ page.url }}">
@@ -28,7 +26,12 @@ styles:
       <link rel="stylesheet" href="{{ style }}">
     {%- endfor -%}
 
-    {% include imports.html %}
+    {% if env.DEV -%}
+      <script type="importmap">{ {pkg.devImportMap | json }}</script>
+    {% else %}
+      <script type="importmap">{{ pkg.importMap | json }}</script>
+      <script type="module" src="https://esm.sh/es-module-shims@1.6.3"></script>
+    {%- endif %}
   </head>
   <body>
     {{ content }}

@@ -1,4 +1,5 @@
 let path = require("path");
+let crypto = require("crypto");
 
 /**
  * @param {any[]} array
@@ -19,6 +20,8 @@ function propsToObject(array) {
   return props;
 }
 
+let uid = 0;
+
 /**
  * @param {"static" | "hydrate" | "client"} mode
  */
@@ -28,7 +31,12 @@ function createIslandShortcode(mode) {
    * @param {any[]} propArgs
    */
   return async (entryPoint, ...propArgs) => {
-    let islandId = Math.random().toString(16).slice(2, 8);
+    let islandId = crypto
+      .createHash("sha1")
+      .update(`${uid++}`)
+      .digest("hex")
+      .slice(0, 6);
+
     let publicDir = path.resolve(__dirname, "../_site/");
     let entryFile = path.join(publicDir, entryPoint);
 

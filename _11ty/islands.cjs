@@ -56,21 +56,20 @@ function createIslandShortcode(mode) {
 
     let scripts = `
 <script type="module" async>
-  ${mode === "client"
-    ? `import { render, h } from "preact";`
-    : `import { hydrate as render, h } from "preact";`}
-  import component from "${entryPoint}";
-  render(
-    h(component, ${JSON.stringify(props)}),
-    document.querySelector('[data-island-id="${islandId}"]')
-  );
+  new IntersectionObserver(async ([entry], observer) => {
+    if (entry.intersectionRatio <= 0) return;
+    ${mode === "client" ? "let { h, render }" : "let { h, hydrate: render }"} = await import("preact");
+    let component = await import("${entryPoint}");
+    render(h(component.default, ${JSON.stringify(props)}), entry.target);
+    observer.disconnect();
+  }).observe(document.querySelector('[data-island-id="${islandId}"]'));
 </script>
       `.trim();
 
     if (mode === "static") {
       return html;
     } else {
-      return `<eleventy-island data-island-id="${islandId}">${html}</eleventy-island>
+      return `<preact-island data-island-id="${islandId}">${html}</preact-island>
 ${scripts}`;
     }
   };

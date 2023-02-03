@@ -27,7 +27,7 @@ styles:
     {%- endfor -%}
 
     {% if env.DEV -%}
-      <script type="importmap">{ {pkg.devImportMap | json }}</script>
+      <script type="importmap">{{ pkg.devImportMap | json }}</script>
     {% else %}
       <script type="importmap">{{ pkg.importMap | json }}</script>
       <script type="module" src="https://esm.sh/es-module-shims@1.6.3"></script>

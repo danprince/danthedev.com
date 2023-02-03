@@ -50,13 +50,6 @@ function createIslandShortcode(mode) {
     // this module.
     let mod = await import(`${entryFile}?v=${Date.now()}`);
 
-    if (mod.getStaticProps) {
-      let dirname = path.join(__dirname, "../src/");
-      let context = { dirname };
-      let staticProps = await mod.getStaticProps(context);
-      Object.assign(props, staticProps);
-    }
-
     if (mode === "static" || mode === "hydrate") {
       html = renderToString(h(mod.default, props));
     }

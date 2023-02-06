@@ -2,6 +2,7 @@ let path = require("path");
 let esbuild = require("esbuild");
 let syntax = require("@11ty/eleventy-plugin-syntaxhighlight");
 let markdown = require("markdown-it");
+let footnotes = require("markdown-it-footnote");
 let linkAttrs = require("markdown-it-link-attributes");
 let toc = require("markdown-it-table-of-contents");
 let attrs = require("markdown-it-attrs");
@@ -76,6 +77,7 @@ module.exports = config => {
   });
 
   md.use(attrs);
+  md.use(footnotes);
 
   md.use(linkAttrs, {
     pattern: /^https?:/,

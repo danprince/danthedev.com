@@ -65,6 +65,11 @@ details {
   padding-left: 2rem;
 }
 
+hr {
+  border: 0;
+  border-top: solid 1px whitesmoke;
+}
+
 .cover {
   height: 300px;
   margin-top: 1rem;
@@ -167,6 +172,7 @@ a.center {
   .permalink { color: royalblue; }
   a { color: dodgerblue; }
   :visited { color: mediumorchid; }
+  hr { border-color: royalblue; }
   .token.comment { color: royalblue; }
   .token.keyword { color: cornflowerblue; }
   .token.number { color: cornflowerblue; }

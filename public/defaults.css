@@ -65,6 +65,14 @@ details {
   padding-left: 2rem;
 }
 
+kbd {
+  border: solid 1px lightgray;
+  font: 1rem var(--mono);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
 hr {
   border: 0;
   border-top: solid 1px whitesmoke;
@@ -172,6 +180,7 @@ a.center {
   .permalink { color: royalblue; }
   a { color: dodgerblue; }
   :visited { color: mediumorchid; }
+  kbd { border-color: royalblue; }
   hr { border-color: royalblue; }
   .token.comment { color: royalblue; }
   .token.keyword { color: cornflowerblue; }

@@ -243,7 +243,9 @@ test "wrap" {
 
 This will catch regressions but failing tests only report the first mismatched line. This can make it hard to tell which case failed.
 
-Instead, we can our iterator to build a string of the same format as `case.expect`, then compare the two directly. The conventional way to concatenate strings involves heap allocations. We've avoided them so far, why not continue?
+Instead, we can use our iterator to build a string of the same format as `case.expect`, then compare the two directly.
+
+The conventional way to concatenate strings involves heap allocations. We've avoided them so far, why not continue?
 
 String literals in Zig programs have fixed lengths and are compiled into the [constant data segment of the executable](https://ziglang.org/documentation/master/#toc-Where-are-the-bytes). They don't live on the stack or the heap. We can use the lengths of the strings in `cases` to have the compiler allocate stack frame space for our `actual` strings.
 

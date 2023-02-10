@@ -155,15 +155,10 @@ function islandsPlugin(eleventyConfig) {
       return `
 <div data-island-id="${id}">${html}</div>
 <script async type="module">
+  import { h, hydrate } from "preact";
+  import component from "${src}";
   let element = document.querySelector(\`[data-island-id="${id}"]\`);
-  new IntersectionObserver(async ([entry], observer) => {
-    if (entry.intersectionRatio <= 0) return;
-    let { h, hydrate } = await import("preact");
-    let component = await import("${src}");
-    hydrate(h(component.default, ${JSON.stringify(props)}), entry.target);
-    element.setAttribute("data-ready", "");
-    observer.disconnect();
-  }).observe(element);
+  hydrate(h(component, ${JSON.stringify(props)}), element);
 </script>
       `.trim();
     }

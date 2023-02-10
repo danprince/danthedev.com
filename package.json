@@ -3,7 +3,7 @@
   "url": "https://danthedev.com",
   "scripts": {
     "start": "eleventy --serve --quiet",
-    "build": "eleventy"
+    "build": "tsc && eleventy"
   },
   "devDependencies": {
     "@11ty/eleventy": "^1.0.2",

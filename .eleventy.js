@@ -20,10 +20,7 @@ module.exports = eleventyConfig => {
   eleventyConfig.addPlugin(syntax);
   eleventyConfig.addPlugin(markdownPlugin);
   eleventyConfig.addPlugin(islandsPlugin);
-  eleventyConfig.addPassthroughCopy({
-    "public": "/",
-    "islands": "/islands"
-  });
+  eleventyConfig.addPassthroughCopy({ "public": "/" });
 };
 
 /**
@@ -96,6 +93,7 @@ function islandsPlugin(eleventyConfig) {
   eleventyConfig.addAsyncShortcode("island", createIslandShortcode("hydrate"));
   eleventyConfig.addAsyncShortcode("static-island", createIslandShortcode("static"));
   eleventyConfig.addAsyncShortcode("client-island", createIslandShortcode("client"));
+  eleventyConfig.addPassthroughCopy("islands");
 
   /**
    * Liquid templates don't support named arguments which means we have to

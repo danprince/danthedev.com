@@ -1,3 +1,6 @@
+let fs = require("fs/promises");
+let path = require("path");
+let crypto = require("crypto");
 let syntax = require("@11ty/eleventy-plugin-syntaxhighlight");
 let markdown = require("markdown-it");
 let footnotes = require("markdown-it-footnote");
@@ -16,7 +19,11 @@ let anchor = require("markdown-it-anchor");
 module.exports = eleventyConfig => {
   eleventyConfig.addPlugin(syntax);
   eleventyConfig.addPlugin(markdownPlugin);
-  eleventyConfig.addPassthroughCopy({ "public": "/" })
+  eleventyConfig.addPlugin(islandsPlugin);
+  eleventyConfig.addPassthroughCopy({
+    "public": "/",
+    "islands": "/islands"
+  });
 };
 
 /**
@@ -65,4 +72,102 @@ function slugify(str) {
     .trim()
     .replace(/\s+/g, "-")
     .toLowerCase();
+}
+
+/**
+ * This plugin adds shortcodes for rendering islands of interactive content
+ * inside a static page using Preact.
+ *
+ * The `island` shortcode renders the component at build time, then hydrates it
+ * at runtime when the island becomes visible.
+ *
+ * The `static-island` shortcode renders the component at build time. No
+ * JavaScript will be loaded at runtime.
+ *
+ * The `client-island` shortcode skips the build time rendering and only
+ * renders the component at runtime.
+ *
+ * @param {EleventyConfig} eleventyConfig
+ */
+function islandsPlugin(eleventyConfig) {
+  let counters = {};
+
+  eleventyConfig.on("eleventy.after", () => counters = {});
+  eleventyConfig.addAsyncShortcode("island", createIslandShortcode("hydrate"));
+  eleventyConfig.addAsyncShortcode("static-island", createIslandShortcode("static"));
+  eleventyConfig.addAsyncShortcode("client-island", createIslandShortcode("client"));
+
+  /**
+   * Liquid templates don't support named arguments which means we have to
+   * build our props from a list of names and values.
+   * @param {any[]} args
+   * @returns {Record<string, any>}
+   */
+  function argsToProps(args) {
+    let props = {};
+    for (let i = 0; i < args.length; i += 2) {
+      props[args[i]] = args[i + 1];
+    }
+    return props;
+  }
+
+  /**
+   * @param {"hydrate" | "static" | "client"} mode
+   */
+  function createIslandShortcode(mode) {
+    return async function(src, ...args) {
+      let inputPath = `${this.inputPath}:${src}`;
+      let props = argsToProps(args);
+      let html = "";
+
+      // It's important that we use the version of the file inside public rather
+      // than the one inside _site, because there's no guarantee that it will
+      // have been copied over before this shortcode runs.
+      let file = path.join(__dirname, src);
+
+      if (mode !== "client") {
+        // ESM has no `require.cache` that we can use to invalidate an existing
+        // file, so instead we'll import it under a new alias if the file has
+        // changed.
+        let stat = await fs.stat(file);
+        let mod = await import(`${file}?v=${stat.mtimeMs}`);
+
+        // Need to use ESM for these preact imports so that this module gets the
+        // same instance of preact as the component we're rendering (a commonjs
+        // version gets us a different one).
+        let { h } = await import("preact");
+        let { renderToString } = await import("preact-render-to-string");
+        html = renderToString(h(mod.default, props));
+      }
+
+      if (mode === "static") {
+        return html;
+      }
+
+      // Give each island a stable id so that they don't change in the posts that
+      // weren't updated.
+      counters[inputPath] ||= 0;
+      counters[inputPath] += 1;
+      let id = crypto
+        .createHash("sha1")
+        .update(`${inputPath}:${counters[inputPath]}`)
+        .digest("hex")
+        .slice(0, 6);
+
+      return `
+<div data-island-id="${id}">${html}</div>
+<script async type="module">
+  let element = document.querySelector(\`[data-island-id="${id}"]\`);
+  new IntersectionObserver(async ([entry], observer) => {
+    if (entry.intersectionRatio <= 0) return;
+    let { h, hydrate } = await import("preact");
+    let component = await import("${src}");
+    hydrate(h(component.default, ${JSON.stringify(props)}), entry.target);
+    element.setAttribute("data-ready", "");
+    observer.disconnect();
+  }).observe(element);
+</script>
+      `.trim();
+    }
+  }
 }

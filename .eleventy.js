@@ -7,16 +7,22 @@ let attrs = require("markdown-it-attrs");
 let anchor = require("markdown-it-anchor");
 
 /**
- * @param {import("@11ty/eleventy/src/UserConfig")} config
+ * @typedef {import("@11ty/eleventy/src/UserConfig")} EleventyConfig
  */
-module.exports = config => {
-  config.addPlugin(syntax);
 
-  config.addPassthroughCopy({ "public": "/" })
+/**
+ * @param {EleventyConfig} eleventyConfig
+ */
+module.exports = eleventyConfig => {
+  eleventyConfig.addPlugin(syntax);
+  eleventyConfig.addPlugin(markdownPlugin);
+  eleventyConfig.addPassthroughCopy({ "public": "/" })
+};
 
-  // These files will be copied through in-place
-  config.setTemplateFormats(["md", "css"]);
-
+/**
+ * @param {EleventyConfig} eleventyConfig
+ */
+function markdownPlugin(eleventyConfig) {
   let md = markdown({
     html: true,
     linkify: true,
@@ -48,7 +54,7 @@ module.exports = config => {
     includeLevel: [2,3]
   });
 
-  config.setLibrary("md", md);
+  eleventyConfig.setLibrary("md", md);
 }
 
 function slugify(str) {

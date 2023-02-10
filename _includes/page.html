@@ -13,6 +13,7 @@ styles:
     <meta property="og:type" content="{{ og_type | default: 'article' }}" />
     <meta property="og:url" content="{{ pkg.url }}{{ page.url }}" />
     {% if description %}<meta name="description" content="{{ description }}">{% endif %}
+    <script type="importmap">{{ pkg.importMap | json }}</script>
 
     {%- if cover -%}
     <meta property="og:image" content="{{ pkg.url }}{{ cover.url }}" />

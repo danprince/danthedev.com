@@ -13,6 +13,16 @@
     "markdown-it-attrs": "^4.1.0",
     "markdown-it-footnote": "^3.0.3",
     "markdown-it-link-attributes": "^3.0.0",
-    "markdown-it-table-of-contents": "^0.6.0"
+    "markdown-it-table-of-contents": "^0.6.0",
+    "preact-render-to-string": "^5.2.6"
+  },
+  "dependencies": {
+    "preact": "^10.12.1"
+  },
+  "importMap": {
+    "imports": {
+      "preact": "https://esm.sh/preact@10.12.1",
+      "preact/hooks": "https://esm.sh/preact@10.12.1/hooks"
+    }
   }
 }

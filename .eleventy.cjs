@@ -1,6 +1,5 @@
 let fs = require("fs/promises");
 let path = require("path");
-let crypto = require("crypto");
 let syntax = require("@11ty/eleventy-plugin-syntaxhighlight");
 let markdown = require("markdown-it");
 let footnotes = require("markdown-it-footnote");
@@ -114,7 +113,6 @@ function islandsPlugin(eleventyConfig) {
    */
   function createIslandShortcode(mode) {
     return async function(src, ...args) {
-      let inputPath = `${this.inputPath}:${src}`;
       let props = argsToProps(args);
       let html = "";
 
@@ -143,15 +141,11 @@ function islandsPlugin(eleventyConfig) {
         return html;
       }
 
-      // Give each island a stable id so that they don't change in the posts that
-      // weren't updated.
-      counters[inputPath] ||= 0;
-      counters[inputPath] += 1;
-      let id = crypto
-        .createHash("sha1")
-        .update(`${inputPath}:${counters[inputPath]}`)
-        .digest("hex")
-        .slice(0, 6);
+      // Give each island a stable id so that they don't change in the posts
+      // that weren't updated. `this.inputPath` is the path of the page
+      // Eleventy is currently rendering.
+      let id = counters[this.inputPath] ||= 0;
+      counters[this.inputPath] += 1;
 
       return `
 <div data-island-id="${id}">${html}</div>

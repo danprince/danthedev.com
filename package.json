@@ -1,9 +1,10 @@
 {
   "private": true,
+  "type": "module",
   "url": "https://danthedev.com",
   "scripts": {
-    "start": "eleventy --serve --quiet",
-    "build": "tsc && eleventy"
+    "start": "eleventy --serve --quiet --config=.eleventy.cjs",
+    "build": "tsc && eleventy --config=.eleventy.cjs"
   },
   "devDependencies": {
     "@11ty/eleventy": "^1.0.2",

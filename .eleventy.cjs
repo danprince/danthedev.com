@@ -112,9 +112,20 @@ function islandsPlugin(eleventyConfig) {
    * @param {"hydrate" | "static" | "client"} mode
    */
   function createIslandShortcode(mode) {
+    /**
+     * @param {string | { src: string, export: string }} src
+     * @param {any[]} args
+     */
     return async function(src, ...args) {
+      let name = "default";
       let props = argsToProps(args);
       let html = "";
+
+      // Handle imports with named exports
+      if (typeof src === "object") {
+        name = src.export;
+        src = src.src;
+      }
 
       // It's important that we use the version of the file inside the islands
       // dir rather than the one inside _site/islands, because there's no
@@ -134,7 +145,7 @@ function islandsPlugin(eleventyConfig) {
         // version gets us a different one).
         let { h } = await import("preact");
         let { renderToString } = await import("preact-render-to-string");
-        html = renderToString(h(mod.default, props));
+        html = renderToString(h(mod[name], props));
       }
 
       if (mode === "static") {
@@ -151,7 +162,7 @@ function islandsPlugin(eleventyConfig) {
 <div data-island-id="${id}">${html}</div>
 <script async type="module">
   import { h, hydrate } from "preact";
-  import component from "${src}";
+  import { ${name} as component } from "${src}";
   let element = document.querySelector(\`[data-island-id="${id}"]\`);
   hydrate(h(component, ${JSON.stringify(props)}), element);
 </script>

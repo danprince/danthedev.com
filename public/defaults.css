@@ -78,6 +78,10 @@ hr {
   border-top: solid 1px whitesmoke;
 }
 
+.footnotes-sep {
+  margin-top: 5rem;
+}
+
 .cover {
   height: 300px;
   margin-top: 1rem;
@@ -144,6 +148,7 @@ a.center {
 
 .token.comment { color: darkgrey; }
 .token.keyword { color: blue; }
+.token.interpolation { color: blue; }
 .token.number { color: blue; }
 .token.attr-value { color: blue; }
 .token.attr-equals { color: black; }
@@ -184,6 +189,7 @@ a.center {
   hr { border-color: royalblue; }
   .token.comment { color: royalblue; }
   .token.keyword { color: cornflowerblue; }
+  .token.interpolation { color: cornflowerblue; }
   .token.number { color: cornflowerblue; }
   .token.attr-value { color: cornflowerblue; }
   .token.tag .punctuation { color: cornflowerblue; }

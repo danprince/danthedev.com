@@ -118,9 +118,10 @@ function islandsPlugin(eleventyConfig) {
       let props = argsToProps(args);
       let html = "";
 
-      // It's important that we use the version of the file inside public rather
-      // than the one inside _site, because there's no guarantee that it will
-      // have been copied over before this shortcode runs.
+      // It's important that we use the version of the file inside the islands
+      // dir rather than the one inside _site/islands, because there's no
+      // guarantee that it will have been copied over before this shortcode
+      // runs.
       let file = path.join(__dirname, src);
 
       if (mode !== "client") {

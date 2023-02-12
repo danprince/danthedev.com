@@ -86,9 +86,19 @@ function slugify(str) {
  * @param {EleventyConfig} eleventyConfig
  */
 function islandsPlugin(eleventyConfig) {
+  /**
+   * @type {Record<string, number>}
+   */
   let counters = {};
 
+  /**
+   * @typedef {{ src: string, name: string, props: Record<string, any>, file: string }} Typecheck
+   * @type {Typecheck[]}
+   */
+  let typechecks = [];
+
   eleventyConfig.on("eleventy.after", () => counters = {});
+  eleventyConfig.on("eleventy.after", emitTypeChecks);
   eleventyConfig.addAsyncShortcode("island", createIslandShortcode("hydrate"));
   eleventyConfig.addAsyncShortcode("static-island", createIslandShortcode("static"));
   eleventyConfig.addAsyncShortcode("client-island", createIslandShortcode("client"));
@@ -134,6 +144,9 @@ function islandsPlugin(eleventyConfig) {
       // runs.
       let file = path.join(__dirname, src);
 
+      // Add this to our typechecking file to make sure the types are right.
+      typechecks.push({ src, name, props, file: inputPath });
+
       if (mode !== "client") {
         // ESM has no `require.cache` that we can use to invalidate an existing
         // file, so instead we'll import it under a new alias if the file has
@@ -169,5 +182,38 @@ function islandsPlugin(eleventyConfig) {
 </script>
       `.trim();
     }
+  }
+
+  /**
+   * There no type safety for the callsites of islands when they're written
+   * inside markdown as liquid shortcodes. This function translates all of
+   * the calls from the current build into actual TypeScript syntax and writes
+   * it to a @check.ts file that can be verified once the Eleventy build has
+   * finished.
+   */
+  async function emitTypeChecks() {
+    // We don't do any type checking in development, so no need to write
+    // the file. Still need to reset the array to stop memory leaks though.
+    if (process.env.NODE_ENV !== "production") {
+      typechecks = [];
+      return;
+    }
+
+    /**
+     * @param {Typecheck} t
+     * @returns {string}
+     */
+    function typecheckToString(t) {
+      return `h((await import(".${t.src}")).${t.name}, ${JSON.stringify(
+        t.props,
+      )}); // in ${t.file}`;
+    }
+
+    await fs.writeFile(
+      path.join(__dirname, "@checks.ts"),
+      `import { h } from "preact";\n${typechecks
+        .map(typecheckToString)
+        .join("\n")}`,
+    );
   }
 }

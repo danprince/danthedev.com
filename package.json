@@ -4,7 +4,7 @@
   "url": "https://danthedev.com",
   "scripts": {
     "start": "eleventy --serve --quiet",
-    "build": "tsc && eleventy"
+    "build": "eleventy && tsc"
   },
   "devDependencies": {
     "@11ty/eleventy": "^2.0.0",

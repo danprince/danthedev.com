@@ -9,7 +9,7 @@ let attrs = require("markdown-it-attrs");
 let anchor = require("markdown-it-anchor");
 
 /**
- * @typedef {import("@11ty/eleventy/src/UserConfig")} EleventyConfig
+ * @typedef {import("@11ty/eleventy").UserConfig} EleventyConfig
  */
 
 /**

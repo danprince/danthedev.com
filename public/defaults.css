@@ -146,20 +146,6 @@ a.center {
   gap: 0.5em;
 }
 
-.token.comment { color: darkgrey; }
-.token.keyword { color: blue; }
-.token.interpolation { color: blue; }
-.token.number { color: blue; }
-.token.attr-value { color: blue; }
-.token.attr-equals { color: black; }
-.token.tag .punctuation { color: blue; }
-.token.prefix { user-select: none; }
-.token.inserted.prefix { color: seagreen; }
-.token.deleted.prefix { color: crimson; }
-.language-diff .token.inserted { color: seagreen; }
-.token.deleted, .token.deleted * { color: crimson !important; }
-.token.unchanged { opacity: 0.5; }
-
 /* Posts list */
 
 .post-list-item a {
@@ -187,12 +173,6 @@ a.center {
   :visited { color: mediumorchid; }
   kbd { border-color: royalblue; }
   hr { border-color: royalblue; }
-  .token.comment { color: royalblue; }
-  .token.keyword { color: cornflowerblue; }
-  .token.interpolation { color: cornflowerblue; }
-  .token.number { color: cornflowerblue; }
-  .token.attr-value { color: cornflowerblue; }
-  .token.tag .punctuation { color: cornflowerblue; }
 }
 
 .pixelated {
@@ -204,4 +184,64 @@ a.center {
     max-width: 130%;
     margin-left: -15%;
   }
+}
+
+/* GitHub Light */
+.token.comment { color: #6e7781; }
+.token.keyword { color: #cf222e; }
+.token.function { color: #8250df; }
+.token.punctuation { color: #0969da; }
+.token.boolean { color: #0550ae; }
+.token.string, .token.string-property { color: #0a3069; }
+.token.number { color: #0550ae; }
+.token.operator { color: #cf222e; }
+.token.parameter { color: #953800; }
+.token.tag { color: #116329; }
+.token.builtin { color: #0550ae; }
+.token.regex { color: #0a3069; }
+.token.regex-flags { color: #cf222e; }
+.token.regex-source { color: #0550ae; }
+.token.interpolation-punctuation { color: #0a3069; }
+.token.tag .punctuation { color: #24292f; }
+.token.tag .attr-name { color: #0550ae; }
+.token.tag .attr-value { color: #0a3069; }
+.token.tag .attr-value .punctuation { color: #0a3069; }
+.token.tag .script-punctuation { color: #cf222e; }
+.token.selector { color: #0550ae; }
+.token.rule { color: #cf222e; }
+.token.prefix.inserted { color: #2da44e; }
+.token.prefix.deleted { color: #cf222e; }
+.token.inserted-sign { background: #e6ffec; }
+.token.deleted-sign { background: #ffebe9; }
+.language-json .property { color: #0a3069; }
+.language-css .property { color: #0550ae; }
+
+@media (prefers-color-scheme: dark) {
+  /* GitHub Dark */
+  .token.comment { color: #8b949e; }
+  .token.keyword { color: #f3766d; }
+  .token.function { color: #d2a8ff; }
+  .token.punctuation { color: #6daae4; }
+  .token.boolean { color: #79c0ff; }
+  .token.string, .token.string-property { color: #a1d2fa; }
+  .token.number { color: #79c0ff; }
+  .token.operator { color: #ff7b72; }
+  .token.parameter { color: #ffa657; }
+  .token.tag { color: #7ee787; }
+  .token.builtin { color: #79c0ff; }
+  .token.regex { color: #a5d6ff; }
+  .token.regex-flags { color: #ff7b72; }
+  .token.regex-source { color: #79c0ff; }
+  .token.class-name { color: #ffa657; }
+  .token.tag .punctuation { color: white; }
+  .token.tag .attr-name { color: #79c0ff; }
+  .token.tag .attr-value { color: #a5d6ff; }
+  .token.tag .attr-value .punctuation { color: #a5d6ff; }
+  .token.tag .script-punctuation { color: #ff7b72; }
+  .token.selector { color: #79c0ff; }
+  .token.rule { color: #ff7b72; }
+  .token.inserted-sign { background: #2e9e4226; }
+  .token.deleted-sign { background: #f8514926; }
+  .language-json .property { color: #7ee787; }
+  .language-css .property { color: #79c0ff; }
 }

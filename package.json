@@ -3,11 +3,11 @@
   "type": "module",
   "url": "https://danthedev.com",
   "scripts": {
-    "start": "eleventy --serve --quiet --config=.eleventy.cjs",
-    "build": "tsc && eleventy --config=.eleventy.cjs"
+    "start": "eleventy --serve --quiet",
+    "build": "tsc && eleventy"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^1.0.2",
+    "@11ty/eleventy": "^2.0.0",
     "@11ty/eleventy-plugin-syntaxhighlight": "^3.1.3",
     "markdown-it": "^12.3.2",
     "markdown-it-anchor": "^8.4.1",
@@ -15,7 +15,8 @@
     "markdown-it-footnote": "^3.0.3",
     "markdown-it-link-attributes": "^3.0.0",
     "markdown-it-table-of-contents": "^0.6.0",
-    "preact-render-to-string": "^5.2.6"
+    "preact-render-to-string": "^5.2.6",
+    "typescript": "^4.9.5"
   },
   "dependencies": {
     "@preact/signals": "^1.1.3",

@@ -1,6 +1,9 @@
 import { h } from "preact";
 import { useState } from "preact/hooks";
 
+/**
+ * @type {Islands.Preact<{ value?: number }>}
+ */
 export let ConfettiCounter = ({ value = 0 }) => {
   let [count, setCount] = useState(value);
 

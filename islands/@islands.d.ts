@@ -12,3 +12,11 @@ declare module "https://esm.sh/*" {
   const mod: any;
   export = mod;
 }
+
+/**
+ * Globally declared helper types for islands so that they don't need to import
+ * these types themselves (often a bit messy inside JSDoc).
+ */
+declare namespace Islands {
+  export type Preact<P = {}> = import("preact").FunctionComponent<P>;
+}

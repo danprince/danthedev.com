@@ -119,6 +119,7 @@ function islandsPlugin(eleventyConfig) {
     return async function(src, ...args) {
       let name = "default";
       let props = argsToProps(args);
+      let inputPath = this.page.inputPath;
       let html = "";
 
       // Handle imports with named exports
@@ -153,10 +154,10 @@ function islandsPlugin(eleventyConfig) {
       }
 
       // Give each island a stable id so that they don't change in the posts
-      // that weren't updated. `this.inputPath` is the path of the page
-      // Eleventy is currently rendering.
-      let id = counters[this.inputPath] ||= 0;
-      counters[this.inputPath] += 1;
+      // that weren't updated. `inputPath` is the path of the page Eleventy
+      // is currently rendering.
+      let id = counters[inputPath] ||= 0;
+      counters[inputPath] += 1;
 
       return `
 <div data-island-id="${id}">${html}</div>

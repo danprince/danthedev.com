@@ -71,6 +71,47 @@ function slugify(str) {
 }
 
 /**
+ * @typedef {object} Framework
+ * @property {(mod: any, name: string, props: Record<string, any>)} render
+ * @property {(src: string, name: string, props: Record<string, any>, id: string)} hydrate
+ */
+
+/**
+ * @type {Framework}
+ */
+let preact = {
+  async render(mod, name, props) {
+    let { h } = await import("preact");
+    let { renderToString } = await import("preact-render-to-string");
+    return renderToString(h(mod[name], props));
+  },
+  hydrate(src, name, props, id) {
+    return `
+let { h, hydrate } = await import("preact");
+let mod = await import("${src}");
+let element = document.querySelector("[data-island-id='${id}']");
+hydrate(h(mod.${name}, ${JSON.stringify(props)}), element);
+    `;
+  }
+};
+
+/**
+ * @type {Framework}
+ */
+let vanilla = {
+  async render(mod, name, props) {
+    return mod[name].render(props);
+  },
+  hydrate(src, name, props, id) {
+    return `
+let mod = await import("${src}");
+let element = document.querySelector("[data-island-id='${id}']");
+mod.${name}.hydrate(${JSON.stringify(props)}, element);
+    `;
+  }
+};
+
+/**
  * This plugin adds shortcodes for rendering islands of interactive content
  * inside a static page using Preact.
  *
@@ -122,6 +163,9 @@ function islandsPlugin(eleventyConfig) {
       let inputPath = this.page.inputPath;
       let html = "";
 
+      // Decide which islands framework to use
+      let framework = /\.vanilla\./.test(src) ? vanilla : preact;
+
       // Handle imports with named exports
       if (typeof src === "object") {
         name = src.export;
@@ -140,13 +184,7 @@ function islandsPlugin(eleventyConfig) {
         // changed.
         let stat = await fs.stat(file);
         let mod = await import(`${file}?v=${stat.mtimeMs}`);
-
-        // Need to use ESM for these preact imports so that this module gets the
-        // same instance of preact as the component we're rendering (a commonjs
-        // version gets us a different one).
-        let { h } = await import("preact");
-        let { renderToString } = await import("preact-render-to-string");
-        html = renderToString(h(mod[name], props));
+        html = await framework.render(mod, name, props);
       }
 
       if (mode === "static") {
@@ -161,12 +199,7 @@ function islandsPlugin(eleventyConfig) {
 
       return `
 <div data-island-id="${id}">${html}</div>
-<script async type="module">
-  import { h, hydrate } from "preact";
-  import { ${name} as component } from "${src}";
-  let element = document.querySelector('[data-island-id="${id}"]');
-  hydrate(h(component, ${JSON.stringify(props)}), element);
-</script>
+<script async type="module">${framework.hydrate(src, name, props, id).trim()}</script>
       `.trim();
     }
   }

@@ -12,7 +12,7 @@ An island is an interactive section within a sea of static content. The term is 
 
 I started pulling this thread about 7 months ago, when I wrote [eleventy-preact-islands](https://github.com/danprince/eleventy-preact-islands). That was after spending a week experimenting with [Astro](https://astro.build/) right after it launched. Then I decided to write a [new static site generator](https://github.com/danprince/melange-experimental). Then I [rewrote it](https://github.com/danprince/sietch). Then I [rewrote the rewrite](https://github.com/danprince/sietch/issues/11). And now I find myself back at [Eleventy](https://www.11ty.dev/) with an implementation for islands in less than 100 lines of code.
 
-{% island confetti "value" "10" %}
+{% island confetti %}
 
 👆 See that unassuming button there? That's an island. If you reload this page with JavaScript disabled you'll see the same button, because it was rendered at build time. You already clicked it didn't you? That was very irresponsible. There's no point trying to create suspense now!
 

@@ -74,12 +74,14 @@ kbd {
 }
 
 hr {
-  border: 0;
-  border-top: solid 1px whitesmoke;
+  display: none;
 }
 
-.footnotes-sep {
-  margin-top: 5rem;
+.footnotes {
+  border: solid 1px gainsboro;
+  border-left: 0;
+  border-right: 0;
+  margin: 3rem 0;
 }
 
 .cover {
@@ -186,7 +188,7 @@ a.center {
   a { color: dodgerblue; }
   :visited { color: mediumorchid; }
   kbd { border-color: royalblue; }
-  hr { border-color: royalblue; }
+  .footnotes { border-color: blue; }
   .token.comment { color: royalblue; }
   .token.keyword { color: cornflowerblue; }
   .token.interpolation { color: cornflowerblue; }

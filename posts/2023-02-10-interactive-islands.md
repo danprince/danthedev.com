@@ -6,7 +6,7 @@ confetti:
   export: ConfettiCounter
 ---
 
-My most recent adventure into how well the browser works involved building a minimalist implementation of the [islands architecture](https://jasonformat.com/islands-architecture/) for this site.
+My most recent adventure into how well the browser works, involved building a minimalist implementation of the [islands architecture](https://jasonformat.com/islands-architecture/) for this site.
 
 An island is an interactive section within a sea of static content. The term is _usually_ associated with server-side rendering and some people call it "partial hydration". In the islands metaphor, hydration is a particularly confusing term, as by definition, the island is the dry bit. Names are hard.
 
@@ -59,7 +59,7 @@ Here's how a shortcode looks in a page.
 Behind the scenes is a JavaScript function in the Eleventy config which receives the positional arguments we passed and returns a string of content to render.
 
 ```js
-// .eleventy.js
+// eleventy.config.js
 eleventyConfig.addShortcode("island", src => `TODO`);
 ```
 
@@ -72,7 +72,7 @@ This function has two main responsibilities.
 Let's start with build time rendering.
 
 ```js
-// .eleventy.cjs
+// eleventy.config.cjs
 eleventyConfig.addShortcode("island", async (src, ...args) => {
   let { h } = await import("preact");
   let { renderToString } = await import("preact-render-to-string");
@@ -85,9 +85,7 @@ eleventyConfig.addShortcode("island", async (src, ...args) => {
 });
 ```
 
-Using `import` and `export` in our islands creates some problems for Node, which only understands that syntax in `.mjs` files. The alternative is to add `"type": "module"` to our `package.json`, but this upsets Eleventy which requires `.eleventy.js` to be a CommonJS module[^eleventy-2]. The workaround here is to rename that file to `.eleventy.cjs` and specify each time you call the `eleventy` script.
-
-There's a more subtle problem with Preact. If we use `require` instead of `import` we get [different versions of the module](https://github.com/preactjs/preact/blob/dec4d42aeb16e8ee12a3196b7cfae18f6af0c1fd/package.json#L7-L8) from the ones our islands are using. As soon as you use hooks (with all their wonderful implicit hooky magic) you'll see an error like this.
+There's a tricky problem with Preact. The Eleventy config needs to be a CommonJS. However, if we `require` Preact, we get [a different version of the library](https://github.com/preactjs/preact/blob/dec4d42aeb16e8ee12a3196b7cfae18f6af0c1fd/package.json#L7-L8) from the one our islands get when they `import` it. As soon as you use hooks (with all their wonderful implicit hooky magic) you'll see an error like this.
 
 * `Cannot read properties of undefined (reading '__H') (via TypeError)`
 
@@ -98,7 +96,7 @@ Translation:
 
 Preact already goes above and beyond to optimise the library's size, so I can forgive some occasional esoterica. The workaround here is to pull Preact down into the nearest `async` scope and to use dynamic imports.
 
-I try and stay close to Eleventy's defaults, and that means I'm using liquid as the templating language. Liquid doesn't support shortcodes with named arguments which means we have to be a little bit creative to pass component props.
+I try and stay close to Eleventy's defaults, and that means I'm using liquid as the templating language. Liquid doesn't support shortcodes with named arguments which means we have to be a little bit creative to pass props to components.
 
 ```liquid
 {{'{% island "/islands/counter.js" "count" 10 %}'}}
@@ -236,7 +234,7 @@ let id = Math.random().toString(16).slice(2, 8);
 
 This code gives each island a unique identifier. These identifiers aren't stable though, and islands will get different identifiers each time the site builds. This means that cached versions of otherwise unchanged posts will need to be invalidated in CDNs and browsers.
 
-It would be better to use stable identifiers that don't change from build to build. The strategy I used was to increment a page-local counter for each (non static) island.
+It would be better to use stable identifiers that don't change from build to build. A simple strategy (for single threaded environments) is to increment a page-local counter for each island.
 
 ```js
 // outside the shortcode
@@ -250,10 +248,35 @@ counters[this.inputPath] += 1;
 
 `this.inputPath` is the path to the page that Eleventy is rendering. Between builds we need to reset these counters so that they're assigned in the same order next time.
 
-## TypeScript
+## Named Exports
+Glaring at me in this code is `export default`. I don't like using default exports, because I think they encourage splitting files preemptively. I wouldn't split 5 related functions into separate files, so why would I split up 5 related components?
+
+The challenge with named exports is a syntactic one. The way I'm handling props in Liquid's shortcodes doesn't leave much space for specifying a named export.
+
+```liquid
+{{'{% island "/islands/counters.js" "ConfettiCounter" %}'}}
+```
+
+Is this the name of the export? Or is this the name of the first prop? Checking for uppercase initials or an odd number of arguments are both fragile and hacky.
+
+I decided to support named exports for islands that have been defined with a `src` and an `export` inside Eleventy's [data cascade](https://www.11ty.dev/docs/data-cascade/).
+
+```yml
+---
+confetti:
+  src: /island/counters.js
+  export: ConfettiCounter
+---
+
+{{'{% island confetti %}'}}
+```
+
+This does a good job at cleaning up some duplication _and_ solving the named export problem with a [single small change](https://github.com/danprince/danthedev.com/commit/944ba7a28d0fc4de1ab5e7d8ccb3d6c2440f815f).
+
+## TypeScript & JSX
 I've spent enough time making things for the web to know that I enjoy it more when I do it with types. The only question here is which flavour of TypeScript to use.
 
-Writing TypeScript in a `.tsx` file is the best short term developer experience. You can express types with first class syntax. You even get JSX thrown in for free. The problem is that unless the _[ECMAScript Proposal for Type Annotations](https://github.com/tc39/proposal-type-annotations)_ is accepted, you can't run a `.tsx` file in a browser. _Even with_ that proposal, it may never be possible to evaluate JSX in a browser.
+Writing TypeScript in a `.tsx` file is the best short term developer experience. You can express types with first class syntax. You even get JSX thrown in for free. The problem is that unless the _[ECMAScript Proposal for Type Annotations](https://github.com/tc39/proposal-type-annotations)_ is accepted, you can't run a `.tsx` file in a browser. _Even with_ that proposal, browsers may never be able to evaluate JSX.
 
 Either we need to integrate a compiler into the toolchain, or to give up on JSX and write types in JS files with JSDoc comments. I've [waffled](/web-dev-without-tools/#static-analysis) about the latter approach here before.
 
@@ -268,41 +291,9 @@ Back to JSDoc and calling `h` like a madman, I guess!
 What I do appreciate about this setup is the transparency. All the files in the `islands` directory are copied across into the site's output directory. I can co-locate a CSS file next to a JS file and that colocation is preserved at runtime. Nothing is transpiled, or bundled. No need for source maps, no mapping paths from `.tsx` to `.js`. I get type checking, and I can still augment those types with `.d.ts` files when I want to express something more complex.
 
 ## Conclusion
-This idea is currently at the proof-of-concept stage. It still needs a trial by fire with an interactive article to uncover rough edges.
+This idea is currently at the proof-of-concept stage. It still needs a trial by fire with a highly interactive article.
 
 One of the changes I'm considering is supporting a "vanilla" component format, [like I did in Sietch](https://sietch.netlify.app/reference/islands.html#vanilla). Vanilla islands can render and hydrate without any dependencies. They're appropriate for _tiny_ bits of interactive content like the button island on this page.
-
-The other issue I see glaring me in the face is `export default`. I don't like using default exports, because I think it encourages people to split files up far too early. I wouldn't split up 5 related functions, so why would I split up 5 related components?
-
-The challenge with named exports is a syntactic one. The way I'm handling props in Liquid's shortcodes doesn't leave much space for specifying a named export.
-
-```liquid
-{{'{% island "/islands/counters.js" "ConfettiCounter" %}'}}
-```
-
-Is this the name of the export? Or is this the name of the first prop? Checking alphabetical case or counting for an odd number of arguments are both fragile and hacky.
-
-I've also wondered about encoding it into the URL itself.
-
-```liquid
-{{'{% island "/islands/counters.js#ConfettiCounter" %}'}}
-```
-
-This is better, but I don't like the magical step that has to happen behind the scenes to parse and remove that fragment.
-
-The most promising idea is to define per-page island maps in the front matter.
-
-```yml
----
-confetti:
-  src: /island/counters.js
-  export: ConfettiCounter
----
-
-{{'{% island confetti %}'}}
-```
-
-This does a good job at cleaning up some duplication _and_ solving the named export problem in a single blow. The shortcode needs to handle an object argument slightly differently, but it wouldn't be a big change.
 
 There are rough edges when you work directly with browsers. Tools and compilers can help you forget about them, but _should_ you forget about them? I think the future of building for the web without those tools is looking brighter and brighter.
 
@@ -310,12 +301,11 @@ Here's the [pull request](https://github.com/danprince/danthedev.com/pull/32) wi
 
 [^button]: `<button onclick="this.textContent -= -1">0</button>`. Don't let something as practical as common sense stop you from bypassing JavaScript's lopsided coercion rules to do addition with minus signs.
 
-[^eleventy-2]: It looks like this _just works_ with Eleventy v2 👏.
+[^scripts-hack]: We could totally hack it with two script tags. The first would render the component, but would have an [invalid `type` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type) so that the browser would ignore it. The second script would create the intersection observer and enable the first script when the island came into view. Hmm.
 
-[^scripts-hack]: As I wrote this I realised you could totally hack it with two script tags. The first would render the component, but would have an [invalid `type` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type) so that the browser would ignore it. The second script would create the intersection observer and enable the first script when the island came into view. Hmm.
-
-[^tsc-magic]: No, I do not want to figure out what magic is required to use the [TypeScript Compiler API](https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API) to trigger incremental builds from inside an `eleventy.before` hook.
+[^tsc-magic]: No, I do not want to figure out what arcane magic is required to use the [TypeScript Compiler API](https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API) to trigger incremental builds from inside an `eleventy.before` hook.
 
 [^is-land-tags]: This is kinda cool because the `<is-land>` tag doesn't need to be replaced, the browser understands it as a custom element at runtime.
 
-[^safe-islands]: Although now it occurs to me that I could convert each of these calls into TypeScript syntax at build time, write them all out to a dummy file, then have the compiler check it as a post-build step? Hmm.
+[^safe-islands]: Although now it occurs to me that I could convert each of these calls into TypeScript syntax at build time, write them all out to a dummy file, then have the compiler check it as a post-build step? [Hmm.](https://github.com/danprince/danthedev.com/pull/33)
+

@@ -86,9 +86,24 @@ function slugify(str) {
  * @param {EleventyConfig} eleventyConfig
  */
 function islandsPlugin(eleventyConfig) {
+  /**
+   * @typedef {object} Typecheck
+   * A typecheck is a single instance of an island shortcode that we can render
+   * into a TypeScript file to check that there are no type errors.
+   * @property {string} src Path to import the file from
+   * @property {string} name Name of the export to use
+   * @property {Record<string, any>} props Component props
+   * @property {string} file File where the island was rendered
+   */
+
+  /** @type {Record<string, number>} */
   let counters = {};
 
+  /** @type {Typecheck[]} */
+  let typechecks = [];
+
   eleventyConfig.on("eleventy.after", () => counters = {});
+  eleventyConfig.on("eleventy.after", emitTypeChecks);
   eleventyConfig.addAsyncShortcode("island", createIslandShortcode("hydrate"));
   eleventyConfig.addAsyncShortcode("static-island", createIslandShortcode("static"));
   eleventyConfig.addAsyncShortcode("client-island", createIslandShortcode("client"));
@@ -134,6 +149,9 @@ function islandsPlugin(eleventyConfig) {
       // runs.
       let file = path.join(__dirname, src);
 
+      // Add this to our typechecking file to make sure the types are right.
+      typechecks.push({ src, props, name: name, file: inputPath });
+
       if (mode !== "client") {
         // ESM has no `require.cache` that we can use to invalidate an existing
         // file, so instead we'll import it under a new alias if the file has
@@ -169,5 +187,25 @@ function islandsPlugin(eleventyConfig) {
 </script>
       `.trim();
     }
+  }
+
+  /**
+   * There no type safety for the callsites of islands when they're written
+   * inside markdown as liquid shortcodes. This function translates all of
+   * the calls from the current build into actual TypeScript syntax and writes
+   * it to a @check.ts file that can be verified once the Eleventy build has
+   * finished.
+   */
+  async function emitTypeChecks() {
+    // Skip type checking in development but clear the typechecks array anyway.
+    if (process.env.NODE_ENV !== "production") return typechecks = [];
+
+    await fs.writeFile(
+      path.join(__dirname, "@checks.ts"),
+      `import { h } from "preact";\n` +
+      `${typechecks.map(({ src, name, props, file }) =>
+        `h((await import(".${src}")).${name}, ${JSON.stringify(props)}); // in ${file}`
+      ).join("\n")}`,
+    );
   }
 }

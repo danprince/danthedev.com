@@ -193,7 +193,7 @@ function islandsPlugin(eleventyConfig) {
    * There no type safety for the callsites of islands when they're written
    * inside markdown as liquid shortcodes. This function translates all of
    * the calls from the current build into actual TypeScript syntax and writes
-   * it to a @check.ts file that can be verified once the Eleventy build has
+   * it to a @islands.ts file that can be verified once the Eleventy build has
    * finished.
    */
   async function emitTypeChecks() {
@@ -201,7 +201,7 @@ function islandsPlugin(eleventyConfig) {
     if (process.env.NODE_ENV !== "production") return typechecks = [];
 
     await fs.writeFile(
-      path.join(__dirname, "@checks.ts"),
+      path.join(__dirname, "@islands.ts"),
       `import { h } from "preact";\n` +
       `${typechecks.map(({ src, name, props, file }) =>
         `h((await import(".${src}")).${name}, ${JSON.stringify(props)}); // in ${file}`

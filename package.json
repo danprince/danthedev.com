@@ -4,11 +4,11 @@
   "url": "https://danthedev.com",
   "scripts": {
     "start": "eleventy --serve --quiet",
-    "build": "eleventy && tsc"
+    "build": "NODE_ENV=production eleventy && tsc"
   },
   "devDependencies": {
     "@11ty/eleventy": "^2.0.0",
-    "@11ty/eleventy-plugin-syntaxhighlight": "^3.1.3",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^3.13",
     "markdown-it": "^12.3.2",
     "markdown-it-anchor": "^8.4.1",
     "markdown-it-attrs": "^4.1.0",

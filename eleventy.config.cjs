@@ -180,10 +180,10 @@ function islandsPlugin(eleventyConfig) {
       return `
 <div data-island-id="${id}">${html}</div>
 <script async type="module">
-  import { h, hydrate } from "preact";
+  import { h, ${mode === "hydrate" ? "hydrate as " : "" }render } from "preact";
   import { ${name} as component } from "${src}";
   let element = document.querySelector('[data-island-id="${id}"]');
-  hydrate(h(component, ${JSON.stringify(props)}), element);
+  render(h(component, ${JSON.stringify(props)}), element);
 </script>
       `.trim();
     }

@@ -1,8 +1,8 @@
 import { h } from "preact";
 import { useState, useMemo } from "preact/hooks";
-import { AngleControls, Canvas, CodeNumberInput, ParticleSystemProvider, useForceUpdate, VelocityControls } from "./components.js";
+import { AngleControls, Canvas, CodeNumberInput, ParticleSystemProvider, useEmitter, useForceUpdate, VelocityControls } from "./components.js";
 import { roundToFixed, formatRadians } from "./helpers.js";
-import { ParticleEmitter, sprites } from "./particles.js";
+import { sprites } from "./particles.js";
 
 /**
  * @param {string} text
@@ -56,28 +56,24 @@ export function RangeDemo() {
 /**
  * @type {Islands.Preact}
  */
-export function VelocityDemo() {
-  let emitter = useMemo(
-    () =>
-      new ParticleEmitter({
-        x: 10,
-        y: 50,
-        frequency: 3,
-        velocity: [50, 0],
-        angle: [0, 0],
-        lifetime: [3, 0],
-        sprites: [sprites.blue_circle],
-      }),
-    [],
-  );
+export function VelocityDemo({ base = 50, spread = 0 }) {
+  let [emitter, update] = useEmitter({
+    x: 10,
+    y: 15,
+    frequency: 1,
+    velocity: [base, spread],
+    angle: [0, 0],
+    lifetime: [3, 0],
+    sprites: [sprites.blue_circle],
+  });
 
   return h(
     ParticleSystemProvider,
-    { emitters: [emitter] },
+    { height: 30, emitters: [emitter] },
     h(
       "div",
       { style: { display: "flex", alignItems: "center" } },
-      h(Canvas, {}, h(VelocityControls, { emitter })),
+      h(Canvas, {}, h(VelocityControls, { emitter, update })),
       h(
         "pre",
         { readOnly: true },
@@ -105,21 +101,15 @@ export function VelocityDemo() {
  * @type {Islands.Preact}
  */
 export function AngleDemo() {
-  let emitter = useMemo(
-    () =>
-      new ParticleEmitter({
-        x: 50,
-        y: 50,
-        frequency: 10,
-        velocity: [50, 10],
-        angle: [0, Math.PI / 2],
-        lifetime: [5, 3],
-        sprites: [sprites.blue_circle],
-      }),
-    [],
-  );
-
-  let forceUpdate = useForceUpdate();
+  let [emitter, update] = useEmitter({
+    x: 50,
+    y: 50,
+    frequency: 10,
+    velocity: [50, 10],
+    angle: [0, Math.PI / 2],
+    lifetime: [5, 3],
+    sprites: [sprites.blue_circle],
+  });
 
   return h(
     ParticleSystemProvider,
@@ -127,19 +117,29 @@ export function AngleDemo() {
     h(
       "div",
       { style: { display: "flex", alignItems: "center" } },
-      h(Canvas, {}, h(AngleControls, { emitter })),
+      h(Canvas, {}, h(AngleControls, { emitter, update })),
       h(
         "pre",
         { readOnly: true },
         h("span", null, `new ParticleEmitter({\n`),
         `  angle: [`,
-        h(
-          "span",
-          { style: { color: "blue" } },
-          formatRadians(emitter.angle[0]),
-        ),
+        h(CodeNumberInput, {
+          value: formatRadians(emitter.angle[0]),
+          parse: eval,
+          color: "blue",
+          onChange(value) {
+            update({ angle: [value, emitter.angle[1]] })
+          },
+        }),
         `, `,
-        h("span", { style: { color: "red" } }, formatRadians(emitter.angle[1])),
+        h(CodeNumberInput, {
+          value: formatRadians(emitter.angle[1]),
+          parse: eval,
+          color: "red",
+          onChange(value) {
+            update({ angle: [emitter.angle[0], value] })
+          },
+        }),
         `],\n`,
         `});`,
       ),

@@ -1,7 +1,8 @@
 import { createContext, h } from "preact";
 import { useCallback, useContext, useEffect, useMemo, useState } from "preact/hooks";
-import { degreesToRadians, formatRadians, normalizeRadians, radiansToDegrees, roundToNearest } from "./helpers.js";
-import { ParticleSystem, ParticleEmitter, sprites } from "./particles.js";
+import { isBrowser } from "../helpers.js";
+import { degreesToRadians, normalizeRadians, radiansToDegrees, roundToNearest } from "./helpers.js";
+import { ParticleSystem, ParticleEmitter } from "./particles.js";
 
 export function useForceUpdate() {
   let [_, setState] = useState([]);
@@ -9,10 +10,28 @@ export function useForceUpdate() {
 }
 
 let ParticleSystemContext = createContext(new ParticleSystem());
-let RefreshContext = createContext(() => {});
 
 export let useParticleSystem = () => useContext(ParticleSystemContext);
-export let useRefresh = () => useContext(RefreshContext);
+
+/**
+ * @param {ConstructorParameters<typeof ParticleEmitter>[0]} options
+ * @returns {[ParticleEmitter, (updates: Partial<ParticleEmitter>) => void]}
+ */
+export let useEmitter = (options) => {
+  let emitter = useMemo(() => new ParticleEmitter(options), []);
+  let forceUpdate = useForceUpdate();
+  let update = useCallback(
+    /**
+     * @param {Partial<ParticleEmitter>} options
+     */
+    options => {
+      Object.assign(emitter, options);
+      forceUpdate();
+    },
+    [forceUpdate],
+  );
+  return [emitter, update];
+}
 
 /**
  * @param {object} props
@@ -20,6 +39,7 @@ export let useRefresh = () => useContext(RefreshContext);
  * @param {number} [props.height]
  * @param {preact.ComponentChildren} [props.children]
  * @param {ParticleEmitter[]} [props.emitters]
+ * @param {() => void} [props.onUpdate]
  */
 export function ParticleSystemProvider({
   children,
@@ -32,14 +52,9 @@ export function ParticleSystemProvider({
     [width, height, ...emitters],
   );
 
-  let update = useForceUpdate();
-
   return h(ParticleSystemContext.Provider, {
     value: system,
-    children: h(RefreshContext.Provider, {
-      value: update,
-      children,
-    }),
+    children,
   });
 }
 
@@ -115,15 +130,27 @@ export function Canvas({ children, ...props }) {
     {
       class: "canvas",
       ref: system.mount,
-      style: { position: "relative" },
+      style: {
+        position: "relative",
+        width: width * system.scale,
+        height: height * system.scale,
+      },
     },
     h("svg", {
       class: "canvas-controls",
       width: width * system.scale,
       height: height * system.scale,
       viewBox: `0 0 ${width} ${height}`,
-      style: { position: "absolute", top: 0, left: 0 },
+      style: { position: "absolute", top: 0, left: 0, userSelect: "none" },
       children,
+
+      // SVG defaults
+      "font-family": "monospace",
+      "font-weight": "bold",
+      "font-size": 5,
+      "dominant-baseline": "middle",
+      "text-anchor": "middle",
+      "stroke-linecap": "round",
     }),
   );
 }
@@ -156,12 +183,17 @@ export function ControlPoint({ x, y, color, onMoved }) {
     window.addEventListener("pointerup", onPointerUp);
   }, [onMoved]);
 
+  // TODO: This doesn't work with hydration. Why not?
+  let background = isBrowser
+    ? window.getComputedStyle(document.body).backgroundColor
+    : "white";
+
   return (
     h("circle", {
       cx: x,
       cy: y,
       r: 2,
-      fill: "white",
+      fill: background,
       stroke: color,
       style: { cursor: "grab" },
       onPointerDown,
@@ -172,37 +204,40 @@ export function ControlPoint({ x, y, color, onMoved }) {
 /**
  * @param {object} props
  * @param {ParticleEmitter} props.emitter
+ * @param {(updates: Partial<ParticleEmitter>) => void} props.update
  */
-export function AngleControls({ emitter }) {
-  let refresh = useRefresh();
-  let [center, setCenter] = useState({ x: emitter.x, y: emitter.y });
-  let [angle, setAngle] = useState(emitter.angle[0]);
-  let [spread, setSpread] = useState(emitter.angle[1]);
-
-  useEffect(() => {
-    // Sync changes in state back to the emitter
-    emitter.angle = [angle, spread];
-    emitter.x = center.x;
-    emitter.y = center.y;
-    refresh();
-  }, [angle, spread, center, emitter, refresh])
+export function AngleControls({ emitter, update }) {
+  let [base, spread] = emitter.angle;
 
   // Control points
   let cx = emitter.x;
   let cy = emitter.y;
   let radius = 30;
-  let x0 = cx + Math.cos(angle) * radius;
-  let y0 = cy + Math.sin(angle) * radius;
-  let x1 = cx + Math.cos(angle + spread) * radius;
-  let y1 = cy + Math.sin(angle + spread) * radius;
+  let x0 = cx + Math.cos(base) * radius;
+  let y0 = cy + Math.sin(base) * radius;
+  let x1 = cx + Math.cos(base + spread) * radius;
+  let y1 = cy + Math.sin(base + spread) * radius;
+
+  /**
+   * @param {number} value
+   */
+  function setBase(value) {
+    update({ angle: [value, spread] });
+  }
+
+  /**
+   * @param {number} value
+   */
+  function setSpread(value) {
+    update({ angle: [base, value] });
+  }
 
   /**
    * @param {number} x
    * @param {number} y
    */
   function angleFromCenter(x, y) {
-    let angle = Math.atan2(y - cy, x - cx);
-    return normalizeRadians(angle);
+    return Math.atan2(y - cy, x - cx);
   }
 
   let sweepFlag = Math.abs(spread) >= Math.PI ? 1 : 1;
@@ -213,26 +248,20 @@ export function AngleControls({ emitter }) {
     {},
     h("path", {
       d: `M ${cx} ${cy} L ${x0} ${y0} A ${radius} ${radius} 0 ${largeArcFlag} ${sweepFlag} ${x1} ${y1} L ${cx} ${cy}`,
-      fill: "rgba(0, 0, 255, 0.1)",
+      fill: "blue",
+      opacity: 0.1,
     }),
     h("path", {
       d: `M ${x0} ${y0} L ${cx} ${cy}`,
       fill: "none",
       stroke: "blue",
-      strokeLinecap: "round",
+      opacity: 0.5,
     }),
     h("path", {
       d: `M ${x1} ${y1} L ${cx} ${cy}`,
       fill: "none",
       stroke: "red",
-      strokeLinecap: "round",
-    }),
-    // This control point determines the "center" of the emitter
-    h(ControlPoint, {
-      x: cx,
-      y: cy,
-      color: "blue",
-      onMoved: (x, y) => setCenter({ x, y }),
+      opacity: 0.5,
     }),
     // This control point determines the "angle" of the emitter
     h(ControlPoint, {
@@ -240,10 +269,10 @@ export function AngleControls({ emitter }) {
       y: y0,
       color: "blue",
       onMoved: (x, y, event) =>
-        setAngle(
+        setBase(
           roundToNearest(
-            angleFromCenter(x, y),
-            degreesToRadians(event.shiftKey ? 1 : 10),
+            normalizeRadians(angleFromCenter(x, y)),
+            degreesToRadians(event.shiftKey ? 10 : 1),
           ),
         ),
     }),
@@ -255,8 +284,8 @@ export function AngleControls({ emitter }) {
       onMoved: (x, y, event) =>
         setSpread(
           roundToNearest(
-            angleFromCenter(x, y),
-            degreesToRadians(event.shiftKey ? 1 : 10),
+            normalizeRadians(angleFromCenter(x, y) - base),
+            degreesToRadians(event.shiftKey ? 10 : 1),
           ),
         ),
     }),
@@ -272,16 +301,11 @@ export function AngleControls({ emitter }) {
       "text",
       {
         x: x0 + 11,
-        y: y0,
-        "font-family": "monospace",
-        "font-size": 5,
-        "font-weight": "bold",
-        "dominant-baseline": "middle",
-        "text-anchor": "middle",
+        y: y0 + 1,
         fill: "white",
         style: { pointerEvents: "none", userSelect: "none" },
       },
-      `${Math.round(radiansToDegrees(angle))}°`,
+      `${Math.round(radiansToDegrees(base))}°`,
     ),
     h("rect", {
       x: x1 + 4,
@@ -296,11 +320,6 @@ export function AngleControls({ emitter }) {
       {
         x: x1 + 11,
         y: y1,
-        "font-family": "monospace",
-        "font-weight": "bold",
-        "font-size": 5,
-        "dominant-baseline": "middle",
-        "text-anchor": "middle",
         fill: "white",
         style: { pointerEvents: "none", userSelect: "none" },
       },
@@ -312,16 +331,10 @@ export function AngleControls({ emitter }) {
 /**
  * @param {object} props
  * @param {ParticleEmitter} props.emitter
+ * @param {(updates: Partial<ParticleEmitter>) => void} props.update
  */
-export function VelocityControls({ emitter }) {
-  let refresh = useRefresh();
-  let [base, setBase] = useState(emitter.velocity[0]);
-  let [spread, setSpread] = useState(emitter.velocity[1]);
-
-  useEffect(() => {
-    emitter.velocity = [base, spread];
-    refresh();
-  }, [base, spread, emitter]);
+export function VelocityControls({ emitter, update }) {
+  let [base, spread] = emitter.velocity;
 
   return (
     h("g", {},
@@ -345,13 +358,13 @@ export function VelocityControls({ emitter }) {
         x: emitter.x + base,
         y: emitter.y + 10,
         color: "blue",
-        onMoved: x => setBase(x - emitter.x),
+        onMoved: x => update({ velocity: [x - emitter.x, spread] }),
       }),
       h(ControlPoint, {
         x: emitter.x + base + spread,
         y: emitter.y + 10,
         color: "red",
-        onMoved: x => setSpread(x - base - emitter.x),
+        onMoved: x => update({ velocity: [base, (x - base - emitter.x)] }),
       }),
     )
   );

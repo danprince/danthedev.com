@@ -45,6 +45,8 @@ Throughout the rest of this article when there's an interactive example, you'll 
 
 {% island demos.velocity %}
 
+{% island demos.velocity "base" 10 "spread" 20 %}
+
 ### Angle
 {% island demos.angles %}
 

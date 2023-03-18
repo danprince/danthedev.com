@@ -45,6 +45,14 @@ export function formatRadians(radians) {
 }
 
 /**
+ * @param {number} radians
+ * @returns {string}
+ */
+export function formatDegrees(radians) {
+  return `${Math.round(radiansToDegrees(radians))}°`;
+}
+
+/**
  * @param {number} value
  * @param {number} step
  */

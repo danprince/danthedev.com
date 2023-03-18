@@ -1,9 +1,6 @@
 import { isBrowser } from "../helpers.js";
 
 /**
- * @typedef {[number, number]} Range
- * @typedef {{ x: number, y: number, w: number, h: number }} Sprite
- *
  * @typedef {object} Particle
  * @property {number} x
  * @property {number} y
@@ -11,67 +8,111 @@ import { isBrowser } from "../helpers.js";
  * @property {number} vy
  * @property {number} mass
  * @property {number} age
- * @property {number} lifetime
+ * @property {number} life
  * @property {number} bounce
+ * @property {number} variant
+ *
+ * @typedef {object} Sprite
+ * @property {number} x
+ * @property {number} y
+ * @property {number} w
+ * @property {number} h
+ *
+ * @typedef {object} ParticleEmitterOptions
+ * @property {number} [x]
+ * @property {number} [y]
+ * @property {number} [width]
+ * @property {number} [height]
+ * @property {number} [frequency]
+ * @property {number} [floor]
+ * @property {number} [velocity]
+ * @property {number} [velocitySpread]
+ * @property {number} [mass]
+ * @property {number} [massSpread]
+ * @property {number} [angle]
+ * @property {number} [angleSpread]
+ * @property {number} [life]
+ * @property {number} [lifeSpread]
+ * @property {number} [bounce]
+ * @property {number} [bounceSpread]
+ * @property {[Sprite, ...Sprite[]][]} variants
  */
 
 /**
+ * A list of unused particles that emitters can draw from to save memory.
  * @type {Particle[]}
  */
 let pool = [];
 
 export class ParticleEmitter {
   /**
+   * The particles that are active inside this emitter.
    * @type {Particle[]}
    */
   particles = [];
+
   /**
+   * Internal clock which tracks the number of seconds since we last spawned a
+   * particle.
+   * @private
    * @type {number}
    */
   clock = 0;
 
   /**
-   * @param {object} options
-   * @param {number} [options.x] The X coordinate of the left of the spawn area.
-   * @param {number} [options.y] The Y coordinate of the top of the spawn area.
-   * @param {number} [options.width] The width of the spawn area in pixels.
-   * @param {number} [options.height] The height of the spawn area in pixels.
-   * @param {number} [options.frequency] The number of particles to emit each second.
-   * @param {number} [options.floor] The Y coordinate of the floor (particles bounce here).
-   * @param {Range} [options.velocity] The range of values for initial particle velocity, a scalar value in pixels per second.
-   * @param {Range} [options.mass] The range of values for initial particle mass.
-   * @param {Range} [options.angle] The range of values for initial particle angle in radians.
-   * @param {Range} [options.lifetime] The range of values
-   * @param {Range} [options.bounce] A range of normalized bounciness factors (0–1).
-   * @param {[Sprite, ...Sprite[]]} options.sprites A non-empty array of sprites
+   * @param {ParticleEmitterOptions} options
    */
   constructor(options) {
+    /**
+     * The base x coordinate that particles will spawn at.
+     */
     this.x = options.x ?? 0;
+    /**
+     * The base y coordinate that particles will spawn at.
+     * @type {number}
+     */
     this.y = options.y ?? 0;
+    /**
+     * The width of the rectangle that particles can spawn in.
+     * @type {number}
+     */
     this.width = options.width ?? 0;
+    /**
+     * The height of the rectangle that particles can spawn in.
+     * @type {number}
+     */
     this.height = options.height ?? 0;
+    /**
+     * The height of the rectangle that particles can spawn in.
+     * @type {number}
+     */
     this.floor = options.floor ?? Infinity;
-    this.velocity = options.velocity ?? [0, 0];
-    this.mass = options.mass ?? [0, 0];
-    this.angle = options.angle ?? [0, 0];
-    this.lifetime = options.lifetime ?? [0, 0];
-    this.bounce = options.bounce ?? [0, 0];
-    this.sprites = options.sprites;
+    this.velocity = options.velocity ?? 0;
+    this.velocitySpread = options.velocitySpread ?? 0;
+    this.mass = options.mass ?? 0;
+    this.massSpread = options.massSpread ?? 0;
+    this.angle = options.angle ?? 0;
+    this.angleSpread = options.angleSpread ?? 0;
+    this.life = options.life ?? 0;
+    this.lifeSpread = options.lifeSpread ?? 0;
+    this.bounce = options.bounce ?? 0;
+    this.bounceSpread = options.bounceSpread ?? 0;
     this.frequency = options.frequency ?? 1;
-    this.clock = 0;
+    this.variants = options.variants;
   }
 
   emit() {
     let particle = pool.pop() || /** @type {Particle} */ ({});
-    let velocity = this.velocity[0] + this.velocity[1] * Math.random();
-    let angle = this.angle[0] + this.angle[1] * Math.random();
+    let velocity = this.velocity + this.velocitySpread * Math.random();
+    let angle = this.angle + this.angleSpread * Math.random();
     particle.x = this.x + this.width * Math.random();
     particle.y = this.y + this.height * Math.random();
     particle.vx = Math.cos(angle) * velocity;
     particle.vy = Math.sin(angle) * velocity;
-    particle.mass = this.mass[0] + this.mass[1] * Math.random();
-    particle.lifetime = this.lifetime[0] + this.lifetime[1] * Math.random();
-    particle.bounce = this.bounce[0] + this.bounce[1] * Math.random();
+    particle.mass = this.mass + this.massSpread * Math.random();
+    particle.life = this.life + this.lifeSpread * Math.random();
+    particle.bounce = this.bounce + this.bounceSpread * Math.random();
+    particle.variant = Math.floor(Math.random() * this.variants.length);
     particle.age = 0;
     this.particles.push(particle);
   }
@@ -98,7 +139,7 @@ export class ParticleEmitter {
         particle.vy *= -particle.bounce;
         particle.y = this.floor;
       }
-      return particle.age < particle.lifetime;
+      return particle.age < particle.life;
     });
   }
 
@@ -107,9 +148,9 @@ export class ParticleEmitter {
    */
   render(draw) {
     for (let particle of this.particles) {
-      let progress = particle.age / particle.lifetime;
-      let spriteIndex = Math.floor(progress * this.sprites.length);
-      let sprite = this.sprites[spriteIndex];
+      let progress = particle.age / particle.life;
+      let spriteIndex = Math.floor(progress * this.variants.length);
+      let sprite = this.variants[particle.variant][spriteIndex];
       draw(sprite, particle.x, particle.y);
     }
   }
@@ -127,6 +168,10 @@ if (isBrowser) {
 
 export let sprites = {
   blue_circle: { x: 0, y: 0, w: 4, h: 4 },
+  smoke_1: { x: 4, y: 0, w: 6, h: 6 },
+  smoke_2: { x: 10, y: 0, w: 6, h: 6 },
+  smoke_3: { x: 16, y: 0, w: 6, h: 6 },
+  smoke_4: { x: 22, y: 0, w: 6, h: 6 },
 };
 
 export class ParticleSystem {
@@ -167,16 +212,20 @@ export class ParticleSystem {
     this.canvas.style.height = `${this.canvas.height * this.scale}px`;
     this.canvas.style.imageRendering = "pixelated";
     this.ctx.imageSmoothingEnabled = false;
-    this.start();
+    //this.start();
   }
 
+  active = false;
+
   start() {
+    this.active = true;
     let lastFrameTime = 0;
 
     /**
      * @param {number} currentFrameTime
      */
     let tick = currentFrameTime => {
+      if (!this.active) return;
       requestAnimationFrame(tick);
       lastFrameTime ||= currentFrameTime;
       let dt = currentFrameTime - lastFrameTime;
@@ -192,6 +241,10 @@ export class ParticleSystem {
     });
 
     requestAnimationFrame(tick);
+  }
+
+  stop() {
+    this.active = false;
   }
 
   /**

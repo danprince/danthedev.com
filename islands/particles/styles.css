@@ -1,0 +1,3 @@
+.control-point:hover .control-point-hit-rect {
+  opacity: 0.05;
+}

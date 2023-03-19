@@ -7,6 +7,7 @@ let linkAttrs = require("markdown-it-link-attributes");
 let toc = require("markdown-it-table-of-contents");
 let attrs = require("markdown-it-attrs");
 let anchor = require("markdown-it-anchor");
+let worker = require("./islands.worker.cjs");
 
 /**
  * @typedef {import("@11ty/eleventy").UserConfig} EleventyConfig
@@ -102,6 +103,11 @@ function islandsPlugin(eleventyConfig) {
   /** @type {Typecheck[]} */
   let typechecks = [];
 
+  // During development we only need to reset the worker, but during production
+  // builds, the worker has to be closed for the node process to exit properly.
+  eleventyConfig.on("eleventy.before", () => worker.resetWorker());
+  eleventyConfig.on("eleventy.after", () => worker.closeWorker());
+
   eleventyConfig.on("eleventy.after", () => counters = {});
   eleventyConfig.on("eleventy.after", emitTypeChecks);
   eleventyConfig.addAsyncShortcode("island", createIslandShortcode("hydrate"));
@@ -153,18 +159,7 @@ function islandsPlugin(eleventyConfig) {
       typechecks.push({ src, props, name: name, file: inputPath });
 
       if (mode !== "client") {
-        // ESM has no `require.cache` that we can use to invalidate an existing
-        // file, so instead we'll import it under a new alias if the file has
-        // changed.
-        let stat = await fs.stat(file);
-        let mod = await import(`${file}?v=${stat.mtimeMs}`);
-
-        // Need to use ESM for these preact imports so that this module gets the
-        // same instance of preact as the component we're rendering (a commonjs
-        // version gets us a different one).
-        let { h } = await import("preact");
-        let { renderToString } = await import("preact-render-to-string");
-        html = renderToString(h(mod[name], props));
+        html = await worker.renderToStringWithWorker({ file, name, props });
       }
 
       if (mode === "static") {

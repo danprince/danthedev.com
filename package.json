@@ -8,7 +8,7 @@
   },
   "devDependencies": {
     "@11ty/eleventy": "^2.0.0",
-    "@11ty/eleventy-plugin-syntaxhighlight": "^3.13",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^3.2.2",
     "markdown-it": "^12.3.2",
     "markdown-it-anchor": "^8.4.1",
     "markdown-it-attrs": "^4.1.0",

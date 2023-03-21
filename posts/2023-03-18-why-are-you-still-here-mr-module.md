@@ -6,21 +6,23 @@ No one writes the full program correctly on their first go. Programming, debuggi
 
 There are three common scenarios for what happens after you edit some code on disk.
 
-1. You have to manually restart the running process.
-2. A watcher automatically restarts the running process.
-3. Your changes are automatically reloaded into the running process ([hot reloading](https://en.wikipedia.org/wiki/Hot_swapping)).
+1. You have to manually restart a running process.
+2. A watcher automatically restarts a running process.
+3. Your changes are automatically reloaded into a running process ([hot reloading](https://en.wikipedia.org/wiki/Hot_swapping)).
 
-Remembering to do manual restarts is a bit of a pain, and having a watcher handle them for you works well, if the process can start up again quickly. The third option is the fastest, but it's also the trickiest to implement.
+Remembering to do manual restarts is a pain. Having a watcher handle them for you works well, if the process can start up again quickly. The third option is the fastest, but it's also the trickiest to implement.
 
-In JavaScript, the most common reloadable unit is a module—a single file on a disk or a network. A program is a graph of dependent modules where each import is a directed connection between two modules. A full process restart involves unloading the entire graph and rebuilding it from scratch. A partial reload involves unloading and reloading a subset of that graph, often a single changed module. O(n) vs O(1).
+In JavaScript, the most common reloadable unit is a module: a single file on a disk or a network. A program is a graph of dependent modules, where each import is a directed connection between two modules. A full process restart involves unloading the entire graph and rebuilding it from scratch. A partial reload involves unloading and reloading a subset of that graph, often a single changed module. O(n) vs O(1).
 
 There are costs to pay each time we load a module. A cost for reading from a disk or a network. A cost for parsing the code, and a cost for evaluating it. The nature of the module graph means the runtime must do the reading and parsing steps before it can move onto the next degree of dependent modules.
 
 When your project has only a few modules, the performance difference between a full reload and a partial reload will be negligible. For thousands of modules, the difference will be significant.
 
+Let's look at what makes it tricky to do these partial reloads.
+
 ## CommonJS
 
-Let's look at a quick example of a JavaScript file, running on Node, to understand what makes these partial reloads tricky.
+Here's a JavaScript file, written to run on Node.
 
 ```js
 // calls.js
@@ -48,7 +50,7 @@ We called `require` twice, but `a` and `b` are the same value! Node only loads t
 
 If each call to `require` instantiated a new module, then our programs would be full of stale references. These can lead to [bugs](https://guides.rubyonrails.org/autoloading_and_reloading_constants.html#reloading-and-stale-objects) that are incredibly difficult to reproduce, that may only occur after a certain set of modules are swapped out in a certain order.
 
-Node isn't going to reload modules for us automatically, but because `require` and `module` are provided by Node, it can expose the implementation details we need to do that cache invalidation ourselves. 
+Node isn't going to reload modules for us automatically, but because `require` and `module` _are_ provided by Node, it _can_ expose the implementation details we need to do that cache invalidation ourselves. 
 
 The first time we `require` a module, Node instantiates it then adds to `require.cache` on disk, storing it under a key which is its absolute file path on disk.
 
@@ -75,7 +77,7 @@ For the sake of the curious, here are some hot-reloading and/or module cache cle
 - [Nuxt](https://github.com/nuxt/nuxt/blob/9e67e57efd08efddfd2852c06b571a55ebd0f9d6/packages/kit/src/internal/cjs.ts#L32-L53)
 - [Gatsby](https://github.com/gatsbyjs/gatsby/blob/9f26b6722955463492776965182baabe779216f8/packages/gatsby/src/utils/clear-require-cache.ts#L1-L25)
 
-And `require.cache` to reload modules at runtime, everything was fast, and everyone lived happily ever after.
+And everyone used `require.cache` to reload modules at runtime, everything was fast, and they all lived happily ever after.
 
 Wait. What's that sound? That's the sound of ES modules arriving in Node and not giving a damn about `require.cache` or everyone's happily ever after.
 
@@ -186,11 +188,9 @@ assert(await callWithWorker("./calls.mjs") === 1);
 
 Each call to `callWithWorker` creates an isolated context and a fresh version of our `calls.mjs` module. A reliable way to invalidate a whole subgraph of ES modules. And there was much rejoicing!
 
-Remember that the path we pass to `callWithWorker` needs to be relative to the worker's script, not to the file where we're calling `callWithWorker`!
-
 ### Shared Workers
 
-My use case for module cache invalidation is that I want to pick up changes to "islands" between builds, without restarting the [Eleventy](11ty.dev) process.
+My use case for module cache invalidation is to pick up changes to ["islands"](/interactive-islands) between builds, without restarting the [Eleventy](11ty.dev) process.
 
 Using CommonJS isn't an option, because I re-use the exact same files to load the islands in browsers, and I don't have a build step that would transform the syntax.
 
@@ -222,17 +222,7 @@ if (isMainThread) {
     else requests[id].resolve(result);
     delete requests[id];
   });
-}
-
-export function callWithSharedWorker(modulePath) {
-  return new Promise((resolve, reject) => {
-    let id = requestId++;
-    requests[id] = { resolve, reject };
-    worker.postMessage({ id, modulePath });
-  });
-}
-
-if (!isMainThread) {
+} else {
   parentPort.on("message", async ({ id, modulePath }) => {
     try {
       let module = await import(modulePath);
@@ -241,6 +231,14 @@ if (!isMainThread) {
     } catch (error) {
       parentPort.postMessage({ id, error });
     }
+  });
+}
+
+export function callWithSharedWorker(modulePath) {
+  return new Promise((resolve, reject) => {
+    let id = requestId++;
+    requests[id] = { resolve, reject };
+    worker.postMessage({ id, modulePath });
   });
 }
 ```
@@ -291,7 +289,7 @@ assert(await callWithSharedWorker("./calls.mjs") === 3);
 
 For my use case, this is perfect. I call `resetSharedWorker` once per build. That prevents Node from doing any redundant module instantiation.
 
-In a long running process, this is fine, but if you want your Node process to exit, such as for a test suite like the one above, you'll need to terminate the worker after you've finished using it.
+In a long running process, this is fine, but if you want your Node process to exit, as for a test suite like the one above, you'll need to terminate the worker after you've finished using it.
 
 I use a `closeSharedWorker` function that calls `worker.terminate()`.
 
@@ -335,7 +333,7 @@ assert(await callWithSharedWorker("./calls.mjs", "call", []) === 1);
 ```
 
 ## Conclusion
-There's still an awful lot of projects that sidestep this problem by compiling ES modules into CommonJS before running it on Node, then using `require.cache` for all their cache invalidation needs.
+There are still a lot of projects that sidestep this problem by compiling ES modules into CommonJS before running it on Node, then using `require.cache` for all their cache invalidation needs.
 
 The JavaScript ecosystem has already got a big problem with overcomplicated tooling and build steps. Throwing tools at these kinds of problems is a short term solution. It's rare that we actually just write code that's ready to run!
 

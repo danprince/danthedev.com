@@ -30,7 +30,7 @@
   <body>
     <nav>
       {% if not index %}
-      <a href="/">←</a>
+      <a href="/">{% include "icons/move-left.svg" %}</a>
       {% else %}
       <span></span>
       {% endif %}
@@ -40,7 +40,7 @@
         title="Light mode"
         onclick="setTheme('light')"
       >
-        {% include "sun.svg" %}
+        {% include "icons/sun.svg" %}
       </button>
 
       <button
@@ -48,7 +48,7 @@
         title="Dark mode"
         onclick="setTheme('dark')"
       >
-        {% include "moon.svg" %}
+        {% include "icons/sun-moon.svg" %}
       </button>
     </nav>
 

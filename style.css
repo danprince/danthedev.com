@@ -141,7 +141,7 @@ header {
 
 header p {
   color: var(--text-muted-color);
-  max-width: 50%;
+  max-width: 75%;
   margin: 0 auto;
 }
 
@@ -153,8 +153,7 @@ nav {
   padding: 1rem;
   display: flex;
   justify-content: space-between;
-  color: var(--text-muted-color);
-  font-family: var(--sans);
+  color: var(--text-dim-color);
 }
 
 nav a {

@@ -1,5 +1,6 @@
 ---
 title: Why Are You Still Here, Mr Module?
+layout: post.html
 ---
 
 No one writes the full program correctly on their first go. Programming, debugging, and testing are all incremental processes. We add a line of code, we comment something out, we change the condition in a branch, then we want to see the effects of those changes.
@@ -293,7 +294,7 @@ In a long running process, this is fine, but if you want your Node process to ex
 
 I use a `closeSharedWorker` function that calls `worker.terminate()`.
 
-This implementation isn't particularly generic. It imports a module and calls an export called `call`[^naming-things]. In my blog's codebase, this worker does specific things to render a component to a string of HTML. However, we can make these workers more generic if needs be.
+This implementation isn't particularly generic. It imports a module and calls an export called `call`. In my blog's codebase, this worker does specific things to render a component to a string of HTML. However, we can make these workers more generic if needs be.
 
 In the same way that we pass the path to the module we want to import, 
 
@@ -338,5 +339,3 @@ There are still a lot of projects that sidestep this problem by compiling ES mod
 The JavaScript ecosystem has already got a big problem with overcomplicated tooling and build steps. Throwing tools at these kinds of problems is a short term solution. It's rare that we actually just write code that's ready to run!
 
 You can find implementations and tests for the various module cache invalidation strategies at [danprince/node-code-reload](https://github.com/danprince/node-code-reload) on GitHub. You can also find the implementation I use for this blog at [danprince/danthedev.com](https://github.com/danprince/danthedev.com).
-
-[^naming-things]: Calls, called, `call`. After writing a whole post about cache invalidation, it seems fitting to also struggle with naming things.

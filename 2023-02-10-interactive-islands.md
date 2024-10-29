@@ -1,10 +1,13 @@
 ---
 title: Interactive Islands
-
-confetti:
-  src: /islands/confetti-counter.js
-  export: ConfettiCounter
+layout: post.html
 ---
+
+<aside>
+
+⚠️ <strong>Outdated!</strong> I removed the islands functionality last time I reworked this site because I didn't actually end up using them much. I'm keeping the post around for posterity, but don't expect the examples to work!
+
+</aside>
 
 My most recent adventure into how well the browser works, involved building a minimalist implementation of the [islands architecture](https://jasonformat.com/islands-architecture/) for this site.
 
@@ -12,11 +15,11 @@ An island is an interactive section within a sea of static content. The term is 
 
 I started pulling this thread about 7 months ago, when I wrote [eleventy-preact-islands](https://github.com/danprince/eleventy-preact-islands). That was after spending a week experimenting with [Astro](https://astro.build/) right after it launched. Then I decided to write a [new static site generator](https://github.com/danprince/melange-experimental). Then I [rewrote it](https://github.com/danprince/sietch). Then I [rewrote the rewrite](https://github.com/danprince/sietch/issues/11). And now I find myself back at [Eleventy](https://www.11ty.dev/) with an implementation for islands in less than 100 lines of code.
 
-{% island confetti %}
+<button>0</button>
 
 👆 See that unassuming button there? That's an island. If you reload this page with JavaScript disabled you'll see the same button, because it was rendered at build time. You already clicked it didn't you? That was very irresponsible. There's no point trying to create suspense now!
 
-This island lives with a script tag which uses [Preact](https://preactjs.com) to hydrate the HTML it rendered at build time, creating the interactive (and overly dramatic) counter above. A button this simple is _not_ a good reason to bring a component framework into a page[^button], it just happens to be a simple island that's easy to test.
+This island lives with a script tag which uses [Preact](https://preactjs.com) to hydrate the HTML it rendered at build time, creating the interactive (and overly dramatic) counter above. A button this simple is _not_ a good reason to bring a component framework into a page, it just happens to be a simple island that's easy to test.
 
 A more focused programmer might have just added a script tag that defines a web component, then started using it immediately to add interactive examples to posts. Build time rendering be damned! I aspire to that level of ruthless pragmatism, but alas, tinkering tickles my brain too much. I _want_ to enjoy using web components, but that's a rant for another day!
 
@@ -41,14 +44,14 @@ export default ({ value = 0 }) => {
   let [count, setCount] = useState(value);
   let increment = () => setCount(count + 1);
   return h("button", { onClick: increment }, count);
-}
+};
 ```
 
 ## Shortcodes
 
 When I want to add an interactive island into a post, I need some way to tell the build process to import the island and render it to HTML.
 
-Is-land uses a markdown plugin which searches for `<is-land>` tags[^is-land-tags]. Slinkity uses [shortcodes](https://www.11ty.dev/docs/shortcodes/). The shortcode implementation is a little bit simpler overall, so that's how I went about it.
+Is-land uses a markdown plugin which searches for `<is-land>` tags. Slinkity uses [shortcodes](https://www.11ty.dev/docs/shortcodes/). The shortcode implementation is a little bit simpler overall, so that's how I went about it.
 
 Here's how a shortcode looks in a page.
 
@@ -60,10 +63,11 @@ Behind the scenes is a JavaScript function in the Eleventy config which receives
 
 ```js
 // eleventy.config.js
-eleventyConfig.addShortcode("island", src => `TODO`);
+eleventyConfig.addShortcode("island", (src) => `TODO`);
 ```
 
 This function has two main responsibilities.
+
 - Import the component at build time and render it to a static string of HTML.
 - Generate the appropriate script tags and imports to hydrate the component at runtime.
 
@@ -87,12 +91,12 @@ eleventyConfig.addShortcode("island", async (src, ...args) => {
 
 There's a tricky problem with Preact. The Eleventy config needs to be a CommonJS. However, if we `require` Preact, we get [a different version of the library](https://github.com/preactjs/preact/blob/dec4d42aeb16e8ee12a3196b7cfae18f6af0c1fd/package.json#L7-L8) from the one our islands get when they `import` it. As soon as you use hooks (with all their wonderful implicit hooky magic) you'll see an error like this.
 
-* `Cannot read properties of undefined (reading '__H') (via TypeError)`
+- `Cannot read properties of undefined (reading '__H') (via TypeError)`
 
 Translation:
 
-* `You tried calling a hook from a component where hooks aren't installed.`
-* `You probably have two copies of Preact active.`
+- `You tried calling a hook from a component where hooks aren't installed.`
+- `You probably have two copies of Preact active.`
 
 Preact already goes above and beyond to optimise the library's size, so I can forgive some occasional esoterica. The workaround here is to pull Preact down into the nearest `async` scope and to use dynamic imports.
 
@@ -102,11 +106,18 @@ I try and stay close to Eleventy's defaults, and that means I'm using liquid as 
 {{'{% island "/islands/counter.js" "count" 10 %}'}}
 ```
 
-This involves treating extra arguments as pairs of keys and values. Yes, it bothers me that there's no type safety here, but not enough to want to write my posts as markdown inside TypeScript files instead[^safe-islands].
+This involves treating extra arguments as pairs of keys and values. Yes, it bothers me that there's no type safety here, but not enough to want to write my posts as markdown inside TypeScript files instead.
+
+<aside>
+
+💡 Although now it occurs to me that I could convert each of these calls into TypeScript syntax at build time, write them all out to a dummy file, then have the compiler check it as a post-build step? [PR time!](https://github.com/danprince/danthedev.com/pull/33)
+
+</aside>
 
 This is cool and all, but the whole point of these islands is that they _aren't_ static content. We still need to bring them to life on the other side.
 
 ## Hydration
+
 To make the island interactive again in the browser, we need to import it and pass it to Preact's `hydrate` function.
 
 ```js
@@ -189,6 +200,7 @@ let mod = await import(`${file}?v=${stat.mtimeMs}`);
 ```
 
 ## Hydration Modes
+
 Render at build time, hydrate at runtime is a good default, but some components don't need to be hydrated, others rely on web features that don't work in a Node process.
 
 I support two alternate hydration modes with a pair of shortcodes:
@@ -206,6 +218,7 @@ For the static island this involves outputting the rendered HTML directly. No ne
 The client island needs to skip the step where we import the component and render it to a string, but otherwise it's no different.
 
 ## Lazy Hydration
+
 One of my original goals was to defer all imports until the island entered the viewport. Dynamic imports inside an `IntersectionObserver` is the slightly scary sounding way to achieve this.
 
 ```js
@@ -220,12 +233,19 @@ One of my original goals was to defer all imports until the island entered the v
     hydrate(h(component, {}), element);
     observer.disconnect();
   }).observe(element);
-</script> 
+</script>
 ```
 
-Unfortunately the shim that makes import maps work in older browsers [can't polyfill dynamic imports](https://github.com/guybedford/es-module-shims#polyfill-edge-case-dynamic-import). There are some workarounds, but I think making the script tag `async` is probably good enough for now[^scripts-hack].
+Unfortunately the shim that makes import maps work in older browsers [can't polyfill dynamic imports](https://github.com/guybedford/es-module-shims#polyfill-edge-case-dynamic-import). There are some workarounds, but I think making the script tag `async` is probably good enough for now.
+
+<aside>
+
+💡 We could totally hack it with two script tags. The first would render the component, but would have an [invalid `type` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type) so that the browser would ignore it. The second script would create the intersection observer and enable the first script when the island came into view.
+
+</aside>
 
 ## Stable IDs
+
 Behold! The `uid` implementation of a man who is done with installing small packages from npm.
 
 ```js
@@ -239,16 +259,17 @@ It would be better to use stable identifiers that don't change from build to bui
 ```js
 // outside the shortcode
 let counters = {};
-eleventyConfig.on("eleventy.after", () => counters = {});
+eleventyConfig.on("eleventy.after", () => (counters = {}));
 
 // inside the shortcode
-let id = counters[this.inputPath] ||= 0;
+let id = (counters[this.inputPath] ||= 0);
 counters[this.inputPath] += 1;
 ```
 
 `this.inputPath` is the path to the page that Eleventy is rendering. Between builds we need to reset these counters so that they're assigned in the same order next time.
 
 ## Named Exports
+
 Glaring at me in this code is `export default`. I don't like using default exports, because I think they encourage splitting files preemptively. I wouldn't split 5 related functions into separate files, so why would I split up 5 related components?
 
 The challenge with named exports is a syntactic one. The way I'm handling props in Liquid's shortcodes doesn't leave much space for specifying a named export.
@@ -267,20 +288,19 @@ confetti:
   src: /island/counters.js
   export: ConfettiCounter
 ---
-
-{{'{% island confetti %}'}}
 ```
 
 This does a good job at cleaning up some duplication _and_ solving the named export problem with a [single small change](https://github.com/danprince/danthedev.com/commit/944ba7a28d0fc4de1ab5e7d8ccb3d6c2440f815f).
 
 ## TypeScript & JSX
+
 I've spent enough time making things for the web to know that I enjoy it more when I do it with types. The only question here is which flavour of TypeScript to use.
 
 Writing TypeScript in a `.tsx` file is the best short term developer experience. You can express types with first class syntax. You even get JSX thrown in for free. The problem is that unless the _[ECMAScript Proposal for Type Annotations](https://github.com/tc39/proposal-type-annotations)_ is accepted, you can't run a `.tsx` file in a browser. _Even with_ that proposal, browsers may never be able to evaluate JSX.
 
 Either we need to integrate a compiler into the toolchain, or to give up on JSX and write types in JS files with JSDoc comments. I've [waffled](/web-dev-without-tools/#static-analysis) about the latter approach here before.
 
-Initially I went for a setup where TypeScript compiled everything in the `islands` directory. This works but it needs to run in parallel with Eleventy[^tsc-magic]. That means a clean build before even starting Eleventy to ensure that the output files exist before shortcodes start reaching for them, and a throttle on Eleventy's watcher to prevent race conditions with the compiler in development.
+Initially I went for a setup where TypeScript compiled everything in the `islands` directory. This works but it needs to run in parallel with Eleventy. That means a clean build before even starting Eleventy to ensure that the output files exist before shortcodes start reaching for them, and a throttle on Eleventy's watcher to prevent race conditions with the compiler in development.
 
 It also creates an awkward problem if you want to `.gitignore` the compiled JavaScript. You probably do. Eleventy's watcher ignores everything that Git ignores. Instead of watching the files that the site will use, you have to watch the source files and do the throttling trick mentioned above.
 
@@ -291,6 +311,7 @@ Back to JSDoc and calling `h` like a madman, I guess!
 What I do appreciate about this setup is the transparency. All the files in the `islands` directory are copied across into the site's output directory. I can co-locate a CSS file next to a JS file and that colocation is preserved at runtime. Nothing is transpiled, or bundled. No need for source maps, no mapping paths from `.tsx` to `.js`. I get type checking, and I can still augment those types with `.d.ts` files when I want to express something more complex.
 
 ## Conclusion
+
 This idea is currently at the proof-of-concept stage. It still needs a trial by fire with a highly interactive article.
 
 One of the changes I'm considering is supporting a "vanilla" component format, [like I did in Sietch](https://sietch.netlify.app/reference/islands.html#vanilla). Vanilla islands can render and hydrate without any dependencies. They're appropriate for _tiny_ bits of interactive content like the button island on this page.
@@ -298,14 +319,3 @@ One of the changes I'm considering is supporting a "vanilla" component format, [
 There are rough edges when you work directly with browsers. Tools and compilers can help you forget about them, but _should_ you forget about them? I think the future of building for the web without those tools is looking brighter and brighter.
 
 Here's the [pull request](https://github.com/danprince/danthedev.com/pull/32) with the full implementation.
-
-[^button]: `<button onclick="this.textContent -= -1">0</button>`. Don't let something as practical as common sense stop you from bypassing JavaScript's lopsided coercion rules to do addition with minus signs.
-
-[^scripts-hack]: We could totally hack it with two script tags. The first would render the component, but would have an [invalid `type` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type) so that the browser would ignore it. The second script would create the intersection observer and enable the first script when the island came into view. Hmm.
-
-[^tsc-magic]: No, I do not want to figure out what arcane magic is required to use the [TypeScript Compiler API](https://github.com/microsoft/TypeScript/wiki/Using-the-Compiler-API) to trigger incremental builds from inside an `eleventy.before` hook.
-
-[^is-land-tags]: This is kinda cool because the `<is-land>` tag doesn't need to be replaced, the browser understands it as a custom element at runtime.
-
-[^safe-islands]: Although now it occurs to me that I could convert each of these calls into TypeScript syntax at build time, write them all out to a dummy file, then have the compiler check it as a post-build step? [Hmm.](https://github.com/danprince/danthedev.com/pull/33)
-

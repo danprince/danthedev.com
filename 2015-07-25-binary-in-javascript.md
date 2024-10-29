@@ -1,8 +1,11 @@
 ---
 title: Binary in Javascript
+layout: post.html
 ---
 
-_**Heads up!** This is an old post that contains a lot of naive speculation about how JavaScript memory allocation works._
+<aside>
+  <strong>Heads up!</strong> This is an old post that contains a lot of naive speculation about how JavaScript memory allocation works.
+</aside>
 
 Over the last week or so, I've spent my spare time working on a new [roguelike][0] game, with a focus on extensive and interesting planet generation. A key characteristic of the genre is that the game world is procedurally generated and this one is no exception.
 
@@ -20,7 +23,7 @@ var tiles = { WATER: 0, EARTH: 1, SAND: 2, ROCK: 3 };
 var tile = {
   type: tiles.WATER,
   height: 0.54,
-  vegetation: false
+  vegetation: false,
 };
 ```
 
@@ -36,11 +39,11 @@ One of the blessings of Javascript is that it is efficient enough for you to wor
 
 Even if your world is only 512x512, you have to deal with 262144 object instances, each of which contain at least two [64 bit floating point][1] numbers and an additional bit for the boolean. Oh and wait, you're storing a key alongside each value too and strings are made up of [16-bit unsigned integers][2].
 
-| String | Chars | Bits |
-| ------ | ----: | ---: |
-| `"type"`       | 4 | 64 |
-| `"height"`     | 6 | 96 |
-| `"vegetation"` | 10 | 160 |
+| String         | Chars | Bits |
+| -------------- | ----: | ---: |
+| `"type"`       |     4 |   64 |
+| `"height"`     |     6 |   96 |
+| `"vegetation"` |    10 |  160 |
 
 Altogether we have an extra 350 bits and that's not even taking null terminators into account (they'll be back). Let's throw that together with the size of our values (350 + 64 + 64 + 1 = 479). So, each of our 3 field tile instances takes up ~60 bytes of memory. Altogether your 512x512 map is taking up ~15695872 bytes or ~14.97 megabytes of data, just to store tiles. Sure you could shorten your keys and maybe even use an array instead, but you're still allocating huge amounts of memory.
 
@@ -64,7 +67,7 @@ var tiles = { WATER: 0, EARTH: 1, SAND: 2, ROCK: 3 };
 var tile = {
   type: tiles.WATER,
   height: 0.54,
-  vegetation: false
+  vegetation: false,
 };
 ```
 
@@ -78,7 +81,7 @@ How might this look if we had to use a binary format?
 
 | Field  | `type` | `height` | `vegetation` |
 | ------ | :----: | :------: | :----------: |
-| Length | `8`    | `8`      | `1`          |
+| Length |  `8`   |   `8`    |     `1`      |
 
 17 bits. We've managed to substantially cut back on our 479 bit object format. However, 17 is a _tricky_ number when it comes to storage. It won't quite fit into two bytes. We'd probably have to use 3, which would give us 7 bits of extra space for the future. However, if we knew this was going to be the canonical format, we could shorten the first field by 1 bit and use 7 bits to represent tile types instead. Condensing the format to fit nicely into two bytes is an exercise left for the reader.
 
@@ -99,11 +102,11 @@ Tile:
 
 We need to do a small amount of work to the height and vegetation properties, but afterwards, the underlying representation of these values looks like this.
 
-| Field | Decimal | Binary |
-| ----- | ------: | -----: |
-| type       | `4`  | `00000100` |
-| height     | `48` | `00110000` |
-| vegetation | `1`  | `1` |
+| Field      | Decimal |     Binary |
+| ---------- | ------: | ---------: |
+| type       |     `4` | `00000100` |
+| height     |    `48` | `00110000` |
+| vegetation |     `1` |        `1` |
 
 Here is our packaged up tile data type in all of its 17 bits of glory.
 
@@ -128,7 +131,7 @@ function pack(type, height, vegetation) {
 However, it's not quite that simple.
 
 ```js
-assert.equal('00000100001100001', pack(4, 48, 1));
+assert.equal("00000100001100001", pack(4, 48, 1));
 
 // "1001100001" is not equal to "00000100001100001"
 ```
@@ -216,7 +219,7 @@ But how do we get values back out of this binary/number thing? Quite simply, do 
 
 ### Shift Right (`>>`)
 
-From our format, we know that the bit range for the height property is 1-8 (inclusive). To get those bits back to the start, we just can __shift right__ using the start of our range as our RHS operand.
+From our format, we know that the bit range for the height property is 1-8 (inclusive). To get those bits back to the start, we just can **shift right** using the start of our range as our RHS operand.
 
 ```
 00000100001100001 >> 1
@@ -255,10 +258,10 @@ That's all there is to it.
 
 ## Roundup
 
-* Performing field lookups will be faster than doing a key lookup for object.
-* Reduced our tile structure to ~12.5% of the original size.
-* These tiles can be stored in [TypedArrays][8] for further memory efficiency and performance benefits.
-* The size can become as little as ~3% if you fit the format into two bytes, then store it in a [Uint16Array][9] (see demo below).
+- Performing field lookups will be faster than doing a key lookup for object.
+- Reduced our tile structure to ~12.5% of the original size.
+- These tiles can be stored in [TypedArrays][8] for further memory efficiency and performance benefits.
+- The size can become as little as ~3% if you fit the format into two bytes, then store it in a [Uint16Array][9] (see demo below).
 
 We can repeat the earlier experiment and compare the object implementation (on the left) to the binary implementation (on the right).
 
@@ -268,18 +271,19 @@ We can repeat the earlier experiment and compare the object implementation (on t
 As far as your program is concerned, it is the exact same data. We could read a lot more into this data, but I'll save that for another time. Again, the code is in [the gist][14].
 
 ## Sharp Edges
+
 If you're anything like me, mixing this kind of code with functional or object oriented styles feels messy. Looking for some object properties with dot notation and some with `>>` and `&` is upsetting. In order to improve the experience, I've written a tiny library for removing the sharp edges. It allows you to design lightweight formats for dealing with unsigned integers.
 
 ```js
 var Tile = new BinaryFormat([
-  { length: 8, name: 'type' },
-  { length: 8, name: 'height' },
-  { length: 1, name: 'vegetation' }
+  { length: 8, name: "type" },
+  { length: 8, name: "height" },
+  { length: 1, name: "vegetation" },
 ]);
 
-Tile.pack(4, 48, 1);   // 2145
-Tile.unpack(2145);     // { type: 4, height: 48, vegetation: 1 }
-Tile.unpackArray(2145) // [4, 48, 1]
+Tile.pack(4, 48, 1); // 2145
+Tile.unpack(2145); // { type: 4, height: 48, vegetation: 1 }
+Tile.unpackArray(2145); // [4, 48, 1]
 ```
 
 Of course for performance critical moments, you don't want to unpack the numbers; just jump in and get bitwise to your heart's content.
@@ -287,6 +291,7 @@ Of course for performance critical moments, you don't want to unpack the numbers
 Check it out on [GitHub][10].
 
 ## Demo
+
 Finally, what would this kind of very hypothetical rambling be without a demo to back it up? Below is a minimalistic implementation of a terrain generator, using [tiny-binary-format][10] and the [Diamond-Square][11] implementation from my game.
 
 Try it [here](https://jsbin.com/zeqevi/edit) on JSBin!

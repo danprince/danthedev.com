@@ -1,5 +1,6 @@
 ---
 title: Reduce Overcomplicates Code
+layout: post.html
 ---
 
 The best aspects of functional programming are the ways in which it encourages simplicity, but JavaScript's functional [`reduce`][reduce] _usually_ just complicates your code.

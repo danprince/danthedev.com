@@ -1,18 +1,19 @@
 ---
 title: What Is That Text Editor?
+layout: post.html
 ---
 
 I've spent thousands of hours editing text inside a terminal and more time than I am proud to admit, configuring Vim. Then [NeoVim](https://neovim.io/). Then across to [Doom Emacs](https://github.com/doomemacs/doomemacs), and back to Vim again. It was never a surprise when my development workflow raised eyebrows and someone asked "What is that text editor?".
 
 My initial attempts to switch to VSCode were about as successful as [trying to build a castle on a swamp](https://quotegeek.com/quotes-from-movies/monty-python-and-the-holy-grai/2266/), but now I've been using it full time for over a year, and people still ask "What is that text editor?".
 
-![VSCode without all the visual bells and whistles](/img/2023-02-05-08-52-31.png){.overblown}
+![VSCode without all the visual bells and whistles](/images/2023-02-05-08-52-31.png)
 
 VSCode may have something of a reputation for being a resource hungry, battery draining piece of software in a  why-would-you-implement-a-text-editor-inside-a-browser-inside-a-native-app kind of a way, but it also has the best out of the box experience for working with TypeScript, which is most of the work I do now.
 
 If you open the files above with a fresh install of VSCode, you'll see a UI optimised for discovery. All possible features are turned on so that the first time user can find and understand them.
 
-![](/img/2023-02-05-10-47-33.png){.overblown}
+![](/images/2023-02-05-10-47-33.png)
 
 The visual war for your attention is tough, but as a design decision I think it helps flatten the learning curve. It's much easier to turn something you can see off, than to discover a feature you can't see. For some reason, not everyone wants to spend their evenings reading [`:help quickfix`](https://vimhelp.org/quickfix.txt.html).
 
@@ -20,7 +21,7 @@ Lots of people seem to get excited about emulating VSCode inside Vim, which is f
 
 ### Vim
 
-On this noblest of quests, [VSCodeVim](https://github.com/VSCodeVim/Vim) is the main character. Editing text without modes and motions is like having to look at your keyboard to type. This extension implements a _good_ amount of Vim's keybindings and commands [^1]. I occasionally run into edge cases, but not often enough that I've ever considered [embedding Neovim inside VSCode](https://github.com/vscode-neovim/vscode-neovim) for accuracy _or_ performance.
+On this noblest of quests, [VSCodeVim](https://github.com/VSCodeVim/Vim) is the main character. Editing text without modes and motions is like having to look at your keyboard to type. This extension implements a _good_ amount of Vim's keybindings and commands. I occasionally run into edge cases, but not often enough that I've ever considered [embedding Neovim inside VSCode](https://github.com/vscode-neovim/vscode-neovim) for accuracy _or_ performance.
 
 ### Theme
 
@@ -149,7 +150,7 @@ It's well established that [Magit](https://emacsair.me/2017/09/01/magit-walk-thr
 
 Thankfully, for that, there's [Edamagit](https://github.com/kahole/edamagit), a Magit implementation for VSCode. A Git buffer is only ever a <kbd>&lt;leader&gt;gg</kbd> away.
 
-![](/img/2023-02-06-13-08-54.png)
+![](/images/2023-02-06-13-08-54.png)
 
 From this buffer, I can manage branches, stage changes, stash, tag, push, pull, cherry-pick, rebase, commit, and [lots more](https://github.com/kahole/edamagit#usage). Best of all, the entire UI is text based, so you can navigate through it using motions and patterns you use everywhere else.
 
@@ -167,11 +168,11 @@ For more complex projects, I still use Tmux. For most of the projects at work, I
 ### Spot the Difference
 Let's open up the original session in Vim and see how close we managed to get.
 
-![](/img/2023-02-05-22-50-00.png)
+![](/images/2023-02-05-22-50-00.png)
 
 And here it is again in VSCode.
 
-![](/img/2023-02-05-08-52-31.png)
+![](/images/2023-02-05-08-52-31.png)
 
 Pretty good, right? It's not going to be for everyone, but I find that I'd much rather opt-in to distractions, than have them onscreen at all time.
 
@@ -193,7 +194,7 @@ That said, there are some VSCode features that do not exist in Vim, or that have
 ### What Do I Miss From Vim?
 - Speed. At least on an MBP with an M1, VSCode is not laggy, but it's also not playing in the same league as Vim. This makes complete sense as part of the tradeoffs of building a text editor with web technologies. I still use Vim for many one-off tasks if I need to quickly edit text outside of my current workspace. Sometimes, I even use Vim inside VSCode's terminal.
 - My battery life. One of the biggest factors that delayed my transition to VSCode was the strain on my battery life. I indirectly mitigated this problem when I upgraded to a new Macbook, but reliably VSCode is one of the most energy hungry apps I run.
-- The editor is not as reliable. The editor slows down over a long enough sessions, but its unclear whether this is a performance regression with VSCode, or whether this is an extension leaking memory. As of this morning, VSCodeVim's undo stack resets when you save a file [^2]. For a few weeks between releases <kbd>ctrl n</kbd> and <kbd>ctrl p</kbd> stopped navigating up and down in some lists. You do not run into these kinds of problems with Vim.
+- The editor is not as reliable. The editor slows down over a long enough sessions, but its unclear whether this is a performance regression with VSCode, or whether this is an extension leaking memory. As of this morning, [VSCodeVim's undo stack resets when you save a file][2]. For a few weeks between releases <kbd>ctrl n</kbd> and <kbd>ctrl p</kbd> stopped navigating up and down in some lists. You do not run into these kinds of problems with Vim.
 - `:help`. VSCode is undoubtedly friendlier than Vim, but the documentation is scattered and sometimes patchy. Being able to open detailed documentation for any feature by name, directly inside your text editor is something I miss.
 - I wish I could use workspace search and replace entirely inside a text buffer, rather than having to open the sidebar for that functionality. I said that this was painful in Vim, but once you're through the awkward step of generating a quickfix list of search results with something like `:grep vim *.md` and `:cfdo s/vim/emacs/gc` the user experience for previewing and confirming those changes is great.
 - Spellcheck. It's kind of incredible that Vim comes with a spellchecker and VSCode doesn't. There are extensions that provide one, but in my experience they're also slow and hungry, so I stopped using them. That's probably why you spotted some typos in this post.
@@ -211,5 +212,4 @@ Why do some programmers habitually configure and tweak their text editors? Well,
 
 There are lots of other tweaks I made that aren't worth mentioning here, but you can find the entire [VSCode config](https://github.com/danprince/dotfiles/tree/main/vscode) in my [dotfiles repo](https://github.com/danprince/dotfiles).
 
-[^1]: [VSCodeVim Roadmap](https://github.com/VSCodeVim/Vim/blob/master/ROADMAP.md)
-[^2]: https://github.com/VSCodeVim/Vim/issues/8157
+[2]: https://github.com/VSCodeVim/Vim/issues/8157

@@ -321,3 +321,9 @@ kbd {
     position: absolute;
   }
 }
+
+/* Top level images should be centered */
+body > p > img {
+  display: block;
+  margin: 0 auto;
+}

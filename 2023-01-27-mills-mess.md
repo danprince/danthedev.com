@@ -3,8 +3,6 @@ title: Mills' Mess
 layout: post.html
 ---
 
-And now for something completely different...
-
 ![Mills' Mess juggling animation](/images/mills-mess.gif)
 
 Technology is the primary focus and namesake of this blog, but some weeks I finish work and the last thing I want to do is spend time thinking and writing about programming.

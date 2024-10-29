@@ -2,13 +2,9 @@
 layout: page.html
 ---
 
-<!-- Title for pages with titles -->
 {% if title %}
 <header>
   <h1>{{title}}</h1>
   <time>{{ page.date | date: "%b %e, %Y" }}</time>
 </header>
-{% endif %}
-
-<!-- Post contents -->
-{{content}}
+{% endif %} {{content}}

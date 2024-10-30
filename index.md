@@ -18,5 +18,3 @@ eleventyExcludeFromCollections: true
   </li>
 {%- endfor -%}
 </ul>
-
-{% include "footer.html" %}

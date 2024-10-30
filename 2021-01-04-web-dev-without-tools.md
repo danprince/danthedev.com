@@ -1,5 +1,6 @@
 ---
 title: Web Dev Without Tools
+layout: post.html
 ---
 
 Most frontend web development projects rely on a complex stack of tools that turn code into code, or code into errors. In a given project, there's a good chance you'll see some combination of the following:
@@ -340,34 +341,9 @@ The future of tooling for web development is far from bleak and despondent thoug
 * [swc][swc] is another performant JavaScript compiler with a bundler, written in Rust.
 * [Deno][deno] is a reimagining of Node.js, but with first class TypeScript support and without a central package repository. Less of a tool and more of a platform, but it comes with a [unified toolchain](https://deno.land/manual/tools).
 
----
-
 Someone starting out with web development can use these techniques to create a complex app before they ever think about installing Node and npm. A burnt out web developer can breathe fresh life into their next project by sidestepping tool configurations and boilerplates.
 
 If you end up making something cool, more people are likely to play with it and contribute when they don't have to spend 5 minutes installing tools to get it running.
-
-There used to be a joke that went something like this:
-
-> Just use jQuery.
-> 
-> How do I install jQuery?  
-> Use Bower.  
-> What's Bower?   
-> It's a package manager.  
->
-> How do I install Bower?  
-> Use npm.  
-> What's npm?  
-> It's a package manager.  
->
-> How do I install npm?  
-> Use brew.  
-> What's brew?  
-> It's a package manager.  
->
-> How do I install brew?  
-
-I say this as someone who used to use [Bower][bower] without a sense of irony. It's possible to be grateful for the ways that tools have advanced modern development, without forgetting that they can also create a ridiculous mess.
 
 These days it's either tricky or impossible to get some of my old projects running again because the tools I used are now outdated. At the time, they usually suggested using a global installation, so I have no idea which versions I was using and I don't have enough motivation to retroactively find out.
 

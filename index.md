@@ -1,20 +1,22 @@
 ---
-title: Dan Prince
-layout: post.html
+title: Dan the Dev
+layout: page.html
 index: true
-description: |
-  Making things, breaking things, and trying to fix the things I've broken before someone finds out.
+eleventyExcludeFromCollections: true
 ---
 
-{{ description }}
+<header>
+  <h1>Dan the Dev</h1>
+  <p>Making things, breaking things, and trying to fix the things I've broken before someone finds out.</p>
+</header>
 
-{% assign posts = collections.post | reverse %}
-
-{%- for post in posts -%}
-  <div class="post-list-item">
-    <a href="{{ post.url }}" >
-      <time>{{ post.date | date: "%b %d, %y" }}</time>
-      <span>{{ post.data.title }}</span>
-    </a>
-  </div>
+<ul>
+{%- for post in collections.all reversed -%}
+  <li>
+    <time>{{ post.date | date: "%b %d, %y" }}</time>
+    <a href="{{ post.url }}">{{ post.data.title }}</a>
+  </li>
 {%- endfor -%}
+</ul>
+
+{% include "footer.html" %}

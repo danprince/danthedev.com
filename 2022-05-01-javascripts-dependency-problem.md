@@ -1,10 +1,11 @@
 ---
 title: JavaScript's Dependency Problem
+layout: post.html
 ---
 
 With nearly two million packages, JavaScript's de facto package registry is already an order of magnitude larger than equivalent registries for other programming languages.
 
-![](/img/package-stats.png)
+![](/images/package-stats.png)
 
 JavaScript is probably a more popular programming language, but we're still way off the normal scale here. Why is that? And does it matter?
 

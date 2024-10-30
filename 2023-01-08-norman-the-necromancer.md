@@ -1,6 +1,7 @@
 ---
 title: Norman the Necromancer
 description: A post-mortem of a necromantic action game.
+layout: post.html
 ---
 
 Most years I take part in [JS13K](https://js13kgames.com/), a month-long challenge to build a game for the web that must not exceed 13KB.
@@ -11,11 +12,9 @@ When ["DEATH"](https://medium.com/js13kgames/js13kgames-2022-has-started-73a7bd3
 
 > &ldquo;Play as an outcast necromancer trying to learn to reanimate corpses whilst being hunted by the inhabitants of the local village&rdquo;.
 >
-> ![An early mockup of how the game might look](/img/2023-01-03-22-48-04.png)
+> ![An early mockup of how the game might look](/images/2023-01-03-22-48-04.png)
 
 This iteration of the jam was the first time I actually finished and submitted a game. I want to look back at what worked, what didn't, and what I learned from building ["Norman the Necromancer"](https://js13kgames.com/games/norman-the-necromancer/index.html).
-
-[[toc]]
 
 ## What Worked Well?
 I feel a bit uncomfortable patting myself on the back and saying "well done", but there were  positive aspects of the game and the development process that will influence the way I approach building small games in the future. Hopefully some of that can be useful to you too.
@@ -23,7 +22,7 @@ I feel a bit uncomfortable patting myself on the back and saying "well done", bu
 ### 1. Visuals
 Visuals are arguably the hardest part of making a game this small. For JS13K I usually generate my graphics with code, but this year I was resolute about using pixel art and managed to fit 83 sprites and a 96 character font into a 160x70 sprite sheet.
 
-![](/img/2023-01-04-22-48-38.png)
+![](/images/2023-01-04-22-48-38.png)
 
 I draw with a program called [Aseprite](https://www.aseprite.org/) and the blue rectangles are [slices](https://www.aseprite.org/docs/slices/) that define named sprites. I export the bounds of each sprite to a [JSON file](https://github.com/danprince/norman-the-necromancer/blob/cc9ba92ffd5f5bc19e0f5a0bbb38847b2651611e/src/sprites.json) so that I can refer to those sprites by name. TypeScript's [`resolveJsonModule` option](https://www.typescriptlang.org/tsconfig#resolveJsonModule) ensures that there's a compile  error if anything goes out of sync.
 
@@ -32,9 +31,9 @@ It might seem odd to include a font, but it's almost impossible to render conven
 Tweens and particle effects are both classic ["juice"](https://www.youtube.com/watch?v=Fy0aCDmgnxg) techniques that hide the static nature of these sprites. Instead of using animation frames for walk cycles, objects hop with a sinusoidal tween. For almost everything else, I used particle emitters and burst them to show that something happened.
 
 <div style="display: flex; justify-content: space-around;">
-<img src="/img/norman-particles-bones.gif" alt="" />
-<img src="/img/norman-particles-monk.gif"  alt="" />
-<img src="/img/norman-particles-heal.gif"  alt="" />
+<img src="/images/norman-particles-bones.gif" alt="" />
+<img src="/images/norman-particles-monk.gif"  alt="" />
+<img src="/images/norman-particles-heal.gif"  alt="" />
 </div>
 
 The rest of the aesthetics are minimal, partly to stay within the budget and partly to keep the focus on the foreground as much as possible. The hallway in which the game takes place is barely visible pattern of repeating tiles, and the UI elements try not to compete for attention by staying well away from the action.
@@ -42,7 +41,7 @@ The rest of the aesthetics are minimal, partly to stay within the budget and par
 ### 2. Spells
 Despite the curious necromancer narrative, this game largely ended up being about magic and spells. Norman ended up as more of a spell-slinger than a reclusive scientist.
 
-![](/img/norman-spells.gif)
+![](/images/norman-spells.gif)
 
 The basic casting mechanics are very basic. The player chooses an angle and shoots a gravity-affected projectile at a fixed velocity. Not a huge amount of fun, but the interesting stuff happens when you use souls to perform rituals at the end of each level. Many of these rituals alter Norman's spellcasting.
 
@@ -199,7 +198,7 @@ export function Monk() {
 
 These behaviours were great for prototyping, and many enemies came together incredibly quickly as a result. My favourite example is the [`Summon`](https://github.com/danprince/js13k-2022/blob/cc9ba92ffd5f5bc19e0f5a0bbb38847b2651611e/src/behaviours.ts#L144) behaviour which I built so that the [`Piper`](https://github.com/danprince/js13k-2022/blob/cc9ba92ffd5f5bc19e0f5a0bbb38847b2651611e/src/objects.ts#L260-L268) could _summon_ rats as he comes through the level. This ended up becoming the core mechanic for [`Wizard`](https://github.com/danprince/js13k-2022/blob/cc9ba92ffd5f5bc19e0f5a0bbb38847b2651611e/src/objects.ts#L357) who _summons_ portals. In turn, those portals _summon_ random enemies.
 
-![](/img/norman-behaviours-wizard.gif)
+![](/images/norman-behaviours-wizard.gif)
 
 I had already drawn a sprite for the wizard before I decided on the behaviour, but it must have taken about 5 minutes to draw the portal sprite, define the particle effects, and add the summon behaviours to both. These kinds of feedback cycles make a huge difference for development velocity!
 
@@ -269,7 +268,7 @@ I tried a few different strategies for balancing rituals. First, separating them
 
 The simplest example is the big shelled knights that spend half their time inside their shells, invulnerable. Most spells are wasted (unless they inflict a status effect like bleed) at this phase. However, this turned out not to be punishing enough if the player just keeps on spamming, so I created an angry red knight who had a "bleeding" state which reflects damage back to Norman. This wasn't intuitive and he ended up getting nerfed down to simply healing if he is damaged whilst "enraged". The final iteration of this design ended up being the King's Guards, a late game enemy, who use their shields to reflect projectiles back at Norman.
 
-![](/img/norman-royal-guard.gif)
+![](/images/norman-royal-guard.gif)
 
 _These guys used to reflect Norman's own projectiles back at him, until I inflicted bleed on myself during a playthrough and realised there was no cure._
 
@@ -282,7 +281,7 @@ When villagers meet their demise, they have a fixed chance to drop a skull onto 
 
 I designed quite a few of the rituals around this ability, ultimately it just wasn't as fun as bouncing lightning off the ceiling. The closest I got to a satisfying mechanic here was the "Riders" ritual, which summoned a bone chariot after each resurrection.
 
-![](/img/norman-bone-chariot.gif)
+![](/images/norman-bone-chariot.gif)
 
 Sadly, I couldn't justify the enormous sprite for a relatively small mechanic, and this ritual ended up getting replaced by ["Allegiance"](https://github.com/danprince/js13k-2022/blob/cc9ba92ffd5f5bc19e0f5a0bbb38847b2651611e/src/rituals.ts#L208).
 

@@ -1,5 +1,6 @@
 ---
 title: You Might Not Need Planes
+layout: post.html
 ---
 
 I work and travel as a digital nomad with an interesting restriction. I don't fly. A year on the road has taken me to 15 countries across three continents. I've spent weeks of time on trains, buses, and ferries.

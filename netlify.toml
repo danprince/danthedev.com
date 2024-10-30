@@ -1,6 +1,6 @@
 [build]
   publish = "_site/"
-  command = "yarn build"
+  command = "pnpm build"
 
 [[redirects]]
   from = "/deepest-circles-of-javascript-hell/stop-using-foreach/"

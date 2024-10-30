@@ -1,39 +1,57 @@
----
-styles:
-  - /defaults.css
----
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Dan Prince">
-    <meta name="theme-color" content="blue">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Dan Prince" />
+    <meta name="theme-color" content="#1e1e1e" />
     <meta property="og:title" content="{{ title }}" />
     <meta property="og:type" content="{{ og_type | default: 'article' }}" />
     <meta property="og:url" content="{{ pkg.url }}{{ page.url }}" />
-    {% if description %}<meta name="description" content="{{ description }}">{% endif %}
-    <script type="importmap">{{ pkg.importMap | json }}</script>
+    {% if description %}
+    <meta name="description" content="{{ description }}" />
+    {% endif %}
 
-    {%- if cover -%}
-    <meta property="og:image" content="{{ pkg.url }}{{ cover.url }}" />
-    {%- else -%}
-    <meta property="og:image" content="{{ pkg.url }}/favicon.svg" />
-    {%- endif -%}
-
-    <link rel="icon" href="/favicon.svg">
-    <link rel="canonical" href="{{ pkg.url }}{{ page.url }}">
     <title>{{ title }}</title>
+    <link rel="icon" href="/favicon.svg" />
+    <link href="/style.css" rel="stylesheet" />
 
-    {%- for style in styles -%}
-      <link rel="stylesheet" href="{{ style }}">
-    {%- endfor -%}
+    <!-- Make sure the theme code executes before the body so that we don't
+     see a flash of the wrong theme. -->
+    <script>
+      let dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      let theme = localStorage.theme || (dark ? "dark" : "light");
+      let html = document.documentElement;
+      html.setAttribute("data-theme", theme);
+      setTheme = (theme) =>
+        html.setAttribute("data-theme", (localStorage.theme = theme));
+    </script>
   </head>
   <body>
-    {{ content }}
+    <nav>
+      {% if not index %}
+      <a href="/">{% include "icons/move-left.svg" %}</a>
+      {% else %}
+      <span></span>
+      {% endif %}
 
-    {% for script in scripts %}
-      <script type="module" src="{{ script }}"></script>
-    {% endfor %}
+      <button
+        class="toggle-theme toggle-light"
+        title="Light mode"
+        onclick="setTheme('light')"
+      >
+        {% include "icons/sun.svg" %}
+      </button>
+
+      <button
+        class="toggle-theme toggle-dark"
+        title="Dark mode"
+        onclick="setTheme('dark')"
+      >
+        {% include "icons/sun-moon.svg" %}
+      </button>
+    </nav>
+
+    {{content}}
   </body>
 </html>

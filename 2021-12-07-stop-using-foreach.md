@@ -1,11 +1,6 @@
 ---
 title: Stop Using forEach!
-cover:
-  title: Next time, I'll use a for loop...
-  alt: A kraken destroys a ship.
-  url: /covers/kraken-foreach.png
-description: >
-  The deepest circles of JavaScript hell are reserved for people who use forEach.
+layout: post.html
 ---
 
 The deepest circles of JavaScript hell are reserved for people that use [`forEach`][for-each].
@@ -134,7 +129,7 @@ new Set(["spyglass", "compass", "rum"]).forEach();
 
 Or any other third party data structure that implements the [iterable protocol][iterable].
 
-```js/4
+```js
 import { PegLegTree } from "@pirates/trees";
 
 new PegLegTree(23, 54, 64, 12).forEach();

@@ -105,6 +105,7 @@ pre code {
 }
 
 aside {
+  text-align: left;
   font: 12pt/1.8 var(--sans);
   color: var(--text-dim-color);
 }
@@ -134,7 +135,8 @@ code mark {
   color: inherit;
 }
 
-header {
+header,
+footer {
   margin: 4rem 0;
   text-align: center;
 }

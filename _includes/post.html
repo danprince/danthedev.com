@@ -7,4 +7,4 @@ layout: page.html
   <h1>{{title}}</h1>
   <time>{{ page.date | date: "%b %e, %Y" }}</time>
 </header>
-{% endif %} {{content}}
+{% endif %} {{content}} {% include "footer.html" %}

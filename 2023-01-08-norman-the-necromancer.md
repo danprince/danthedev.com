@@ -2,6 +2,7 @@
 title: Norman the Necromancer
 description: A post-mortem of a necromantic action game.
 layout: post.html
+tags: post
 ---
 
 Most years I take part in [JS13K](https://js13kgames.com/), a month-long challenge to build a game for the web that must not exceed 13KB.

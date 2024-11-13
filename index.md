@@ -2,7 +2,6 @@
 title: Dan the Dev
 layout: page.html
 index: true
-eleventyExcludeFromCollections: true
 ---
 
 <header>
@@ -11,7 +10,7 @@ eleventyExcludeFromCollections: true
 </header>
 
 <ul>
-{%- for post in collections.all reversed -%}
+{%- for post in collections.post reversed -%}
   <li>
     <time>{{ post.date | date: "%b %d, %y" }}</time>
     <a href="{{ post.url }}">{{ post.data.title }}</a>

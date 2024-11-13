@@ -1,6 +1,7 @@
 ---
 title: Binary in Javascript
 layout: post.html
+tags: post
 ---
 
 <aside>

@@ -1,9 +1,3 @@
----
-title: LICENSE
-layout: page.html
-eleventyExcludeFromCollections: true
----
-
 # License
 
 All posts, images, styles, and scripts are licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en).

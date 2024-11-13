@@ -1,6 +1,7 @@
 ---
 title: Why Are You Still Here, Mr Module?
 layout: post.html
+tags: post
 ---
 
 No one writes the full program correctly on their first go. Programming, debugging, and testing are all incremental processes. We add a line of code, we comment something out, we change the condition in a branch, then we want to see the effects of those changes.

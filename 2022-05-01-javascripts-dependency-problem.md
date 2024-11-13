@@ -1,6 +1,7 @@
 ---
 title: JavaScript's Dependency Problem
 layout: post.html
+tags: post
 ---
 
 With nearly two million packages, JavaScript's de facto package registry is already an order of magnitude larger than equivalent registries for other programming languages.

@@ -1,6 +1,7 @@
 ---
 title: Stop Using forEach!
 layout: post.html
+tags: post
 ---
 
 The deepest circles of JavaScript hell are reserved for people that use [`forEach`][for-each].

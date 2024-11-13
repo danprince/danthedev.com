@@ -1,6 +1,7 @@
 ---
 title: Zig Iterators
 layout: post.html
+tags: post
 ---
 
 I came across an interesting little problem while converting some Python to Zig. The code in question needs to wrap a string of text into lines with a fixed maximum length.

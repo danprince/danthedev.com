@@ -1,6 +1,7 @@
 ---
 title: Interactive Islands
 layout: post.html
+tags: post
 ---
 
 <aside>

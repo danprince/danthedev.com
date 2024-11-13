@@ -1,6 +1,7 @@
 ---
 title: What Is That Text Editor?
 layout: post.html
+tags: post
 ---
 
 I've spent thousands of hours editing text inside a terminal and more time than I am proud to admit, configuring Vim. Then [NeoVim](https://neovim.io/). Then across to [Doom Emacs](https://github.com/doomemacs/doomemacs), and back to Vim again. It was never a surprise when my development workflow raised eyebrows and someone asked "What is that text editor?".

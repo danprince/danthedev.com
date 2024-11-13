@@ -1,6 +1,7 @@
 ---
 title: Mills' Mess
 layout: post.html
+tags: post
 ---
 
 ![Mills' Mess juggling animation](/images/mills-mess.gif)

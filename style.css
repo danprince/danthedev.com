@@ -118,13 +118,17 @@ aside > :last-child {
   margin-bottom: 0;
 }
 
+aside code {
+  background-color: var(--background-color);
+}
+
 pre code {
   overflow-x: auto;
 }
 
 code {
   border-radius: 4px;
-  font: 11pt/1.8 var(--mono);
+  font: 0.8em/1.8 var(--mono);
   background: var(--code-background-color);
   border: solid 1px var(--box-border-color);
   padding: 0 2px;

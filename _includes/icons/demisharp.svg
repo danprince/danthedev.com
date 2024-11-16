@@ -1,0 +1,11 @@
+<svg
+  height="1em"
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  viewBox="0 0 20 69"
+>
+  <path
+    fill="currentColor"
+    d="m0 19 8-1V0h3v18l8-1v9l-8 1v14l8-1v10l-8 1v18H8V51l-8 1V42h8V28l-8 1V19Z"
+  />
+</svg>

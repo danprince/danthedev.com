@@ -1,0 +1,1762 @@
+---
+title: Bağlamas and Staff Notation
+layout: post.html
+tags: post
+draft: true
+---
+
+<p>
+  I spent the Spring of 2024 in Türkiye, where I took some spontaneous bağlama
+  lessons, after seeing them advertised at a nearby studio. The only catch was
+  that I had no idea what a bağlama was.
+</p>
+
+<iframe
+  width="100%"
+  height="377"
+  src="https://www.youtube.com/embed/sFQkvTsBuoo?si=jK3YXLfkjK_LM3oi"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allowfullscreen
+></iframe>
+
+<p>
+  You may recognise a distinct musical flavour when you hear a bağlama (being
+  played well) and there's a good chance that's because you're hearing notes
+  that aren't easily produced on Western instruments, such as pianos.
+</p>
+
+<p>
+  Each key on a piano (and each
+  <a href="https://en.wikipedia.org/wiki/Fret">fret</a> on a guitar) corresponds
+  to one tone from the
+  <a href="https://en.wikipedia.org/wiki/12_equal_temperament"
+    >Western music system</a
+  >, which divides octaves into 12 tones. Bağlamas have additional subdivisions
+  which produce quarter-tone notes that you can't find on the keys of a piano or
+  the neck of a guitar.
+</p>
+
+<figure>
+  <div class="piano">
+    <!-- C  --><button data-step="3" data-note="-9" data-white>C</button>
+    <!-- Db --><button data-step="4" data-note="-8" data-black></button>
+    <!-- D  --><button data-step="5" data-note="-7" data-white>D</button>
+    <!-- Eb --><button data-step="6" data-note="-6" data-black></button>
+    <!-- E  --><button data-step="7" data-note="-5" data-white>E</button>
+    <!-- F  --><button data-step="8" data-note="-4" data-white>F</button>
+    <!-- Gb --><button data-step="9" data-note="-3" data-black></button>
+    <!-- G  --><button data-step="10" data-note="-2" data-white>G</button>
+    <!-- Ab --><button data-step="11" data-note="-1" data-black></button>
+    <!-- A  --><button data-step="0" data-note="0" data-white>A</button>
+    <!-- Bb --><button data-step="1" data-note="1" data-black></button>
+    <!-- B  --><button data-step="2" data-note="2" data-white>B</button>
+    <!-- C  --><button data-step="3" data-note="3" data-white>C</button>
+    <!-- Db --><button data-step="4" data-note="4" data-black></button>
+    <!-- D  --><button data-step="5" data-note="5" data-white>D</button>
+    <!-- Eb --><button data-step="6" data-note="6" data-black></button>
+    <!-- E  --><button data-step="7" data-note="7" data-white>E</button>
+    <!-- F  --><button data-step="8" data-note="8" data-white>F</button>
+    <!-- Gb --><button data-step="9" data-note="9" data-black></button>
+    <!-- G  --><button data-step="10" data-note="10" data-white>G</button>
+    <!-- Ab --><button data-step="11" data-note="11" data-black></button>
+    <!-- A  --><button data-step="0" data-note="12" data-white>A</button>
+    <!-- Bb --><button data-step="1" data-note="13" data-black></button>
+    <!-- B  --><button data-step="2" data-note="14" data-white>B</button>
+    <!-- C  --><button data-step="3" data-note="15" data-white>C</button>
+  </div>
+  <figcaption>Piano</figcaption>
+</figure>
+
+<figure>
+  <div class="fretboard">
+    <!-- E  --><button data-step="7" data-note="-5"></button>
+    <!-- F  --><button data-step="8" data-note="-4"></button>
+    <!-- F# --><button data-step="9" data-note="-3"></button>
+    <!-- G  --><button data-step="10" data-note="-2" data-dot></button>
+    <!-- G# --><button data-step="11" data-note="-1"></button>
+    <!-- A  --><button data-step="0" data-note="0" data-dot></button>
+    <!-- A# --><button data-step="1" data-note="1"></button>
+    <!-- B  --><button data-step="2" data-note="2" data-dot></button>
+    <!-- C  --><button data-step="3" data-note="3"></button>
+    <!-- C# --><button data-step="4" data-note="4" data-dot></button>
+    <!-- D  --><button data-step="5" data-note="5"></button>
+    <!-- D# --><button data-step="6" data-note="6"></button>
+    <!-- E  --><button data-step="7" data-note="7" data-doubledot></button>
+  </div>
+  <figcaption>Guitar</figcaption>
+</figure>
+
+<figure>
+  <div class="fretboard">
+    <button data-note="0" data-step="0"></button>
+    <button data-note="1" data-step="1"></button>
+    <button data-note="1.5" data-step="1.5"></button>
+    <button data-note="2" data-step="2"></button>
+    <button data-note="3" data-step="3"></button>
+    <button data-note="3.5" data-step="3.5"></button>
+    <button data-note="4" data-step="4"></button>
+    <button data-note="5" data-step="5"></button>
+    <button data-note="6" data-step="6"></button>
+    <button data-note="6.5" data-step="6.5"></button>
+    <button data-note="7" data-step="7"></button>
+    <button data-note="8" data-step="8"></button>
+    <button data-note="8.5" data-step="8.5"></button>
+    <button data-note="9" data-step="9"></button>
+    <button data-note="10" data-step="10"></button>
+    <button data-note="11" data-step="11"></button>
+    <button data-note="11.5" data-step="11.5"></button>
+    <button data-note="12" data-step="0"></button>
+  </div>
+  <figcaption>Bağlama</figcaption>
+</figure>
+
+<p>
+  Compare the musical flavour of a
+  <a data-steps="3 5 7 8 10 12 14 15">major scale</a> to a
+  <a data-steps="3 5 6.5 8 10 12 13.5 15">rast maqam</a>. These scales are
+  nearly the same, but the rast uses two notes from the
+  <a href="https://en.wikipedia.org/wiki/Arab_tone_system">Arab tone system</a>
+  which divides octaves into 24 tones.
+</p>
+
+<p>
+  Depending on what kind of music you grew up listening to, the third and
+  seventh notes in the rast might sound "wrong" or "dissonant". That's because
+  neither
+  <a data-step="6.5">E{% include "icons/demiflat.svg" %}</a> nor
+  <a data-step="13.5">B{% include "icons/demiflat.svg" %}</a> belong to the 12
+  tones of the Western music system.
+</p>
+
+<aside>
+  <details>
+    <summary>What is the {% include "icons/demiflat.svg" %} sign?</summary>
+    <p>
+      Although it could be easily confused with the <em>flat</em> sign (♭), this
+      is actually a <em>demiflat</em> sign, which describes a note which is half
+      a semitone (a quarter tone) flat.
+    </p>
+    <p>
+      Listen to <a data-step="1">B♭</a>,
+      <a data-step="1.5">B{% include "icons/demiflat.svg" %}</a>, and
+      <a data-step="2">B</a> to hear the quartertonal differences.
+    </p>
+    <p>
+      There's also a corresponding <em>demisharp</em> ({%- include
+      "icons/demisharp.svg" -%}) sign, which describes a note raised by
+      <em>half</em> a semitone, as opposed to the <em>sharp</em> sign (♯) which
+      describes a note raised by a <em>full</em> semitone.
+    </p>
+    <p>
+      And yes, I know that mixing "full, half, and quarter" with "whole, semi,
+      and demi" is confusing, however, given that someone else thought
+      <a href="https://en.wikipedia.org/wiki/Sixty-fourth_note"
+        >hemidemisemiquaver</a
+      >
+      was a reasonable name, I'm not inclined to apologise, either!
+    </p>
+  </details>
+</aside>
+
+<p>
+  Here are the same scales, but played above a drone note which stays at the
+  root of the scale, which may help exaggerate the dissonance of the quarter
+  tone notes.
+</p>
+
+<ul>
+  <li>
+    <a data-drone="-9" data-steps="3 5 7 8 10 12 14 15">Major scale</a>
+    (consonance)
+  </li>
+  <li>
+    <a data-drone="-9" data-steps="3 5 6.5 8 10 12 13.5 15">Rast maqam</a> (some
+    dissonance)
+  </li>
+</ul>
+
+<figure>
+  <div class="fretboard">
+    <button data-note="0" data-step="0"></button>
+    <button data-note="1" data-step="1"></button>
+    <button data-note="1.5" data-step="1.5"></button>
+    <button data-note="2" data-step="2"></button>
+    <button data-note="3" data-step="3"></button>
+    <button data-note="3.5" data-step="3.5"></button>
+    <button data-note="4" data-step="4"></button>
+    <button data-note="5" data-step="5"></button>
+    <button data-note="6" data-step="6"></button>
+    <button data-note="6.5" data-step="6.5"></button>
+    <button data-note="7" data-step="7"></button>
+    <button data-note="8" data-step="8"></button>
+    <button data-note="8.5" data-step="8.5"></button>
+    <button data-note="9" data-step="9"></button>
+    <button data-note="10" data-step="10"></button>
+    <button data-note="11" data-step="11"></button>
+    <button data-note="11.5" data-step="11.5"></button>
+    <button data-note="12" data-step="0"></button>
+  </div>
+  <figcaption>Bağlama</figcaption>
+</figure>
+
+<p>
+  The whole concept of
+  <a href="https://en.wikipedia.org/wiki/Consonance_and_dissonance"
+    >consanance and dissonance</a
+  >
+  is fairly subjective, given that different people will hear the relationships
+  between notes differently, depending on the kinds of intervals they are
+  familiar with hearing.
+</p>
+
+<p>
+  I play guitar and I have enough music theory that I don't usually feel too
+  intimidated trying new instruments, but taking the first few steps on the
+  baglama was an immediate challenge.
+</p>
+
+<p>
+  My ears and muscle memory struggled to adapt to the quarter tone intervals. I
+  <em>kept</em> hearing the quarter tones as mistakes and my fingers would
+  automatically jump sideways to find the "correct" note. The lessons were also
+  in Turkish, a language I don't speak much of, however, the biggest challenge
+  was that all of the exercises and pieces were transcribed in
+  <a href="https://en.wikipedia.org/wiki/Musical_notation#Modern_staff_notation"
+    >staff notation</a
+  >, and I can't sight-read!
+</p>
+
+<h2>Staff Notation</h2>
+
+<p>
+  Like most guitarists, I learned with
+  <a href="https://en.wikipedia.org/wiki/Tablature">tablature</a>, a simpler
+  alternative to staff notation. Tabs (as they're usually called) put emphasis
+  on <em>where</em> the note is found on the neck of a guitar-like instrument,
+  and not <em>which</em> note it actually is.
+</p>
+
+<p>
+  Each line in a tab represents one string of the instrument and the numbers on
+  that line correspond to frets on that string.
+</p>
+
+<figure>
+  <div class="tab">
+    <div class="string"></div>
+    <div class="string"></div>
+    <div class="string">
+      <button data-rest></button>
+      <button data-rest></button>
+      <button data-rest></button>
+      <button data-rest></button>
+      <button data-rest></button>
+      <button data-step="0" data-note="12">2</button>
+      <button data-step="2" data-note="14">4</button>
+      <button data-step="3" data-note="15">5</button>
+    </div>
+    <div class="string">
+      <button data-rest></button>
+      <button data-rest></button>
+      <button data-step="7" data-note="7">2</button>
+      <button data-step="8" data-note="8">3</button>
+      <button data-step="10" data-note="10">5</button>
+    </div>
+    <div class="string">
+      <button data-step="3" data-note="3">3</button>
+      <button data-step="5" data-note="5">5</button>
+    </div>
+    <div class="string"></div>
+  </div>
+
+  <figcaption>
+    One possible phrasing of a
+    <a data-steps="3 5 7 8 10 12 14 15">C major scale</a> using tablature
+  </figcaption>
+</figure>
+
+<p>
+  Unfortunately, tablature is a very lossy encoding. Lots of complexity (the
+  stuff that makes staff notation harder to approach) disappears when a piece of
+  music is transcribed into tablature.
+</p>
+
+<p>
+  Most guitarists end up using tab <em>and</em> staff notation together (tab is
+  easier to read, whilst the staff is more precise), or a hybrid model where the
+  tab is accompanied by a pseudo-staff, which just describes the lengths of the
+  notes.
+</p>
+
+<p>
+  The longer I've been playing guitar for, the less useful I find tabs to be.
+  That's partly because the internet is rife with low quality (incorrect) tabs,
+  and partly because I seem to learn faster and better by ear.
+</p>
+
+<p>
+  Staff notation may look similar, but that's just a coincidence, as it has a
+  significantly more complicated learning curve.
+</p>
+
+<figure>
+  <div class="staff">
+    <!-- F -->
+    <div class="line">
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="8" data-step="8"></button>
+    </div>
+    <!-- E -->
+    <div class="gap">
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="7" data-step="7"></button>
+    </div>
+    <!-- D -->
+    <div class="line">
+      <button class="rest"></button>
+      <button class="note" data-note="5" data-step="5"></button>
+    </div>
+    <!-- C -->
+    <div class="gap">
+      <button class="note" data-note="3" data-step="3"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="3" data-step="3"></button>
+    </div>
+    <!-- B -->
+    <div class="line">
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="2" data-step="2"></button>
+    </div>
+    <!-- A -->
+    <div class="gap">
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="0" data-step="0"></button>
+    </div>
+    <!-- G -->
+    <div class="line">
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="-2" data-step="10"></button>
+    </div>
+    <!-- F -->
+    <div class="gap"></div>
+    <!-- E -->
+    <div class="line"></div>
+  </div>
+
+  <figcaption>
+    The <a data-steps="3 5 7 8 10 12 14 15">same scale</a> in staff notation
+  </figcaption>
+</figure>
+
+<aside>
+  <details>
+    <summary>😾 But those aren't exactly the same notes!</summary>
+
+    <p>
+      I'm sorry grumpy cat! I want to stick with C major and I don't want to
+      introduce alternate clefs or ledger lines here. It seems simplest just to
+      split the scale across an octave!
+    </p>
+  </details>
+</aside>
+
+<p>
+  This time, the lines don't relate to strings. Instead, each line and each
+  <em>gap</em> represents one note. How do you tell which line is which note?
+  Buckle up, because this is where things start to get a little weird.
+</p>
+
+<h2>Clefs</h2>
+
+<p>
+  See the curly squiggle floating off to the left? That's what is known as a
+  <a href="https://en.wikipedia.org/wiki/Clef#G-clefs">G-clef</a>. The line that
+  passes through the curl of the clef is a <a data-step="10">G</a>.
+</p>
+
+<figure>
+  <div class="staff">
+    <!-- F -->
+    <div class="line"></div>
+    <!-- E -->
+    <div class="gap"></div>
+    <!-- D -->
+    <div class="line"></div>
+    <!-- C -->
+    <div class="gap"></div>
+    <!-- B -->
+    <div class="line"></div>
+    <!-- A -->
+    <div class="gap"></div>
+    <!-- G -->
+    <div class="line">
+      <button class="note" data-note="10" data-step="10"></button>
+    </div>
+    <!-- F -->
+    <div class="gap"></div>
+    <!-- E -->
+    <div class="line"></div>
+  </div>
+
+  <figcaption>
+    The G-clef is known as a "treble clef" in this position
+  </figcaption>
+</figure>
+
+<p>
+  From <a data-step="10">G</a>, you can work your way upwards or downwards,
+  according to the key signature (we'll come back to key signatures later). Like
+  many musicians, I learned the notes for the treble clef with mnemonics
+  (starting from the bottom of the staff and moving upwards):
+</p>
+
+<ul>
+  <li>
+    Lines: “<a data-step="-5">E</a>very <a data-step="-2">G</a>ood
+    <a data-step="2">B</a>oy <a data-step="5">D</a>eserves
+    <a data-step="8">F</a>ootball”.
+  </li>
+  <li>
+    Gaps: “<a data-step="-4">F</a> <a data-step="0">A</a>
+    <a data-step="3">C</a> <a data-step="7">E</a>”.
+  </li>
+</ul>
+
+<figure>
+  <div class="staff">
+    <!-- F -->
+    <div class="line">
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="8" data-step="8"></button>
+    </div>
+    <!-- E -->
+    <div class="gap">
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="7" data-step="7"></button>
+    </div>
+    <!-- D -->
+    <div class="line">
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="5" data-step="5"></button>
+    </div>
+    <!-- C -->
+    <div class="gap">
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="3" data-step="3"></button>
+    </div>
+    <!-- B -->
+    <div class="line">
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="2" data-step="2"></button>
+    </div>
+    <!-- A -->
+    <div class="gap">
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="0" data-step="0"></button>
+    </div>
+    <!-- G -->
+    <div class="line">
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="-2" data-step="10"></button>
+    </div>
+    <!-- F -->
+    <div class="gap">
+      <button class="rest"></button>
+      <button class="note" data-note="-4" data-step="8"></button>
+    </div>
+    <!-- E -->
+    <div class="line">
+      <button class="note" data-note="-5" data-step="7"></button>
+    </div>
+  </div>
+
+  <figcaption>
+    The same scale again, but starting from a different degree
+  </figcaption>
+</figure>
+
+<aside>
+  <details>
+    <summary>😾 Lies! That's clearly the E phrygian mode!</summary>
+
+    <p>Well grumpy cat, you're not wrong!</p>
+
+    <p>
+      These are the notes of the
+      <a data-bpm="200" data-steps="3 5 7 8 10 12 14 15">C major scale</a>, but
+      instead of starting from <a data-step="3">C</a>, we're starting from
+      <a data-step="7">E</a> to make the mnemonics clearer for readers.
+    </p>
+
+    <p>
+      If you hear those notes
+      <a data-bpm="200" data-drone="-9" data-steps="-5 -4 -2 0 2 3 5 7 8"
+        >played over a C</a
+      >
+      then you'll hear them as a C major scale, which can also be called the
+      <a href="https://en.wikipedia.org/wiki/Ionian_mode">Ionian mode</a>.
+    </p>
+
+    <p>
+      However, if you hear the same notes
+      <a data-bpm="200" data-drone="-5" data-steps="-5 -4 -2 0 2 3 5 7 8"
+        >played over an E</a
+      >
+      then the context changes and you'll hear the musical flavour of the
+      <a href="https://en.wikipedia.org/wiki/Phrygian_mode">Phrygian mode</a>.
+    </p>
+
+    <p>
+      In fact, you can build lots of modes from C major. All you need to do is
+      to start on a different degree of the scale!
+    </p>
+
+    <ul>
+      <li>
+        <a data-bpm="200" data-drone="3" data-steps="3 5 7 8 10 12 14 15"
+          >C Ionian</a
+        >
+        (the major scale)
+      </li>
+      <li>
+        <a data-bpm="200" data-drone="5" data-steps="5 7 8 10 12 14 15 17"
+          >D Dorian</a
+        >
+      </li>
+      <li>
+        <a data-bpm="200" data-drone="7" data-steps="7 8 10 12 14 15 17 19"
+          >E Phrygian</a
+        >
+      </li>
+      <li>
+        <a data-bpm="200" data-drone="-4" data-steps="-4 -2 0 2 3 5 7 8"
+          >F Lydian</a
+        >
+      </li>
+      <li>
+        <a data-bpm="200" data-drone="-2" data-steps="-2 0 2 3 5 7 8 10"
+          >G Mixolydian</a
+        >
+      </li>
+      <li>
+        <a data-bpm="200" data-drone="0" data-steps="0 2 3 5 7 8 10 12"
+          >A Aeolian</a
+        >
+        (the natural minor scale)
+      </li>
+      <li>
+        <a data-bpm="200" data-drone="2" data-steps="2 3 5 7 8 10 12 14"
+          >B Locrian</a
+        >
+      </li>
+    </ul>
+    <p>
+      Each of these modes has a distinct flavour, but they all use the same set
+      of notes, we're just changing the context in which you hear them. Cool,
+      right?
+    </p>
+  </details>
+</aside>
+
+<p>
+  The first bit of bad news for us mnemonic-users is that clefs can be moved up
+  and down (although this isn't all that common for a G-clef). The second bit of
+  bad news is that the G-clef isn't the only one.
+</p>
+
+<p>
+  Music for a deeper instrument—like a cello—is likely to be written with an
+  F-clef, where the line that passes through the dots of the clef is a
+  (surprise)
+  <a data-step="8">F</a>.
+</p>
+
+<figure>
+  <div class="staff fclef">
+    <div class="line"></div>
+    <div class="gap"></div>
+    <div class="line">
+      <button class="note" data-note="8" data-step="8"></button>
+    </div>
+    <div class="gap"></div>
+    <div class="line"></div>
+    <div class="gap"></div>
+    <div class="line"></div>
+    <div class="gap"></div>
+    <div class="line"></div>
+  </div>
+
+  <figcaption>
+    The F-clef is known as a "bass clef" in this position.
+  </figcaption>
+</figure>
+
+<p>
+  Music for a higher instrument—like a viola—is more likely to be written with a
+  C-clef, where the line that passes through the center of the clef is a
+  <a data-step="3">C</a>.
+</p>
+
+<figure>
+  <div class="staff cclef">
+    <div class="line"></div>
+    <div class="gap"></div>
+    <div class="line"></div>
+    <div class="gap"></div>
+    <div class="line">
+      <button class="note" data-note="3" data-step="3"></button>
+    </div>
+    <div class="gap"></div>
+    <div class="line"></div>
+    <div class="gap"></div>
+    <div class="line"></div>
+  </div>
+
+  <figcaption>
+    The C-clef is known as an "Alto clef" in this position.
+  </figcaption>
+</figure>
+
+<p>
+  Piano players have a particularly rough deal, as they need to learn to read
+  their right hand in treble clef and their left hand in bass clef
+  simultaneously!
+</p>
+
+<h2>Key Signatures</h2>
+
+<p>
+  All of the staff examples so far have been in the key of C major, which is
+  often used for simplicity, because it doesn't contain any sharps or flats.
+  However, not all music is composed in C major and we need a way to represent
+  notes that don't belong in that key!
+</p>
+
+<ul>
+  <li>The flat (♭) version of a note is <em>lowered</em> by one semitone.</li>
+  <li>The sharp (♯) version of a note is <em>raised</em> by one semitone.</li>
+</ul>
+
+<figure>
+  <div class="staff">
+    <!-- F -->
+    <div class="line"></div>
+    <!-- E -->
+    <div class="gap"></div>
+    <!-- D -->
+    <div class="line">
+      <button class="note" data-note="5" data-step="5"></button>
+      <button class="rest"></button>
+      <button class="note flat" data-note="4" data-step="4"></button>
+      <button class="rest"></button>
+      <button class="note sharp" data-note="6" data-step="6"></button>
+    </div>
+    <!-- C -->
+    <div class="gap"></div>
+    <!-- B -->
+    <div class="line"></div>
+    <!-- A -->
+    <div class="gap"></div>
+    <!-- G -->
+    <div class="line"></div>
+    <!-- F -->
+    <div class="gap"></div>
+    <!-- E -->
+    <div class="line"></div>
+  </div>
+
+  <figcaption>
+    <a data-step="5">D</a>, <a data-step="4">D♭</a>, and
+    <a data-step="6">D♯</a>.
+  </figcaption>
+</figure>
+
+<p>
+  These deviations from the key signature are known as <em>accidentals</em>.
+</p>
+
+<p>
+  Accidentals change the pitch of the note they're attached to, but they also
+  change the pitch of every subsequent note within the same measure, unless
+  they're overridden with <em>another</em> accidental.
+</p>
+
+<p>The natural (♮) accidental returns the note to its original pitch.</p>
+
+<figure>
+  <div class="staff">
+    <!-- F -->
+    <div class="line"></div>
+    <!-- E -->
+    <div class="gap"></div>
+    <!-- D -->
+    <div class="line">
+      <button class="note" data-note="5" data-step="5"></button>
+      <button class="rest"></button>
+      <button class="note sharp" data-note="6" data-step="6"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="6" data-step="6"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="6" data-step="6"></button>
+      <button class="rest"></button>
+      <button class="note natural" data-note="5" data-step="5"></button>
+    </div>
+    <!-- C -->
+    <div class="gap"></div>
+    <!-- B -->
+    <div class="line"></div>
+    <!-- A -->
+    <div class="gap"></div>
+    <!-- G -->
+    <div class="line"></div>
+    <!-- F -->
+    <div class="gap"></div>
+    <!-- E -->
+    <div class="line"></div>
+  </div>
+
+  <figcaption>
+    The sharp (♯) remains until it is cleared by the natural (♮).
+  </figcaption>
+</figure>
+
+<p>
+  Let's compare some scales using the piano, so that we can easily see the
+  sharps and flats (the black keys).
+</p>
+
+<ul>
+  <li>
+    <a data-bpm="200" data-steps="3 5 7 8 10 12 14 15">C major</a> (no sharps or
+    flats)
+  </li>
+  <li>
+    <a data-bpm="200" data-steps="5 7 8 10 12 13 15 17">D minor</a> (one flat)
+  </li>
+  <li>
+    <a data-bpm="200" data-steps="2 4 6 7 9 11 13 14">B major</a> (five sharps)
+  </li>
+</ul>
+
+<figure>
+  <div class="piano">
+    <!-- C  --><button data-step="3" data-note="-9" data-white>C</button>
+    <!-- Db --><button data-step="4" data-note="-8" data-black></button>
+    <!-- D  --><button data-step="5" data-note="-7" data-white>D</button>
+    <!-- Eb --><button data-step="6" data-note="-6" data-black></button>
+    <!-- E  --><button data-step="7" data-note="-5" data-white>E</button>
+    <!-- F  --><button data-step="8" data-note="-4" data-white>F</button>
+    <!-- Gb --><button data-step="9" data-note="-3" data-black></button>
+    <!-- G  --><button data-step="10" data-note="-2" data-white>G</button>
+    <!-- Ab --><button data-step="11" data-note="-1" data-black></button>
+    <!-- A  --><button data-step="0" data-note="0" data-white>A</button>
+    <!-- Bb --><button data-step="1" data-note="1" data-black></button>
+    <!-- B  --><button data-step="2" data-note="2" data-white>B</button>
+    <!-- C  --><button data-step="3" data-note="3" data-white>C</button>
+    <!-- Db --><button data-step="4" data-note="4" data-black></button>
+    <!-- D  --><button data-step="5" data-note="5" data-white>D</button>
+    <!-- Eb --><button data-step="6" data-note="6" data-black></button>
+    <!-- E  --><button data-step="7" data-note="7" data-white>E</button>
+    <!-- F  --><button data-step="8" data-note="8" data-white>F</button>
+    <!-- Gb --><button data-step="9" data-note="9" data-black></button>
+    <!-- G  --><button data-step="10" data-note="10" data-white>G</button>
+    <!-- Ab --><button data-step="11" data-note="11" data-black></button>
+    <!-- A  --><button data-step="0" data-note="12" data-white>A</button>
+    <!-- Bb --><button data-step="1" data-note="13" data-black></button>
+    <!-- B  --><button data-step="2" data-note="14" data-white>B</button>
+    <!-- C  --><button data-step="3" data-note="15" data-white>C</button>
+  </div>
+</figure>
+
+<p>
+  Transcribing a piece of music in a key like B major would involve writing out
+  lots and lots of accidentals. For example, here's the
+  <a data-steps="2 4 6 7 9 11 13 14">B major scale</a> with all of its glorious
+  sharps.
+</p>
+
+<figure>
+  <div class="staff">
+    <!-- F -->
+    <div class="line">
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note sharp" data-note="9" data-step="9"></button>
+    </div>
+    <!-- E -->
+    <div class="gap">
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="7" data-step="7"></button>
+    </div>
+    <!-- D -->
+    <div class="line">
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note sharp" data-note="6" data-step="6"></button>
+    </div>
+    <!-- C -->
+    <div class="gap">
+      <button class="rest"></button>
+      <button class="note sharp" data-note="4" data-step="4"></button>
+    </div>
+    <!-- B -->
+    <div class="line">
+      <button class="note" data-note="2" data-step="2"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="2" data-step="2"></button>
+    </div>
+    <!-- A -->
+    <div class="gap">
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note sharp" data-note="1" data-step="1"></button>
+    </div>
+    <!-- G -->
+    <div class="line">
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note sharp" data-note="-1" data-step="11"></button>
+    </div>
+    <!-- F -->
+    <div class="gap"></div>
+    <!-- E -->
+    <div class="line"></div>
+  </div>
+
+  <figcaption>
+    The <a data-steps="2 4 6 7 9 11 13 14">B major scale</a> in the key of C
+    major
+  </figcaption>
+</figure>
+
+<p>
+  Thankfully, the boffins behind staff notation figured out a clever way around
+  this problem—<a href="https://en.wikipedia.org/wiki/Key_signature"
+    >key signatures</a
+  >!
+</p>
+
+<p>
+  Instead of writing accidentals every time we need to change the pitch of a
+  note, we can write the accidentals at the start of a measure to keep them
+  turned on.
+</p>
+
+<figure>
+  <div class="staff">
+    <!-- F -->
+    <div class="line" data-note="f">
+      <button class="key sharp"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="9" data-step="9"></button>
+    </div>
+    <!-- E -->
+    <div class="gap" data-note="e">
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="7" data-step="7"></button>
+    </div>
+    <!-- D -->
+    <div class="line" data-note="d">
+      <button class="key sharp"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="6" data-step="6"></button>
+    </div>
+    <!-- C -->
+    <div class="gap" data-note="c">
+      <button class="key sharp"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="4" data-step="4"></button>
+    </div>
+    <!-- B -->
+    <div class="line" data-note="b">
+      <button class="rest"></button>
+      <button class="note" data-note="2" data-step="2"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="2" data-step="2"></button>
+    </div>
+    <!-- A -->
+    <div class="gap" data-note="a">
+      <button class="key sharp"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="1" data-step="1"></button>
+    </div>
+    <!-- G -->
+    <div class="line" data-note="g">
+      <button class="key sharp"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="-1" data-step="11"></button>
+    </div>
+    <!-- F -->
+    <div class="gap" data-note="f"></div>
+    <!-- E -->
+    <div class="line" data-note="e"></div>
+  </div>
+
+  <figcaption>The B major scale in the key of B major</figcaption>
+</figure>
+
+<p>
+  And there was much rejoicing! Although, even with key signatures, you'll still
+  have to write accidentals from time to time.
+</p>
+
+<p>
+  If we look at notes that make up a
+  <a data-drone="2" data-steps="2 6 9 12 14">B7 chord</a>, we'll find that they
+  don't all fit within the key signature of B major.
+</p>
+
+<figure>
+  <div class="staff">
+    <!-- F -->
+    <div class="line" data-note="f">
+      <button class="key sharp"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="9" data-step="9"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+    </div>
+    <!-- E -->
+    <div class="gap" data-note="e">
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+    </div>
+    <!-- D -->
+    <div class="line" data-note="d">
+      <button class="key sharp"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="6" data-step="6"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+    </div>
+    <!-- C -->
+    <div class="gap" data-note="c">
+      <button class="key sharp"></button>
+    </div>
+    <!-- B -->
+    <div class="line" data-note="b">
+      <button class="rest"></button>
+      <button class="note" data-note="2" data-step="2"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note" data-note="2" data-step="2"></button>
+    </div>
+    <!-- A -->
+    <div class="gap" data-note="a">
+      <button class="key sharp"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="note natural" data-note="0" data-step="0"></button>
+    </div>
+    <!-- G -->
+    <div class="line" data-note="g">
+      <button class="key sharp"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+      <button class="rest"></button>
+    </div>
+    <!-- F -->
+    <div class="gap" data-note="f"></div>
+    <!-- E -->
+    <div class="line" data-note="e"></div>
+  </div>
+
+  <figcaption>A B7 arpeggio in the key of B major</figcaption>
+</figure>
+
+<p>
+  There's a pesky <a data-step="0">A</a> to deal with, and if we look at the key
+  signature for B major, we see that A is sharp. Every A will be interpreted as
+  A♯ therefore we need to use a natural accidental (♮) to step outside of the
+  key signature and return A to its original pitch.
+</p>
+
+<p>
+  So, to briefly recap on our whistlestop tour of reading notes on a musical
+  staff:
+</p>
+
+<ol>
+  <li>
+    Identity the <em>type</em> of clef to determine which note the staff is
+    based on.
+  </li>
+  <li>
+    Use the <em>vertical position</em> of the clef to identify the note of the
+    line you want to read.
+  </li>
+  <li>Check whether the key signature adjusts the note.</li>
+  <li>
+    Check for accidentals earlier in the measure that override the key
+    signature.
+  </li>
+  <li>Combine all of the above to read the note!</li>
+</ol>
+
+<p>
+  We've scratched the surface of the complexity of staff notation, but we
+  haven't talked about note lengths, or time signatures, or rests, or ledger
+  lines, or octave markers, or dynamics, or articulations, or ornamentations, or
+  directions...
+</p>
+
+<p>Reading music is <strong>complicated</strong>!</p>
+
+<h2>Strings & Tunings</h2>
+
+<p>
+  Once you've read a note from a sheet of music, the next challenge is to figure
+  out where to find that note on your instrument of choice. This is
+  straightforward on a piano, because there's only one key for each note.
+</p>
+
+<p>
+  A guitar is six stringed instrument, where the strings can be played
+  independently and the standard tuning is
+  <a data-steps="-5 0 5 10 14 19">EADGBE</a>, ascending from the lowest string
+  to the highest.
+</p>
+
+<p>
+  Unlike the piano, the guitar has the potential for some note ambiguity. This
+  happens because there can be many ways to play a given note. Tablature doesn't
+  have this problem because it tells you exactly <em>where</em> to play the
+  note.
+</p>
+
+<figure>
+  <div class="staff">
+    <!-- F -->
+    <div class="line" data-note="f"></div>
+    <!-- E -->
+    <div class="gap" data-note="e"></div>
+    <!-- D -->
+    <div class="line" data-note="d"></div>
+    <!-- C -->
+    <div class="gap" data-note="c"></div>
+    <!-- B -->
+    <div class="line" data-note="b"></div>
+    <!-- A -->
+    <div class="gap" data-note="a"></div>
+    <!-- G -->
+    <div class="line" data-note="g">
+      <button class="note" data-note="10" data-step="10"></button>
+    </div>
+    <!-- F -->
+    <div class="gap" data-note="f"></div>
+    <!-- E -->
+    <div class="line" data-note="e"></div>
+  </div>
+
+  <figcaption>G4, as described with staff notation</figcaption>
+</figure>
+
+<figure>
+  <div class="tab">
+    <div class="string"></div>
+    <div class="string"></div>
+    <div class="string">
+      <button data-rest></button>
+      <button data-rest></button>
+      <button data-rest></button>
+      <button data-step="10" data-note="10">0</button>
+    </div>
+    <div class="string">
+      <button data-rest></button>
+      <button data-rest></button>
+      <button data-step="10" data-note="10">5</button>
+    </div>
+    <div class="string">
+      <button data-rest></button>
+      <button class="double" data-step="10" data-note="10">10</button>
+    </div>
+    <div class="string">
+      <button class="double" data-step="10" data-note="10">15</button>
+    </div>
+  </div>
+
+  <figcaption>Every place you can find G4 on a guitar</figcaption>
+</figure>
+
+<p>
+  There's no hard and fast rule when it comes to figuring out where to play a
+  given note on guitar, mostly it'll be a pragmatic decision, using the nearest
+  option within the surrounding musical context.
+</p>
+
+<p>
+  Unlike guitars, baglamas have 7 strings, but these strings can't easily be
+  played independently because they are clustered together into three compact
+  groups. The simplest way to approach the instrument is to treat it as 3
+  strings, even though each of those "strings" is actually a cluster of strings.
+</p>
+
+<p>
+  Within those clusters, the strings are either tuned in unison (to the same
+  note) or tuned to the same tone, but one octave apart.
+</p>
+
+<aside>
+  <p>
+    If you listen carefully, you might be able to hear that I tried to emulate
+    the doubled string sound of the baglama with the synth that plays the notes
+    in this article.
+  </p>
+  <p>
+    An <a data-step="0">A4</a> isn't just an A4. It's a blend of an A4 and an
+    A3.
+  </p>
+</aside>
+
+<p>
+  The tuning you use will be different depending on whether you have a long-neck
+  baglama or a short-neck one, but each group of strings is usually tuned to a
+  5th intervals above the last group. I was taught in is
+  <a data-steps="0 5 10">ADG</a>
+  (which could also be written more explicitly as
+  <a data-steps="-12 0 0 5 5 -2 10">AaaddGg</a> if you want to capture every the
+  octave tuning of every single string).
+</p>
+
+<p>
+  For the sake of simplicity, from here onwards I'll just pretend that baglamas
+  have 3 strings that are always tuned to
+  <a data-steps="0 5 10">ADG</a>.
+</p>
+
+<p>
+  Baglama suffers from the some note ambiguity, because there are multiple
+  places on the neck that you can fret a given note, however, because there are
+  only 3 strings, there's less ambiguity than guitar.
+</p>
+
+<p>
+  Staff notation is the universal way to transcribe music, but it's not the only
+  way.
+</p>
+
+<ul>
+  <li>
+    <a href="https://www.hummingbirdnotation.com/">Hummingbird</a> is a charming
+    attempt to simplify staff notation with a memorable set of symbols.
+  </li>
+  <li>
+    <a href="https://en.wikipedia.org/wiki/Klavarskribo">Klavarskribo</a> is a
+    staff notation with vertical orientation, designed to match the keys on a
+    piano.
+  </li>
+  <li>
+    <a href="https://www.globalnotation.org.uk/">Global notation</a> is designed
+    around a frequency visualisation, which <em>technically</em> makes it more
+    appropriate for playing music outside of the western system.
+  </li>
+  <li>
+    I highly recommend visiting
+    <a href="https://davidhall.io/visualising-music-graphic-scores/"
+      >David Hall's Graphic notation: a brief history of visualising music</a
+    >
+    for some of the weird and wonderful graphic notations that people have
+    produced over the years.
+  </li>
+</ul>
+
+<script>
+  // @ts-check
+  let ctx = new AudioContext();
+
+  // The guitar wavetables are from https://github.com/mohayonao/wave-tables
+  // but the file is so big that inlining it breaks prettier, hence the include.
+  let guitarTable = JSON.parse(`{% include "json/guitar-wavetables.json" %}`);
+  let guitarWave = ctx.createPeriodicWave(guitarTable.real, guitarTable.imag);
+
+  let masterGain = new GainNode(ctx, { gain: 0.5 });
+  masterGain.connect(ctx.destination);
+
+  let gain = new GainNode(ctx, { gain: 0 });
+  gain.connect(masterGain);
+
+  let reverb = createReverb();
+  gain.connect(reverb);
+  reverb.connect(masterGain);
+
+  let osc = new OscillatorNode(ctx, { periodicWave: guitarWave });
+  osc.connect(gain);
+  osc.start();
+
+  let octaveOsc = new OscillatorNode(ctx, { periodicWave: guitarWave });
+  octaveOsc.connect(gain);
+  octaveOsc.start();
+
+  let droneGain = new GainNode(ctx, { gain: 0 });
+  droneGain.connect(masterGain);
+
+  let drone = new OscillatorNode(ctx, { periodicWave: guitarWave });
+  drone.connect(droneGain);
+  drone.start();
+
+  function createReverb(duration = 2, decay = 1) {
+    let convolver = new ConvolverNode(ctx, {});
+
+    let rate = ctx.sampleRate;
+    let length = rate * duration;
+    let impulse = ctx.createBuffer(2, length, rate);
+    let left = impulse.getChannelData(0);
+    let right = impulse.getChannelData(1);
+
+    for (let i = 0; i < length; i++) {
+      left[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / length, decay);
+      right[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / length, decay);
+    }
+
+    convolver.buffer = impulse;
+
+    return convolver;
+  }
+
+  function startDrone(step) {
+    let frequency = 440 * Math.pow(Math.pow(2, 1 / 12), step - 12);
+    drone.frequency.setValueAtTime(frequency, ctx.currentTime);
+    droneGain.gain.linearRampToValueAtTime(0.25, ctx.currentTime);
+  }
+
+  function stopDrone() {
+    droneGain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.5);
+  }
+
+  function play(step) {
+    ctx.resume();
+
+    let f1 = 440 * Math.pow(Math.pow(2, 1 / 12), step - 12);
+    let f2 = 440 * Math.pow(Math.pow(2, 1 / 12), step - 24);
+    osc.frequency.setValueAtTime(f1, ctx.currentTime);
+    octaveOsc.frequency.setValueAtTime(f2, ctx.currentTime);
+    gain.gain.cancelScheduledValues(ctx.currentTime);
+    gain.gain.setValueAtTime(0, ctx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.25, ctx.currentTime + 0.001);
+    gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.4);
+  }
+
+  /**
+   * @param {number[]} steps
+   * @param {number} [droneStep]
+   * @param {number} [bpm]
+   */
+  async function playSteps(steps, droneStep, bpm = 120) {
+    resetHighlights();
+
+    let bps = bpm / 60;
+    let mspb = (1 / bps) * 1000;
+
+    if (droneStep != null) {
+      startDrone(droneStep);
+    }
+
+    for (let step of steps) {
+      play(step);
+
+      if (droneStep != null) {
+        highlightStep(droneStep);
+      }
+
+      highlightStep(step);
+      await delay(mspb);
+      resetHighlights();
+    }
+
+    if (droneStep != null) {
+      stopDrone();
+    }
+  }
+
+  /**
+   * @param {number} ms
+   */
+  function delay(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  /**
+   * @param {number} step
+   */
+  function highlightStep(step) {
+    // Bring negative steps into positive range
+    while (step < 0) step += 12;
+
+    // Ignore octaves
+    step = step % 12;
+
+    let elements = document.querySelectorAll(`[data-step="${step}"]`);
+
+    for (let element of elements) {
+      element.classList.add("active");
+    }
+  }
+
+  function resetHighlights() {
+    let elements = document.querySelectorAll(`[data-step].active`);
+
+    for (let element of elements) {
+      element.classList.remove("active");
+    }
+  }
+
+  onpointermove = (event) => {
+    if (!(event.target instanceof HTMLElement)) return;
+
+    let step = event.target.getAttribute("data-step");
+    let steps = event.target.getAttribute("data-steps");
+    if (step) {
+      resetHighlights();
+      highlightStep(parseFloat(step));
+    } else if (steps) {
+      resetHighlights();
+      steps.split(" ").map(parseFloat).forEach(highlightStep);
+    } else {
+      resetHighlights();
+    }
+  };
+
+  onclick = (event) => {
+    if (!(event.target instanceof HTMLElement)) return;
+
+    let step =
+      event.target.getAttribute("data-note") ||
+      event.target.getAttribute("data-step");
+    if (step) {
+      play(parseFloat(step));
+    }
+
+    let steps = event.target.getAttribute("data-steps");
+    let drone = event.target.getAttribute("data-drone") ?? undefined;
+    let bpm = event.target.getAttribute("data-bpm") ?? undefined;
+
+    if (steps) {
+      playSteps(
+        steps.split(" ").map(parseFloat),
+        drone ? parseFloat(drone) : undefined,
+        bpm ? parseFloat(bpm) : undefined,
+      );
+    }
+  };
+</script>
+
+<style>
+  :root {
+    --white-key-color: #eee;
+    --white-key-active-color: #ddd;
+    --black-key-color: black;
+    --black-key-active-color: #888;
+    --fret-color: #eee;
+    --fret-active-color: #ddd;
+    --tab-string-color: black;
+    --tab-active-color: #ddd;
+    --clef-color: black;
+  }
+
+  [data-theme="dark"] {
+    --white-key-color: white;
+    --white-key-active-color: #ddd;
+    --black-key-color: black;
+    --black-key-active-color: #888;
+    --fret-color: #2f2f2f;
+    --fret-active-color: #222;
+    --tab-string-color: #555;
+    --tab-active-color: #555;
+    --clef-color: white;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  .fretboard {
+    display: flex;
+  }
+
+  .fretboard button {
+    width: 40px;
+    height: 80px;
+    border: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--fret-color);
+  }
+
+  .fretboard button:first-child {
+    background-color: var(--background-color);
+    border-style: dashed;
+    border: dashed 2px var(--fret-color);
+    border-right: 0;
+  }
+
+  .fretboard [data-step$=".5"],
+  .fretboard [data-step$=".5"] + button {
+    width: 20px;
+  }
+
+  .fretboard button.active {
+    background: var(--fret-active-color);
+  }
+
+  .fretboard button {
+    border-left: solid 2px black;
+  }
+
+  .fretboard [data-dot]:before,
+  .fretboard [data-doubledot]:before,
+  .fretboard [data-doubledot]:after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--text-color);
+  }
+
+  .piano {
+    position: relative;
+    display: flex;
+  }
+
+  .piano button {
+    height: 120px;
+    width: 32px;
+    border: 0;
+    background-color: var(--white-key-color);
+    padding: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 4px;
+    color: var(--text-muted-color);
+  }
+
+  .piano button[data-black] {
+    height: 80px;
+    width: 16px;
+    border: 0;
+    background-color: var(--black-key-color);
+    margin-left: -8px;
+    position: relative;
+    z-index: 10;
+    box-shadow: none;
+  }
+
+  .piano [data-black] + [data-white] {
+    margin-left: -6px;
+  }
+
+  .piano [data-white] + [data-white] {
+    margin-left: 2px;
+  }
+
+  .piano button.active {
+    background-color: var(--white-key-active-color);
+    color: var(--black-key-color);
+    font-weight: bold;
+  }
+
+  .piano button[data-black].active {
+    background-color: var(--black-key-active-color);
+  }
+
+  a[data-steps],
+  a[data-step],
+  music-notes {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    cursor: pointer;
+  }
+
+  .tab {
+    border: solid 2px var(--tab-string-color);
+    border-top: 0;
+    border-bottom: 0;
+    font-family: var(--sans);
+    font-size: 1rem;
+    font-weight: 600;
+    user-select: none;
+    user-select: nonym;
+  }
+
+  .tab::before {
+    content: "TAB";
+    position: absolute;
+    width: 1rem;
+    font-size: 2rem;
+    overflow-wrap: break-word;
+    line-height: 1.6rem;
+    padding: 0.5rem;
+    color: var(--tab-string-color);
+  }
+
+  .tab .string {
+    padding-left: 3rem;
+    padding-right: 1rem;
+    border-bottom: solid 2px var(--tab-string-color);
+    margin: 1rem 0;
+    height: 0;
+  }
+
+  .tab .string:first-child {
+    margin-top: 0;
+  }
+
+  .tab .string:last-child {
+    margin-bottom: 0;
+  }
+
+  .tab .string button {
+    display: inline-block;
+    background: transparent;
+    border: 0;
+    font: inherit;
+    padding: 0;
+  }
+
+  .tab .string [data-note] {
+    color: var(--text-color);
+    background-color: var(--background-color);
+    border-radius: 2px;
+    width: 12px;
+    height: 16px;
+    line-height: 0.5;
+    position: relative;
+    top: -16px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .tab .string .double {
+    width: 1.3rem;
+  }
+
+  .tab .string [data-note]:hover,
+  .tab .string [data-note].active {
+    background-color: var(--tab-active-color);
+  }
+
+  .tab .string [data-rest] {
+    display: inline-block;
+    width: 12px;
+    height: 16px;
+  }
+
+  .staff {
+    position: relative;
+    padding-bottom: 1rem;
+  }
+
+  .staff::before {
+    content: "𝄞";
+    position: absolute;
+    font-size: 9rem;
+    line-height: 0.57;
+    color: var(--clef-color);
+  }
+
+  .staff.cclef::before {
+    content: "𝄡";
+    font-size: 6rem;
+    line-height: 0.87;
+  }
+
+  .staff.fclef::before {
+    content: "𝄢";
+    font-size: 4.9rem;
+    line-height: 0.87;
+  }
+
+  .staff .line,
+  .staff .gap {
+    height: 8px;
+    padding-left: 4rem;
+    padding-right: 1rem;
+  }
+
+  .staff .line {
+    box-shadow: inset 0 3px var(--background-color),
+      inset 0 5px var(--tab-string-color);
+  }
+
+  .staff .note,
+  .staff .rest,
+  .staff .key {
+    height: 16px;
+    width: 24px;
+    margin-right: 8px;
+    position: relative;
+    top: -12px;
+    border: 0;
+    background-color: transparent;
+  }
+
+  .staff .rest {
+    pointer-events: none;
+  }
+
+  .staff .note {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='isolation:isolate' viewBox='584 171 460.2 308.9'%3E%3Cpath fill-rule='evenodd' d='M736 469c-67-16-114-50-135-90-10-18-16-38-17-58v-1c0-23 6-45 25-70 17-22 43-42 78-57a292 292 0 0 1 153-20 337 337 0 0 1 127 39 187 187 0 0 1 46 39 172 172 0 0 1 18 28c8 18 13 39 13 56 0 34-17 65-46 89-22 19-47 33-80 43-25 8-51 12-76 13h-24c-29-1-57-5-82-11Zm144-43 12-12a77 77 0 0 0 18-35l2-9c0-10 0-21-3-32a838 838 0 0 0-13-45l-1-3c-10-26-20-44-35-57a82 82 0 0 0-81-20 73 73 0 0 0-42 31 75 75 0 0 0-13 52l3 17 13 47a139 139 0 0 0 14 33l5 9 10 13a81 81 0 0 0 46 26c18 3 38 0 48-5 7-3 11-5 17-10Z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    color: var(--text-color);
+  }
+
+  [data-theme="dark"] .staff .note {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='isolation:isolate;fill:white' viewBox='584 171 460.2 308.9'%3E%3Cpath fill-rule='evenodd' d='M736 469c-67-16-114-50-135-90-10-18-16-38-17-58v-1c0-23 6-45 25-70 17-22 43-42 78-57a292 292 0 0 1 153-20 337 337 0 0 1 127 39 187 187 0 0 1 46 39 172 172 0 0 1 18 28c8 18 13 39 13 56 0 34-17 65-46 89-22 19-47 33-80 43-25 8-51 12-76 13h-24c-29-1-57-5-82-11Zm144-43 12-12a77 77 0 0 0 18-35l2-9c0-10 0-21-3-32a838 838 0 0 0-13-45l-1-3c-10-26-20-44-35-57a82 82 0 0 0-81-20 73 73 0 0 0-42 31 75 75 0 0 0-13 52l3 17 13 47a139 139 0 0 0 14 33l5 9 10 13a81 81 0 0 0 46 26c18 3 38 0 48-5 7-3 11-5 17-10Z'/%3E%3C/svg%3E");
+  }
+
+  .staff .note.active {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='isolation:isolate;fill:gray' viewBox='584 171 460.2 308.9'%3E%3Cpath fill-rule='evenodd' d='M736 469c-67-16-114-50-135-90-10-18-16-38-17-58v-1c0-23 6-45 25-70 17-22 43-42 78-57a292 292 0 0 1 153-20 337 337 0 0 1 127 39 187 187 0 0 1 46 39 172 172 0 0 1 18 28c8 18 13 39 13 56 0 34-17 65-46 89-22 19-47 33-80 43-25 8-51 12-76 13h-24c-29-1-57-5-82-11Zm144-43 12-12a77 77 0 0 0 18-35l2-9c0-10 0-21-3-32a838 838 0 0 0-13-45l-1-3c-10-26-20-44-35-57a82 82 0 0 0-81-20 73 73 0 0 0-42 31 75 75 0 0 0-13 52l3 17 13 47a139 139 0 0 0 14 33l5 9 10 13a81 81 0 0 0 46 26c18 3 38 0 48-5 7-3 11-5 17-10Z'/%3E%3C/svg%3E");
+  }
+
+  .staff .note::before {
+    position: absolute;
+    left: -18px;
+    top: -8px;
+    font-size: 1.25rem;
+    width: 20px;
+    height: 30px;
+    display: block;
+    color: var(--text-color);
+  }
+
+  .staff .key::before {
+    position: relative;
+    width: 20px;
+    height: 30px;
+    display: block;
+    color: var(--text-color);
+    font-size: 1.25rem;
+  }
+
+  .staff .sharp::before {
+    content: "♯";
+    top: -4px;
+  }
+
+  .staff .flat::before {
+    content: "♭";
+  }
+
+  .staff .natural::before {
+    content: "♮";
+  }
+
+  /* Key signature offsets hack. Yuck! */
+  .staff [data-note="f"] .key {
+    left: -2rem;
+  }
+  .staff [data-note="c"] .key {
+    left: -1.5rem;
+  }
+  .staff [data-note="g"] .key {
+    left: -1rem;
+  }
+  .staff [data-note="d"] .key {
+    left: -0.5rem;
+  }
+  .staff [data-note="a"] .key {
+    left: 0rem;
+  }
+  .staff [data-note="e"] .key {
+    left: 0.5rem;
+  }
+  .staff [data-note="b"] .key {
+    left: 1rem;
+  }
+</style>

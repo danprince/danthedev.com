@@ -79,13 +79,6 @@ h3 a:hover {
   text-decoration: underline;
 }
 
-/* These elements need vertical breathing space */
-table,
-figure {
-  margin-top: 3rem;
-  margin-bottom: 3rem;
-}
-
 a {
   color: inherit;
 }
@@ -172,7 +165,11 @@ nav a:hover {
 }
 
 figure {
-  margin: 0;
+  margin-left: 0;
+  margin-right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 figcaption {
@@ -181,11 +178,19 @@ figcaption {
   color: var(--text-muted-color);
 }
 
+* + figcaption {
+  margin-top: 1rem;
+}
+
+figcaption:first-child {
+  margin-bottom: 1rem;
+}
+
 strong {
   font-weight: 600;
 }
 
-img {
+img, video {
   max-width: 100%;
 }
 
@@ -225,6 +230,16 @@ kbd {
   font-size: 12pt;
   padding: 0 4px;
   border: solid 1px var(--box-border-color);
+}
+
+/* These elements need vertical breathing space */
+table,
+figure,
+details,
+aside,
+iframe {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
 }
 
 .toggle-theme {
@@ -331,4 +346,12 @@ kbd {
 body > p > img {
   display: block;
   margin: 0 auto;
+}
+
+details summary {
+  font-weight: 600;
+}
+
+details p:last-child {
+  margin-bottom: 0;
 }

@@ -14,6 +14,9 @@ export default function (eleventyConfig) {
 
   // Turn off dom diffing so that reloads don't unset the colour theme.
   eleventyConfig.setServerOptions({ domDiff: false });
+
+  // Use bare urls for pages (don't include date)
+  eleventyConfig.addGlobalData("permalink", "{{ page.fileSlug }}/index.html");
 }
 
 function markdown() {
